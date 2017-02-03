@@ -8,13 +8,19 @@ public class EnemyAI : MonoBehaviour {
     public AudioSource hurtMeSound;
     public int runAwayHP = 3;
     private bool caughtPlayer = false;
+    private bool attacking = false;
     private Animator animator;
     private Transform player;
     private NavMeshAgent2D enemy;
     private bool BeenHit = false;
     public float checkDistance = 1.5f; // The distance between enemy and player, when real distance is smaller, enemy will start to walk.
+    public static float lastHitTime;
+    public static float timeSinceLastHit;
+
+
     void Start()
     {
+        lastHitTime = 1f;
         animator = GetComponent<Animator>();
         enemy = GetComponent<NavMeshAgent2D>();
         animator.SetBool("PlayerKicking", false);
@@ -145,6 +151,8 @@ public class EnemyAI : MonoBehaviour {
 
     void SetEnemyToKick()
     {
+        lastHitTime = Time.time;
+        attacking = true;
         animator.SetBool("PlayerMoving", false);
         animator.SetBool("PlayerKicking", true);
     }
@@ -165,10 +173,11 @@ public class EnemyAI : MonoBehaviour {
 
     void StartToAttack()
     {
-        enemy.Stop();
-        animator.speed = 1f;
-        SetEnemyToKick();
-        SetKickAnimationDirection();
+            enemy.Stop();
+            animator.speed = 1f;
+            SetEnemyToKick();
+            SetKickAnimationDirection();
+        
     }
 
     private float AwayFromPlayerVertically(float playerY, float moveY)
@@ -207,12 +216,23 @@ public class EnemyAI : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
+        //Get's the time snice the emeny last made an attack
+        timeSinceLastHit = Time.time - lastHitTime;
 
+        //After a been hit anamation has finshed, the been hit anamation is set to false
         if (!animator.GetCurrentAnimatorStateInfo(0).IsName("hit"))
         {
             BeenHit = false;
+            animator.SetBool("hitme", false);
         }
 
+        //Makese the kick animation == to false after .3 secounds after it was set to true
+        if (attacking && timeSinceLastHit >= .3)
+        {
+            attacking = false;
+            //Debug.Log("hit");
+            PlayerHealth.doDamage(2);
+        }
 
         //Debug.Log("remainingDistance: " + enemy.remainingDistance);
         Transform target = GameObject.FindGameObjectWithTag("Player").transform;
@@ -227,6 +247,7 @@ public class EnemyAI : MonoBehaviour {
 
             if (enemyHP <= runAwayHP)
             {
+                //makes enemy run away
                 enemy.Resume();
                 SetEnemyToMove();
                 enemy.speed = 0.5f;
@@ -237,10 +258,13 @@ public class EnemyAI : MonoBehaviour {
 
             if (caughtPlayer)
             {
-                SetKickAnimationDirection();
-                if (!animator.GetCurrentAnimatorStateInfo(0).IsName("PlayerKicking"))
+                if (!animator.GetCurrentAnimatorStateInfo(0).IsName("PlayerKicking") && !attacking)
                 {
-                    //PlayerHealth.doDamage(10);
+                    animator.SetBool("PlayerKicking", false);
+                }
+                if (!attacking && timeSinceLastHit >= 2.5f)
+                {
+                    StartToAttack();
                 }
                 return;
             }
@@ -266,6 +290,8 @@ public class EnemyAI : MonoBehaviour {
             { // caught the player
                 StartToAttack();
             }
+                
+
         }
     }
 
@@ -299,9 +325,8 @@ public class EnemyAI : MonoBehaviour {
         {
             if (other.tag == "Player")
             {
-                Debug.Log("CCCC");
                 caughtPlayer = true;
-                StartToAttack();
+                //StartToAttack();
             } else if (other.tag == "Enemy")
             {
                 Debug.Log("Enemy");
@@ -314,16 +339,11 @@ public class EnemyAI : MonoBehaviour {
         if (other.tag == "Player")
         {
             caughtPlayer = false;
-            Debug.Log("DDDD");
+
             enemy.Resume();
         } else if (other.tag == "Enemy")
         {
             Debug.Log("Enemy");
         }
-    }
-    public void doDamage(int damage)
-    {
-        PlayerHealth.doDamage(damage);
-        Debug.Log("HAHA");
     }
 }

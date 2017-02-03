@@ -42,8 +42,8 @@ public class PlayerHealth : MonoBehaviour {
 
         if (PlayersHP <= 0)
         {
-            gameObject.SetActive(false);
-            //GameMaster.SoftReset();
+            //gameObject.SetActive(false);
+            GameMaster.SoftReset();
         }
     }
 

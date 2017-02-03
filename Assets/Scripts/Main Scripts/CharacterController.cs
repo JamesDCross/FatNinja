@@ -12,7 +12,7 @@ public class CharacterController : MonoBehaviour {
     public float speed = 1f;
     public bool playerMoving = false;
     public bool playerAttacking = false;
-    public static string attackString;
+    public static string attackString = "";
     public Vector2 lastMove;
 
     public static float lastHitTime;
@@ -50,12 +50,22 @@ public class CharacterController : MonoBehaviour {
     }
 
     void OnTriggerEnter2D(Collider2D other) {
-        enemy = other.gameObject;
+        if (other.tag == "Enemy")
+        {
+            enemy = other.gameObject;
+        }
+        if (other.tag == "Attack")
+        {
+            GameObject temp = other.gameObject;
+            enemy = other.gameObject.transform.parent.gameObject;
+        }
     }
 
     void OnTriggerExit2D(Collider2D other)
     {
-        enemy = null;
+        if (other.tag == "Enemy" || other.tag == "Attack")
+            enemy = null;
+        
     }
 
     void Update() {
@@ -159,7 +169,11 @@ public class CharacterController : MonoBehaviour {
                     comboTracker.Add("Kick");
 
                     if (enemy!=null) {
-                        enemy.GetComponent<EnemyAI>().EnemyBeenHit(2);
+                        EnemyAI test = enemy.GetComponent<EnemyAI>();
+                        if (test == null) {
+                            Debug.Log("fuck");
+                        }
+                        test.EnemyBeenHit(2);
                     }
 
                 } else if (characterActions.Blank)

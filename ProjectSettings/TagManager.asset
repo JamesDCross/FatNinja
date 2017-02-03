@@ -8,6 +8,7 @@ TagManager:
   - Wall
   - Block
   - KickRight
+  - Attack
   layers:
   - Default
   - TransparentFX
