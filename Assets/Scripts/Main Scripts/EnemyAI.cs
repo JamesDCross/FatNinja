@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;      //Tells Random to use the Unity Engine random number generator.
 
-public class EnemyAI : MonoBehaviour {
+public class EnemyAI : MonoBehaviour
+{
     public int enemyHP = 10;
     public AudioSource hurtMeSound;
     public int runAwayHP = 3;
@@ -30,9 +31,11 @@ public class EnemyAI : MonoBehaviour {
 
     public void EnemyBeenHit(int damage)
     {
-        enemyHP -= damage;
-        animator.SetBool("hitme",true);
         BeenHit = true;
+        animator.speed = 1f;
+        enemyHP -= damage;
+        SetEnemyToBeenHit();
+        SetBeenHitAnimationDirection();
         hurtMeSound.Play();
         //stop any current action
     }
@@ -48,10 +51,12 @@ public class EnemyAI : MonoBehaviour {
         if (horizontal > 0)
         {
             pos.x = 1;
-        } else if (horizontal < 0)
+        }
+        else if (horizontal < 0)
         {
             pos.x = -1;
-        } else if (horizontal == 0)
+        }
+        else if (horizontal == 0)
         {
             pos.x = 0;
         }
@@ -59,10 +64,12 @@ public class EnemyAI : MonoBehaviour {
         if (vertical > 0)
         {
             pos.y = 1;
-        } else if (vertical < 0)
+        }
+        else if (vertical < 0)
         {
             pos.y = -1;
-        } else if (vertical == 0)
+        }
+        else if (vertical == 0)
         {
             pos.y = 0;
         }
@@ -156,14 +163,25 @@ public class EnemyAI : MonoBehaviour {
         animator.SetBool("PlayerMoving", false);
         animator.SetBool("PlayerKicking", true);
     }
-
+    void SetEnemyToBeenHit()
+    {
+        animator.SetBool("PlayerMoving", false);
+        animator.SetBool("PlayerKicking", false);
+        animator.SetBool("hitme", true);
+    }
+    void SetBeenHitAnimationDirection()
+    {
+        Vector2 pos = GetPlayerDirection();
+        animator.SetFloat("MoveX", pos.x);
+        animator.SetFloat("MoveY", pos.y);
+    }
     void SetMoveAnimationDirection()
     {
         Vector2 pos = GetPlayerDirection();
         animator.SetFloat("MoveX", pos.x);
         animator.SetFloat("MoveY", pos.y);
     }
- 
+
     void SetKickAnimationDirection()
     {
         Vector2 pos = GetPlayerDirection();
@@ -173,11 +191,11 @@ public class EnemyAI : MonoBehaviour {
 
     void StartToAttack()
     {
-            enemy.Stop();
-            animator.speed = 1f;
-            SetEnemyToKick();
-            SetKickAnimationDirection();
-        
+        enemy.Stop();
+        animator.speed = 1f;
+        SetEnemyToKick();
+        SetKickAnimationDirection();
+
     }
 
     private float AwayFromPlayerVertically(float playerY, float moveY)
@@ -186,7 +204,8 @@ public class EnemyAI : MonoBehaviour {
         if (playerY > 0)
         {
             newY -= moveY;
-        } else if (playerY < 0)
+        }
+        else if (playerY < 0)
         {
             newY += moveY;
         }
@@ -204,7 +223,8 @@ public class EnemyAI : MonoBehaviour {
         if (playerPosition.x > 0) //player at the right side of enemy
         {
             newPosition.x -= moveX;
-        } else if (playerPosition.x < 0) //player at the left side of enemy
+        }
+        else if (playerPosition.x < 0) //player at the left side of enemy
         {
             newPosition.x += moveX;
         }
@@ -240,7 +260,8 @@ public class EnemyAI : MonoBehaviour {
 
         if (!BeenHit)
         {
-            if (enemyHP <= 0) {
+            if (enemyHP <= 0)
+            {
                 //play a dead animation
                 Destroy(gameObject);
             }
@@ -279,18 +300,20 @@ public class EnemyAI : MonoBehaviour {
                 {
                     enemy.speed = 2f;
                     animator.speed = 1f;
-                } else if (remainingDistance <= checkDistance)
+                }
+                else if (remainingDistance <= checkDistance)
                 {
                     enemy.speed = 0.5f;
                     animator.speed = 0.2f;
                     //enemy.destination = GetDestination(GetPlayerDirection());
                     //enemy.destination = player.position;
                 }
-            } else if (remainingDistance <= 0)
+            }
+            else if (remainingDistance <= 0)
             { // caught the player
                 StartToAttack();
             }
-                
+
 
         }
     }
@@ -325,9 +348,10 @@ public class EnemyAI : MonoBehaviour {
         {
             if (other.tag == "Player")
             {
-                caughtPlayer = true;
+                if (enemyHP > runAwayHP) { caughtPlayer = true; }
                 //StartToAttack();
-            } else if (other.tag == "Enemy")
+            }
+            else if (other.tag == "Enemy")
             {
                 Debug.Log("Enemy");
             }
@@ -339,9 +363,11 @@ public class EnemyAI : MonoBehaviour {
         if (other.tag == "Player")
         {
             caughtPlayer = false;
-
+            if (BeenHit) { BeenHit = false; }
+            animator.speed = 1f;
             enemy.Resume();
-        } else if (other.tag == "Enemy")
+        }
+        else if (other.tag == "Enemy")
         {
             Debug.Log("Enemy");
         }
