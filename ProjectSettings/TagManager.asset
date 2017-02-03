@@ -1,0 +1,68 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Enemy
+  - Wall
+  - Block
+  - KickRight
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: BG
+    uniqueID: 3178797265
+    locked: 0
+  - name: PlayerBehind
+    uniqueID: 3420792435
+    locked: 0
+  - name: Enemy
+    uniqueID: 3132790969
+    locked: 0
+  - name: Player
+    uniqueID: 1338790127
+    locked: 0
+  - name: BG-Foreground
+    uniqueID: 3004131853
+    locked: 0
+  - name: Unit
+    uniqueID: 4021957881
+    locked: 0
+  - name: UI
+    uniqueID: 839620235
+    locked: 0
