@@ -35,7 +35,6 @@ public class EnemyAI : MonoBehaviour
         animator.SetBool("PlayerMoving", formerStatus[0]);
         animator.SetBool("PlayerKicking", formerStatus[1]);
         animator.SetBool("hitme", false);
-        Debug.Log("FUK");
         BeenHit = false;
     }
 
@@ -287,7 +286,7 @@ public class EnemyAI : MonoBehaviour
 
         if (!BeenHit)
         {
-            animator.SetBool("hitme",false);
+            EnemyRestoreFromHit();
             if (enemyHP <= 0)
             {
                 //play a dead animation
@@ -349,26 +348,10 @@ public class EnemyAI : MonoBehaviour
 
     // void OnCollisionEnter2D(Collision2D coll)
     // {
-    //     if (coll.gameObject.tag == "Player")
-    //     {
-    //         StartToAttack();
-    //     }
-    //     else if (coll.gameObject.tag == "Enemy")
-    //     {
-    //         Debug.Log("Enemy");
-    //     }
     // }
 
     // void OnCollisionExit2D(Collision2D coll)
     // {
-    //     if (coll.gameObject.tag == "Player")
-    //     {
-    //         enemy.destination = player.position;
-    //     }
-    //     else if (coll.gameObject.tag == "Enemy")
-    //     {
-    //         Debug.Log("Enemy");
-    //     }
     // }
 
     void OnTriggerEnter2D(Collider2D other)
