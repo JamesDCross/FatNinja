@@ -287,7 +287,7 @@ public class EnemyAI : MonoBehaviour
 
         if (!BeenHit)
         {
-            animator.SetBool("hitme",false);
+            EnemyRestoreFromHit();
             if (enemyHP <= 0)
             {
                 //play a dead animation
