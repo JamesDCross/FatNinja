@@ -9,6 +9,7 @@ TagManager:
   - Block
   - KickRight
   - Attack
+  - Shibos Attack
   layers:
   - Default
   - TransparentFX
