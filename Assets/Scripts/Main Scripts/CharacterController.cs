@@ -24,6 +24,7 @@ public class CharacterController : MonoBehaviour {
     PlayerAction characterActions;
 
     private GameObject enemy;
+    public BoxCollider2D ShibosAttack;
 
     void Start() {
         anim = GetComponent<Animator>();
@@ -46,18 +47,23 @@ public class CharacterController : MonoBehaviour {
         characterActions.Roll.AddDefaultBinding(Key.V);
 
         enemy = null;
-
+        ShibosAttack.enabled = false;
     }
 
     void OnTriggerEnter2D(Collider2D other) {
-        if (other.tag == "Enemy")
+        if (attackString != "" && enemy == null)
         {
-            enemy = other.gameObject;
-        }
-        if (other.tag == "Attack")
-        {
-            GameObject temp = other.gameObject;
-            enemy = other.gameObject.transform.parent.gameObject;
+            if (other.tag == "Enemy")
+            {
+                enemy = other.gameObject;
+                Debug.Log("Lunched Attack");
+            }
+            if (other.tag == "Attack")
+            {
+                /*GameObject temp = other.gameObject;
+                enemy = other.gameObject.transform.parent.gameObject;
+                Debug.Log("Hit Enemy Leg");*/
+            }
         }
     }
 
@@ -133,11 +139,16 @@ public class CharacterController : MonoBehaviour {
         if (playerAttacking && attackString != "")
         {
             anim.SetBool(attackString, playerAttacking);
+            //ShibosAttack.enabled = true;
+            ShibosAttack.size = new Vector2(1.6f, .29f);
+
         }
         else if (attackString != "")
         {
             anim.SetBool(attackString, playerAttacking);
-            attackString = "";
+            ShibosAttack.enabled = false;
+            //attackString = "";
+            ShibosAttack.size = new Vector2(0f, 0f);
         }
     }
 
@@ -170,10 +181,8 @@ public class CharacterController : MonoBehaviour {
 
                     if (enemy!=null) {
                         EnemyAI test = enemy.GetComponent<EnemyAI>();
-                        if (test == null) {
-                            Debug.Log("fuck");
-                        }
                         test.EnemyBeenHit(2);
+                        Debug.Log("Recived Attack");
                     }
 
                 } else if (characterActions.Blank)
@@ -202,6 +211,11 @@ public class CharacterController : MonoBehaviour {
     void roll()
     {
 
+    }
+
+    void showCollider()
+    {
+        ShibosAttack.enabled = true;
     }
 
     public static void comboReset()
