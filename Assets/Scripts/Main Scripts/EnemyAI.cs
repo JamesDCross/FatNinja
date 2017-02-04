@@ -168,6 +168,7 @@ public class EnemyAI : MonoBehaviour
     {
         animator.SetBool("PlayerMoving", true);
         animator.SetBool("PlayerKicking", false);
+        animator.SetBool("hitme", false);        
     }
 
     void SetEnemyToKick()
@@ -176,6 +177,7 @@ public class EnemyAI : MonoBehaviour
         attacking = true;
         animator.SetBool("PlayerMoving", false);
         animator.SetBool("PlayerKicking", true);
+        animator.SetBool("hitme", false);        
     }
     void SetEnemyToBeenHit()
     {
@@ -286,7 +288,7 @@ public class EnemyAI : MonoBehaviour
 
         if (!BeenHit)
         {
-            EnemyRestoreFromHit();
+            //EnemyRestoreFromHit();
             if (enemyHP <= 0)
             {
                 //play a dead animation
