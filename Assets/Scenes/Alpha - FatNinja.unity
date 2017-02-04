@@ -977,9 +977,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyHP: 10
+  enemySpeed: 2
   hurtMeSound: {fileID: 134865206}
   runAwayHP: 3
-  checkDistance: 2.5
+  checkDistance: 2
 --- !u!95 &651777000
 Animator:
   serializedVersion: 3

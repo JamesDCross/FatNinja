@@ -1,4 +1,7 @@
 ﻿using System.Collections;
+using System;
+using System.Reflection;
+using System.ComponentModel.Design;
 using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;      //Tells Random to use the Unity Engine random number generator.
@@ -6,6 +9,7 @@ using Random = UnityEngine.Random;      //Tells Random to use the Unity Engine r
 public class EnemyAI : MonoBehaviour
 {
     public int enemyHP = 10;
+    public float enemySpeed = 2f;
     public AudioSource hurtMeSound;
     public int runAwayHP = 3;
     private bool caughtPlayer = false;
@@ -19,6 +23,14 @@ public class EnemyAI : MonoBehaviour
     public static float timeSinceLastHit;
     private bool[] formerStatus; //1-move; 2-kick;
 
+    private enum AnimationParams
+    {
+        PlayerMoving,
+        EnemyWalking,
+        PlayerKicking,
+        hitme
+    }
+
     void Start()
     {
         lastHitTime = 1f;
@@ -26,7 +38,7 @@ public class EnemyAI : MonoBehaviour
         enemy = GetComponent<NavMeshAgent2D>();
         animator.SetBool("PlayerKicking", false);
         player = GameObject.FindGameObjectWithTag("Player").transform;
-        formerStatus = new bool[2];
+        formerStatus = new bool[3];
         //enemy.destination = player.position;
     }
 
@@ -34,6 +46,7 @@ public class EnemyAI : MonoBehaviour
     {
         animator.SetBool("PlayerMoving", formerStatus[0]);
         animator.SetBool("PlayerKicking", formerStatus[1]);
+        animator.SetBool("EnemyWalking", formerStatus[2]);
         animator.SetBool("hitme", false);
         BeenHit = false;
     }
@@ -41,13 +54,12 @@ public class EnemyAI : MonoBehaviour
     public void EnemyBeenHit(int damage)
     {
         BeenHit = true;
-        animator.speed = 1f;
         hurtMeSound.Play();
         enemyHP -= damage;
-        SetEnemyToBeenHit();
-        SetBeenHitAnimationDirection();
+        SetEnemyAnimation(AnimationParams.hitme);
         formerStatus[0] = animator.GetBool("PlayerMoving");
         formerStatus[1] = animator.GetBool("PlayerKicking");
+        formerStatus[2] = animator.GetBool("EnemyWalking");
 
         //BeenHit = false;
         //stop any current action
@@ -163,46 +175,36 @@ public class EnemyAI : MonoBehaviour
         return finalPosition;
     }
 
+    void SetEnemyAnimation(AnimationParams type)
+    {
+        string targetAnimation = Enum.GetName(typeof(AnimationParams), type);
+        Array values = Enum.GetValues(typeof(AnimationParams));
+        foreach (AnimationParams val in values)
+        {
+            string name = Enum.GetName(typeof(AnimationParams), val);
+            if (val.Equals(type))
+            {
+                animator.SetBool(name, true);
+            }
+            else
+            {
+                animator.SetBool(name, false);
+            }
+        }
 
-    void SetEnemyToMove()
-    {
-        animator.SetBool("PlayerMoving", true);
-        animator.SetBool("PlayerKicking", false);
-        animator.SetBool("hitme", false);        
-    }
-
-    void SetEnemyToKick()
-    {
-        lastHitTime = Time.time;
-        attacking = true;
-        animator.SetBool("PlayerMoving", false);
-        animator.SetBool("PlayerKicking", true);
-        animator.SetBool("hitme", false);        
-    }
-    void SetEnemyToBeenHit()
-    {
-        animator.SetBool("PlayerMoving", false);
-        animator.SetBool("PlayerKicking", false);
-        animator.SetBool("hitme", true);
-    }
-    void SetBeenHitAnimationDirection()
-    {
         Vector2 pos = GetPlayerDirection();
-        animator.SetFloat("MoveX", pos.x);
-        animator.SetFloat("MoveY", pos.y);
-    }
-    void SetMoveAnimationDirection()
-    {
-        Vector2 pos = GetPlayerDirection();
-        animator.SetFloat("MoveX", pos.x);
-        animator.SetFloat("MoveY", pos.y);
-    }
-
-    void SetKickAnimationDirection()
-    {
-        Vector2 pos = GetPlayerDirection();
-        animator.SetFloat("LastMoveX", pos.x);
-        animator.SetFloat("LastMoveY", pos.y);
+        if (targetAnimation.Equals("PlayerKicking"))
+        {
+            lastHitTime = Time.time;
+            attacking = true;
+            animator.SetFloat("LastMoveX", pos.x);
+            animator.SetFloat("LastMoveY", pos.y);
+        }
+        else
+        {
+            animator.SetFloat("MoveX", pos.x);
+            animator.SetFloat("MoveY", pos.y);
+        }
     }
 
     void StartToAttack()
@@ -210,9 +212,7 @@ public class EnemyAI : MonoBehaviour
         if (!BeenHit)
         {
             enemy.Stop();
-            animator.speed = 1f;
-            SetEnemyToKick();
-            SetKickAnimationDirection();
+            SetEnemyAnimation(AnimationParams.PlayerKicking);
         }
         else
         {
@@ -267,13 +267,6 @@ public class EnemyAI : MonoBehaviour
         //Get's the time snice the emeny last made an attack
         timeSinceLastHit = Time.time - lastHitTime;
 
-        //After a been hit anamation has finshed, the been hit anamation is set to false
-        // if (!animator.GetCurrentAnimatorStateInfo(0).IsName("hit"))
-        // {
-        //     BeenHit = false;
-        //     animator.SetBool("hitme", false);
-        // }
-
         //Makese the kick animation == to false after .3 secounds after it was set to true
         if (attacking && timeSinceLastHit >= .3)
         {
@@ -283,8 +276,8 @@ public class EnemyAI : MonoBehaviour
         }
 
         //Debug.Log("remainingDistance: " + enemy.remainingDistance);
-        Transform target = GameObject.FindGameObjectWithTag("Player").transform;
-        float remainingDistance = Vector2.Distance(transform.position, target.position);
+        //Transform target = GameObject.FindGameObjectWithTag("Player").transform;
+        float remainingDistance = Vector2.Distance(transform.position, player.position);
 
         if (!BeenHit)
         {
@@ -299,9 +292,8 @@ public class EnemyAI : MonoBehaviour
             {
                 //makes enemy run away
                 enemy.Resume();
-                SetEnemyToMove();
-                enemy.speed = 0.5f;
-                animator.speed = 0.3f;
+                SetEnemyAnimation(AnimationParams.EnemyWalking);
+                enemy.speed = 0.6f * enemySpeed;
                 enemy.destination = GetFurthestPointAfterPlayerToEnemy();
                 return;
             }
@@ -311,7 +303,6 @@ public class EnemyAI : MonoBehaviour
                 if (!animator.GetCurrentAnimatorStateInfo(0).IsName("PlayerKicking") && !attacking)
                 {
                     animator.SetBool("PlayerKicking", false);
-
                 }
                 if (!attacking && timeSinceLastHit >= 2.5f)
                 {
@@ -322,21 +313,19 @@ public class EnemyAI : MonoBehaviour
 
             if (remainingDistance > 0)
             {
-                SetEnemyToMove();
-                SetMoveAnimationDirection();
-                enemy.destination = target.position;
+                enemy.Resume();
+                SetEnemyAnimation(AnimationParams.PlayerMoving);
+                enemy.destination = player.position;
 
                 if (remainingDistance > checkDistance)
                 {
-                    enemy.speed = 2f;
-                    animator.speed = 1f;
+                    enemy.speed = enemySpeed;
                 }
                 else if (remainingDistance <= checkDistance)
                 {
-                    enemy.speed = 0.5f;
-                    animator.speed = 0.2f;
-                    //enemy.destination = GetDestination(GetPlayerDirection());
-                    //enemy.destination = player.position;
+                    //enemy.speed = 0.9f * enemySpeed;
+                    enemy.Resume();
+                    SetEnemyAnimation(AnimationParams.EnemyWalking);
                 }
             }
             else if (remainingDistance <= 0)
@@ -363,7 +352,6 @@ public class EnemyAI : MonoBehaviour
             if (other.tag == "Player")
             {
                 if (enemyHP > runAwayHP) { caughtPlayer = true; }
-                //StartToAttack();
             }
             else if (other.tag == "Enemy")
             {
@@ -381,7 +369,6 @@ public class EnemyAI : MonoBehaviour
             {
                 BeenHit = false;
             }
-            animator.speed = 1f;
             enemy.Resume();
         }
         else if (other.tag == "Enemy")
