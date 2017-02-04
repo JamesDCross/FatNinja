@@ -52,4 +52,10 @@ public class PlayerHealth : MonoBehaviour {
         Damage += damageAmount;
         PlayersHP = MaxHP - Damage;
     }
+
+    public static void heal(int healAmount)
+    {
+        Damage = Damage - healAmount < 0 ? 0 : Damage - healAmount;
+        PlayersHP = MaxHP - Damage;
+    }
 }
