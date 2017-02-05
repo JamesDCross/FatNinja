@@ -6,4 +6,10 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/TeamGold.unity
+  - enabled: 1
+    path: Assets/Scenes/Start Menu.unity
+  - enabled: 1
+    path: Assets/Scenes/Controls.unity
+  - enabled: 1
     path: Assets/Scenes/Alpha - FatNinja.unity

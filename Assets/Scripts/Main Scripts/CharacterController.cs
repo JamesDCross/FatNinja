@@ -46,6 +46,8 @@ public class CharacterController : MonoBehaviour {
         characterActions.Roll.AddDefaultBinding(InputControlType.Action4);
         characterActions.Roll.AddDefaultBinding(Key.V);
 
+        
+
         enemy = null;
         ShibosAttack.enabled = false;
     }
