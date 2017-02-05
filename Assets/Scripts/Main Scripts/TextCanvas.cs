@@ -14,14 +14,7 @@ public class TextCanvas : MonoBehaviour {
     {
         if (!GameMaster.pause)
         {
-            if (CharacterController.comboTracker.Count > 0)
-            {
-                //combo.text = CharacterController.comboTracker.Count + "";
-                //combo.text = "Hit x" + CharacterController.comboTracker.Count;
-            } else
-            {
-               combo.text = "";
-            }
+            combo.text = "";            
         }
     }
 }

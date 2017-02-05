@@ -146,13 +146,13 @@ namespace InControl
 			switch (logMessage.type)
 			{
 				case LogMessageType.Info:
-					Debug.Log( logMessage.text );
+					//Debug.Log( logMessage.text );
 					break;
 				case LogMessageType.Warning:
-					Debug.LogWarning( logMessage.text );
+					//Debug.LogWarning( logMessage.text );
 					break;
 				case LogMessageType.Error:
-					Debug.LogError( logMessage.text );
+					//Debug.LogError( logMessage.text );
 					break;
 			}
 		}

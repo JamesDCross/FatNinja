@@ -25,7 +25,7 @@ public class EnemyAttackCollision : MonoBehaviour {
 
         hasHit = false;
 
-        playerAttacking = CharacterController.attackString == "PlayerKicking";
+        playerAttacking = CharacterController.getAttack() == "PlayerKicking";
 
         if (Attack && playerAttacking)
         {

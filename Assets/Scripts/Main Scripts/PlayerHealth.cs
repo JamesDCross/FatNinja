@@ -24,7 +24,7 @@ public class PlayerHealth : MonoBehaviour {
         GUI.BeginGroup(new Rect(pos.x, pos.y, size.x, size.y));
         GUI.DrawTexture(new Rect(0, 0, size.x, size.y), HP_Container);
 
-        // Removes health from bar - bar total = 200
+        // Removes health from bar - bar total = 20
         GUI.BeginGroup(new Rect(0, 0, size.x - (Damage * 10), size.y));
         GUI.DrawTexture(new Rect(0, 0, size.x, size.y), HP_Indercator);
 
