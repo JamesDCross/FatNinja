@@ -51,13 +51,12 @@ public class CharacterController : MonoBehaviour {
     }
 
     void OnTriggerEnter2D(Collider2D other) {
-        if (attackString != "" && enemy == null && other.GetType() == typeof(BoxCollider2D))
+        if (attackString != "" && enemy == null && other.tag == "EnemyHitBox")
         {
-            if (other.tag == "Enemy")
-            {
-                enemy = other.gameObject;
-                Debug.Log("Lunched Attack");
-            }
+            GameObject temp = other.gameObject;
+            enemy = other.gameObject.transform.parent.gameObject;
+            Debug.Log("Lunched Attack");
+
         }
     }
 

@@ -10,6 +10,7 @@ TagManager:
   - KickRight
   - Attack
   - Shibos Attack
+  - EnemyHitBox
   layers:
   - Default
   - TransparentFX
