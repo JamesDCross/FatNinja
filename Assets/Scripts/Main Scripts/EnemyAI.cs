@@ -1,10 +1,10 @@
-﻿using System.Collections;
-using System;
+﻿using System;
+using System.Collections;
 using System.Reflection;
 using System.ComponentModel.Design;
 using System.Collections.Generic;
 using UnityEngine;
-using Random = UnityEngine.Random;      //Tells Random to use the Unity Engine random number generator.
+using Random = UnityEngine.Random;      //Tells Random to use the Unity Engine random number generator.
 
 public class EnemyAI : MonoBehaviour
 {
@@ -19,10 +19,14 @@ public class EnemyAI : MonoBehaviour
     private NavMeshAgent2D enemy;
     private bool BeenHit = false;
     public float checkDistance = 1.5f; // The distance between enemy and player, when real distance is smaller, enemy will start to walk.
-    public static float lastHitTime;
+    public static float lastHitTime;
     public static float timeSinceLastHit;
+    private bool isRandomMove;
+    private Vector2 RandomDestination;
+    private Transform playerCollider;
     private bool[] formerStatus; //1-move; 2-kick;
-
+    private Vector3 playerLastPosition;
+    public float randomWalkRange = 1f; //when enemy do a random action selection near player, how far should he go.
     private enum AnimationParams
     {
         PlayerMoving,
@@ -39,8 +43,9 @@ public class EnemyAI : MonoBehaviour
         animator.SetBool("PlayerKicking", false);
         player = GameObject.FindGameObjectWithTag("Player").transform;
         formerStatus = new bool[3];
-        //enemy.destination = player.position;
-    }
+        playerCollider = null;
+        //enemy.destination = player.position;
+    }
 
     public void EnemyRestoreFromHit()
     {
@@ -61,20 +66,19 @@ public class EnemyAI : MonoBehaviour
         formerStatus[1] = animator.GetBool("PlayerKicking");
         formerStatus[2] = animator.GetBool("EnemyWalking");
 
-        //BeenHit = false;
-        //stop any current action
-    }
+        //BeenHit = false;
+        //stop any current action
+    }
 
     Vector2 GetPlayerDirection()
     {
-
         float horizontal = player.position.x - transform.position.x;
         float vertical = player.position.y - transform.position.y;
 
         Vector2 pos = new Vector2(0, 0);
         float offset = 0.4f; //use to make the enemy not that sensetive to direction
 
-        if (horizontal > offset)
+        if (horizontal > offset)
         {
             pos.x = 1;
         }
@@ -105,72 +109,72 @@ public class EnemyAI : MonoBehaviour
 
     Vector2 GetDestination(Vector2 playerRawAxis)
     {
-        /* 
-            This method is used to detect the player's facing, 
-            then return the destination that the enemy should move to.
-            The destination == center point of the player's collider2D component 
-            but slightly move outwards
-        */
+        /*
+            This method is used to detect the player's facing,
+            then return the destination that the enemy should move to.
+            The destination == center point of the player's collider2D component
+            but slightly move outwards
+        */
 
-        Vector2 finalPosition = player.transform.position;
+        Vector2 finalPosition = player.transform.position;
 
-        // player facing up
-        if (playerRawAxis.x == 0 && playerRawAxis.y == 1)
+        // player facing up
+        if (playerRawAxis.x == 0 && playerRawAxis.y == 1)
         {
             finalPosition.y += 0.5f; // + -> outwards
-        }
+        }
 
-        // player facing down
-        if (playerRawAxis.x == 0 && playerRawAxis.y == -1)
+        // player facing down
+        if (playerRawAxis.x == 0 && playerRawAxis.y == -1)
         {
             finalPosition.y -= 0.4f; // - -> outwards
-        }
+        }
 
-        // player facing right
-        if (playerRawAxis.x == 1 && playerRawAxis.y == 0)
+        // player facing right
+        if (playerRawAxis.x == 1 && playerRawAxis.y == 0)
         {
             finalPosition.x += 0.4f; // - -> outwards
-        }
+        }
 
-        // player facing left
-        if (playerRawAxis.x == -1 && playerRawAxis.y == 0)
+        // player facing left
+        if (playerRawAxis.x == -1 && playerRawAxis.y == 0)
         {
             finalPosition.x -= 0.4f; // - -> outwards
-        }
+        }
 
-        // =================================
+        // =================================
 
-        // player facing up right
-        if (playerRawAxis.x > 0 && playerRawAxis.x <= 1 &&
-            playerRawAxis.y > 0 && playerRawAxis.y <= 1)
+        // player facing up right
+        if (playerRawAxis.x > 0 && playerRawAxis.x <= 1 &&
+      playerRawAxis.y > 0 && playerRawAxis.y <= 1)
         {
-            finalPosition.x += 0.27f; // + -> outwards            
-            finalPosition.y += 0.4f; // + -> outwards
-        }
+            finalPosition.x += 0.27f; // + -> outwards
+            finalPosition.y += 0.4f; // + -> outwards
+        }
 
-        // player facing up left
-        if (playerRawAxis.x < 0 && playerRawAxis.x >= -1 &&
-            playerRawAxis.y > 0 && playerRawAxis.y <= 1)
+        // player facing up left
+        if (playerRawAxis.x < 0 && playerRawAxis.x >= -1 &&
+      playerRawAxis.y > 0 && playerRawAxis.y <= 1)
         {
-            finalPosition.x += 0.35f; // - -> outwards            
-            finalPosition.y -= 0.4f; // + -> outwards
-        }
+            finalPosition.x += 0.35f; // - -> outwards
+            finalPosition.y -= 0.4f; // + -> outwards
+        }
 
-        // player facing down right
-        if (playerRawAxis.x > 0 && playerRawAxis.x <= 1 &&
-            playerRawAxis.y < 0 && playerRawAxis.y >= -1)
+        // player facing down right
+        if (playerRawAxis.x > 0 && playerRawAxis.x <= 1 &&
+      playerRawAxis.y < 0 && playerRawAxis.y >= -1)
         {
             finalPosition.x += 0.32f; // + -> outwards
-            finalPosition.y -= 0.3f;  // + -> outwards
-        }
+            finalPosition.y -= 0.3f;  // + -> outwards
+        }
 
-        // player facing down left
-        if (playerRawAxis.x < 0 && playerRawAxis.x >= -1 &&
-            playerRawAxis.y < 0 && playerRawAxis.y >= -1)
+        // player facing down left
+        if (playerRawAxis.x < 0 && playerRawAxis.x >= -1 &&
+      playerRawAxis.y < 0 && playerRawAxis.y >= -1)
         {
             finalPosition.x -= 0.29f; // - -> outwards
-            finalPosition.y -= 0.29f; // - -> outwards
-        }
+            finalPosition.y -= 0.29f; // - -> outwards
+        }
 
         return finalPosition;
     }
@@ -219,11 +223,10 @@ public class EnemyAI : MonoBehaviour
             if (!animator.GetCurrentAnimatorStateInfo(0).IsName("hit"))
             {
                 BeenHit = false;
-                animator.SetBool("hitme", false);
+                //animator.SetBool("hitme", false);
+                EnemyRestoreFromHit();
             }
         }
-
-
     }
 
     private float AwayFromPlayerVertically(float playerY, float moveY)
@@ -246,14 +249,14 @@ public class EnemyAI : MonoBehaviour
         Vector2 newPosition = transform.position;
 
         float moveX = 1.5f; // delta value to move
-        float moveY = 1.5f; // delta value to move
+        float moveY = 1.5f; // delta value to move
 
-        if (playerPosition.x > 0) //player at the right side of enemy
-        {
+        if (playerPosition.x > 0) //player at the right side of enemy
+        {
             newPosition.x -= moveX;
         }
         else if (playerPosition.x < 0) //player at the left side of enemy
-        {
+        {
             newPosition.x += moveX;
         }
         newPosition.y = AwayFromPlayerVertically(playerPosition.y, moveY);
@@ -261,37 +264,118 @@ public class EnemyAI : MonoBehaviour
         return newPosition;
     }
 
-    // Update is called once per frame
-    void Update()
+    Vector2 GetRandomNearPlayerPosition()
     {
+        Vector2 playerPos = GetPlayerDirection();
+        Vector2 oldEnemyPos = transform.position;
+        Vector2 newEnemyPos = new Vector2(0, 0);
+
+        float offSet = randomWalkRange;
+
+        if (playerPos.x >= 0) //player is at right
+        {
+            oldEnemyPos.x += -1 * Random.Range(0, offSet);
+            oldEnemyPos.y += Random.Range(-1 * offSet, offSet);
+        }
+        else if (playerPos.x < 0) //player is at left
+        {
+            oldEnemyPos.x += Random.Range(0, offSet);
+            oldEnemyPos.y += Random.Range(-1 * offSet, offSet);
+        }
+
+        return oldEnemyPos;
+    }
+
+    void EnemyRandomMove()
+    {
+        int randomNumber = Random.Range(0, 10);
+        int chance = 4;
+        if (randomNumber >= 0 && randomNumber <= chance)
+        { //enemy will attack;
+            if (playerCollider != null)
+            {
+                //player is at attacking range
+                if (!animator.GetCurrentAnimatorStateInfo(0).IsName("PlayerKicking") && !attacking)
+                {
+                    animator.SetBool("PlayerKicking", false);
+                }
+                if (!attacking && timeSinceLastHit >= 1)
+                //if (!attacking)
+                {
+                    StartToAttack();
+                }
+            }
+        }
+        else if (randomNumber > chance && randomNumber <= 10)
+        { //enemy will moveBack
+            enemy.Resume();
+            SetEnemyAnimation(AnimationParams.EnemyWalking);
+            enemy.destination = GetRandomNearPlayerPosition();
+
+            isRandomMove = true;
+            RandomDestination = enemy.destination;
+        }
+    }
+
+    public void KickPlayer()
+    {
+        PlayerHealth.doDamage(2);
+        Debug.Log("haha");
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (player.position.x - playerLastPosition.x > 1 ||
+            player.position.y - playerLastPosition.y > 1)
+        {
+            isRandomMove = false;
+            enemy.destination = player.position;
+        }
+
+        if (isRandomMove)
+        {
+            if (enemy.remainingDistance <= 0.3f)
+            {
+                isRandomMove = false;
+            }
+            else
+            {
+                enemy.destination = RandomDestination;
+                return;
+            }
+        }
+
         //Get's the time snice the emeny last made an attack
         timeSinceLastHit = Time.time - lastHitTime;
 
         //Makese the kick animation == to false after .3 secounds after it was set to true
+        //TODO: Why previous one is 1f?
         if (attacking && timeSinceLastHit >= .3)
+        //if (attacking)
         {
             attacking = false;
-            //Debug.Log("hit");
-            PlayerHealth.doDamage(2);
+            //Debug.Log("hit");
+            //PlayerHealth.doDamage(2);
         }
 
-        //Debug.Log("remainingDistance: " + enemy.remainingDistance);
-        //Transform target = GameObject.FindGameObjectWithTag("Player").transform;
-        float remainingDistance = Vector2.Distance(transform.position, player.position);
+        //Debug.Log("remainingDistance: " + enemy.remainingDistance);
+        //Transform target = GameObject.FindGameObjectWithTag("Player").transform;
 
         if (!BeenHit)
         {
-            //EnemyRestoreFromHit();
-            if (enemyHP <= 0)
+            float remainingDistance = Vector2.Distance(transform.position, player.position);
+            //EnemyRestoreFromHit();
+            if (enemyHP <= 0)
             {
-                //play a dead animation
-                Destroy(gameObject);
+                //play a dead animation
+                Destroy(gameObject);
             }
 
             if (enemyHP <= runAwayHP)
             {
-                //makes enemy run away
-                enemy.Resume();
+                //makes enemy run away
+                enemy.Resume();
                 SetEnemyAnimation(AnimationParams.EnemyWalking);
                 enemy.speed = 0.6f * enemySpeed;
                 enemy.destination = GetFurthestPointAfterPlayerToEnemy();
@@ -300,58 +384,58 @@ public class EnemyAI : MonoBehaviour
 
             if (caughtPlayer)
             {
-                if (!animator.GetCurrentAnimatorStateInfo(0).IsName("PlayerKicking") && !attacking)
-                {
-                    animator.SetBool("PlayerKicking", false);
-                }
-                if (!attacking && timeSinceLastHit >= 2.5f)
-                {
-                    StartToAttack();
-                }
+                EnemyRandomMove();
                 return;
             }
 
             if (remainingDistance > 0)
             {
                 enemy.Resume();
-                SetEnemyAnimation(AnimationParams.PlayerMoving);
-                enemy.destination = player.position;
-
                 if (remainingDistance > checkDistance)
                 {
                     enemy.speed = enemySpeed;
+                    SetEnemyAnimation(AnimationParams.PlayerMoving);
                 }
                 else if (remainingDistance <= checkDistance)
                 {
-                    //enemy.speed = 0.9f * enemySpeed;
-                    enemy.Resume();
+                    //enemy.speed = 0.9f * enemySpeed;
+                    enemy.Resume();
                     SetEnemyAnimation(AnimationParams.EnemyWalking);
+                }
+
+                if (!isRandomMove)
+                {
+                    enemy.destination = player.position;
                 }
             }
             else if (remainingDistance <= 0)
             { // caught the player
-                StartToAttack();
+                StartToAttack();
             }
-
-
         }
+
+        playerLastPosition = player.position;
     }
 
-    // void OnCollisionEnter2D(Collision2D coll)
-    // {
-    // }
+    // void OnCollisionEnter2D(Collision2D coll)
+    // {
+    // }
 
-    // void OnCollisionExit2D(Collision2D coll)
-    // {
-    // }
+    // void OnCollisionExit2D(Collision2D coll)
+    // {
+    // }
 
-    void OnTriggerEnter2D(Collider2D other)
+    void OnTriggerEnter2D(Collider2D other)
     {
         if (!BeenHit)
         {
             if (other.tag == "Player")
             {
-                if (enemyHP > runAwayHP) { caughtPlayer = true; }
+                if (enemyHP > runAwayHP)
+                {
+                    caughtPlayer = true;
+                    playerCollider = other.gameObject.transform;
+                }
             }
             else if (other.tag == "Enemy")
             {
@@ -365,6 +449,7 @@ public class EnemyAI : MonoBehaviour
         if (other.tag == "Player")
         {
             caughtPlayer = false;
+            playerCollider = null;
             if (BeenHit)
             {
                 BeenHit = false;
