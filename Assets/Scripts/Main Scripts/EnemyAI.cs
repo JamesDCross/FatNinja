@@ -104,6 +104,11 @@ public class EnemyAI : MonoBehaviour
             pos.y = 0;
         }
 
+        if (enemyHP <= runAwayHP){
+            pos.x *= -1;
+            pos.y *= -1;
+        }
+
         return pos;
     }
 
@@ -320,7 +325,6 @@ public class EnemyAI : MonoBehaviour
     public void KickPlayer()
     {
         PlayerHealth.doDamage(2);
-        Debug.Log("haha");
     }
 
     // Update is called once per frame
@@ -355,12 +359,9 @@ public class EnemyAI : MonoBehaviour
         //if (attacking)
         {
             attacking = false;
-            //Debug.Log("hit");
             //PlayerHealth.doDamage(2);
         }
 
-        //Debug.Log("remainingDistance: " + enemy.remainingDistance);
-        //Transform target = GameObject.FindGameObjectWithTag("Player").transform;
 
         if (!BeenHit)
         {
