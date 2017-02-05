@@ -51,27 +51,14 @@ public class CharacterController : MonoBehaviour {
     }
 
     void OnTriggerEnter2D(Collider2D other) {
-        if (attackString != "" && enemy == null)
+        if (attackString != "" && enemy == null && other.GetType() == typeof(BoxCollider2D))
         {
             if (other.tag == "Enemy")
             {
                 enemy = other.gameObject;
                 Debug.Log("Lunched Attack");
             }
-            if (other.tag == "Attack")
-            {
-                /*GameObject temp = other.gameObject;
-                enemy = other.gameObject.transform.parent.gameObject;
-                Debug.Log("Hit Enemy Leg");*/
-            }
         }
-    }
-
-    void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.tag == "Enemy" || other.tag == "Attack")
-            enemy = null;
-        
     }
 
     void Update() {
@@ -141,7 +128,13 @@ public class CharacterController : MonoBehaviour {
             anim.SetBool(attackString, playerAttacking);
             //ShibosAttack.enabled = true;
             ShibosAttack.size = new Vector2(1.6f, .29f);
-
+            if (enemy != null)
+            {
+                EnemyAI test = enemy.GetComponent<EnemyAI>();
+                test.EnemyBeenHit(2);
+                Debug.Log("Recived Attack");
+                enemy = null;
+            }
         }
         else if (attackString != "")
         {
@@ -178,13 +171,6 @@ public class CharacterController : MonoBehaviour {
                     attackString = "PlayerKicking";
                     lastHitTime = Time.time;
                     comboTracker.Add("Kick");
-
-                    if (enemy!=null) {
-                        EnemyAI test = enemy.GetComponent<EnemyAI>();
-                        test.EnemyBeenHit(2);
-                        Debug.Log("Recived Attack");
-                    }
-
                 } else if (characterActions.Blank)
                 {
                     lastHitTime = Time.time;
