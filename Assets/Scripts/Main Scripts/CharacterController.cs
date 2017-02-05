@@ -6,6 +6,8 @@ using InControl;
 public class CharacterController : MonoBehaviour {
 
     public float speed;
+    public float comboTimeMin;
+    public float comboTimeMax;
     public Sprite A;
     public Sprite B;
     public Sprite Y;
@@ -92,11 +94,16 @@ public class CharacterController : MonoBehaviour {
     private void PerformMovement()
     {
         //playerMoving = true if there is horizontal or vertical movement and the player is not attacking, otherwise false.
-        playerMoving = Input.GetAxisRaw("Horizontal") == 0 && Input.GetAxisRaw("Vertical") == 0 || playerAttacking ? false : true;
+        playerMoving = Input.GetAxisRaw("Horizontal") == 0 && Input.GetAxisRaw("Vertical") == 0 || playerAttacking  ? false : true;
 
+        if (attackString == "HurricaneKick")
+            playerMoving = true;
+
+        if (attackString == "UpperCut")
+            playerMoving = false;
         //playerAttacking = false once the attack antimation has been played.
         //Stops the player from moving whilst attacking.
-        if (!anim.GetCurrentAnimatorStateInfo(0).IsName("PlayerKicking") && timeSinceLastHit >= .3f)
+        if (!anim.GetCurrentAnimatorStateInfo(0).IsName(attackString) && timeSinceLastHit >= comboTimeMin)
             playerAttacking = false; 
         else
             myRigidbody.velocity = new Vector2(0f, 0f);
@@ -171,9 +178,9 @@ public class CharacterController : MonoBehaviour {
                 anim.SetBool(attackString, playerAttacking);
                 hasAttackAnimationPlayed = true;
                 //testing
-                Debug.Log(attackString);
+                Debug.LogWarning(attackString);
             }
-            //Checking to see if attacks have collied with enemys
+            //If an attack collies with an enemy calls a damage method on that enemy
             if (enemy != null)
             {
                 EnemyAI EAI = enemy.GetComponent<EnemyAI>();
@@ -195,7 +202,7 @@ public class CharacterController : MonoBehaviour {
 
     private void Action() {
         //If condtions are ture means you still have time to complete a combo
-        comboTiming =  timeSinceLastHit <= .8f;
+        comboTiming =  timeSinceLastHit <= comboTimeMax;
 
         //Resest combo if combo has run out of time or you have successfuly completed a combo
         if (comboTracker != null && comboTracker.Count >= 5 || !comboTiming)
@@ -209,7 +216,7 @@ public class CharacterController : MonoBehaviour {
         {
             //Can only attack if its your first attack or its been longer than .3 sec after you last attack
             //Only does this once every button push
-            if (!pressed && timeSinceLastHit >= 0.3f || !hasAlreadyAttacked)
+            if (!pressed && timeSinceLastHit >= comboTimeMin || !hasAlreadyAttacked)
             {
                 pressed = true;
                 playerAttacking = true;
@@ -273,7 +280,10 @@ public class CharacterController : MonoBehaviour {
                     {
                         comboSuccess = true;
                         attackString = moveSet[1][0];
-                        attackDamage = 3;
+                        if (moveSet[1][0] == "HurricaneKick")
+                            attackDamage = 2;
+                        else if (moveSet[1][0] == "UpperCut")
+                            attackDamage = 3;
                     } else
                         tempComboList.Add(moveSet);
                 }
