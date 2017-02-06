@@ -12,25 +12,30 @@ public class EnemyAI : MonoBehaviour
     public float enemySpeed = 2f;
     //public AudioSource hurtMeSound;
     public int runAwayHP = 3;
+    public float randomWalkRange = 1f; //when enemy do a random action selection near player, how far should he go.
+    public float checkDistance = 1.5f; // The distance between enemy and player, when real distance is smaller, enemy will start to walk.
+    public int chanceToAttack = 4; // min 0, max 10;
+
+    //Audio
+    public AudioClip[] painSounds;
+    public AudioSource audio;
+
+    public static float lastHitTime;
+    public static float timeSinceLastHit;
+
     private bool caughtPlayer = false;
     private bool attacking = false;
     private Animator animator;
     private Transform player;
     private NavMeshAgent2D enemy;
     private bool BeenHit = false;
-    public float checkDistance = 1.5f; // The distance between enemy and player, when real distance is smaller, enemy will start to walk.
-    public static float lastHitTime;
-    public static float timeSinceLastHit;
+
     private bool isRandomMove;
     private Vector2 RandomDestination;
     private Transform playerCollider;
     private bool[] formerStatus; //1-move; 2-kick;
     private Vector3 playerLastPosition;
-    public float randomWalkRange = 1f; //when enemy do a random action selection near player, how far should he go.
 
-    //Audio
-    public AudioClip[] painSounds;
-    public AudioSource audio;
     private enum AnimationParams
     {
         PlayerMoving,
@@ -204,6 +209,7 @@ public class EnemyAI : MonoBehaviour
             if (val.Equals(type))
             {
                 animator.SetBool(name, true);
+                Debug.Log("AAAGAHGAHAGHAA" + name + " " + val);
             }
             else
             {
@@ -304,8 +310,7 @@ public class EnemyAI : MonoBehaviour
     void EnemyRandomMove()
     {
         int randomNumber = Random.Range(0, 10);
-        int chance = 4;
-        if (randomNumber >= 0 && randomNumber <= chance)
+        if (randomNumber >= 0 && randomNumber <= chanceToAttack)
         { //enemy will attack;
             if (playerCollider != null)
             {
@@ -321,7 +326,7 @@ public class EnemyAI : MonoBehaviour
                 }
             }
         }
-        else if (randomNumber > chance && randomNumber <= 10)
+        else if (randomNumber > chanceToAttack && randomNumber <= 10)
         { //enemy will moveBack
             enemy.Resume();
             SetEnemyAnimation(AnimationParams.EnemyWalking);
