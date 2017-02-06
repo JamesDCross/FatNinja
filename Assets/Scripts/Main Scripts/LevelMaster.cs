@@ -24,7 +24,7 @@ public class LevelMaster : MonoBehaviour
 void Update(){
 
 LoadLevel1();
-LoadLevelControls();
+//LoadLevelControls();
 
 
 }
@@ -39,7 +39,7 @@ LoadLevelControls();
          }
     }
 
-    public void LoadLevelControls()
+    /*public void LoadLevelControls()
     {
         //if button is ... 
         Debug.Log("New Level load: ");
@@ -48,7 +48,7 @@ LoadLevelControls();
         {
             SceneManager.LoadScene("Controls");
          }
-    }
+    }*/
 
 
 
