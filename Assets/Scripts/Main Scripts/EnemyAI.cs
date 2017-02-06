@@ -21,6 +21,9 @@ public class EnemyAI : MonoBehaviour
     public AudioClip[] painSounds;
     public AudioSource audio;
 
+    // Blood effect
+    public GameObject bloodPrefab;
+
     public static float lastHitTime;
     public static float timeSinceLastHit;
 
@@ -95,6 +98,18 @@ public class EnemyAI : MonoBehaviour
         //Debug.Log(rand);
         audio.clip = painSounds[rand];
         audio.Play();
+
+        // spawn blood
+        
+        //if (damage != 0) {
+            GameObject blood = Instantiate(bloodPrefab);
+            Vector3 bloodPos = this.transform.position;
+            //bloodPos.z = 50;
+            blood.transform.position = bloodPos;
+            float playerAngle = player.gameObject.GetComponent<CharacterController>().getPlayerAngle();
+            blood.GetComponent<BloodScript>().setBlood(playerAngle, (float)damage / 4f);
+        //}
+        
     }
 
     Vector2 GetPlayerDirection()
@@ -222,7 +237,6 @@ public class EnemyAI : MonoBehaviour
             if (val.Equals(type))
             {
                 animator.SetBool(name, true);
-                Debug.Log("AAAGAHGAHAGHAA" + name + " " + val);
             }
             else
             {
