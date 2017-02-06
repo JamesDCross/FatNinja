@@ -61,7 +61,8 @@ public class EnemyAI : MonoBehaviour
     private AnimationEvent CreateAnimationEvent()
     {
         // new event created
-        return new AnimationEvent(){
+        return new AnimationEvent()
+        {
             time = 0.06f,
             functionName = "KickPlayer"
         };
@@ -74,7 +75,18 @@ public class EnemyAI : MonoBehaviour
             string name = clip.name;
             if (name.StartsWith("Kick"))
             {
-                clip.AddEvent(evt);
+                bool isAdded = false;
+                foreach (AnimationEvent e in clip.events)
+                {
+                    if (e.functionName == evt.functionName)
+                    {
+                        isAdded = true;
+                    }
+                }
+                if (!isAdded)
+                {
+                    clip.AddEvent(evt);
+                }
             }
         }
     }
@@ -366,6 +378,11 @@ public class EnemyAI : MonoBehaviour
         PlayerHealth.doDamage(damage);
     }
 
+    public void EnemyDead()
+    {
+        StartCoroutine(DoBlinks(3f, 0.2f));
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -409,7 +426,7 @@ public class EnemyAI : MonoBehaviour
             if (enemyHP <= 0)
             {
                 //play a dead animation
-                Destroy(gameObject);
+                animator.SetBool("IsEnemyDead", true);
             }
 
             if (enemyHP <= runAwayHP)
@@ -457,15 +474,34 @@ public class EnemyAI : MonoBehaviour
         playerLastPosition = player.position;
     }
 
-    // void OnCollisionEnter2D(Collision2D coll)
-    // {
-    // }
+    // void OnCollisionEnter2D(Collision2D coll)
+    // {
+    // }
 
-    // void OnCollisionExit2D(Collision2D coll)
-    // {
-    // }
+    // void OnCollisionExit2D(Collision2D coll)
+    // {
+    // }
 
-    void OnTriggerEnter2D(Collider2D other)
+    IEnumerator DoBlinks(float duration, float blinkTime)
+    {
+        Renderer renderer = enemy.GetComponent<Renderer>();
+        while (duration > 0f)
+        {
+            duration -= Time.deltaTime;
+
+            //toggle renderer
+            renderer.enabled = !renderer.enabled;
+
+            //wait for a bit
+            yield return new WaitForSeconds(blinkTime);
+        }
+
+        //make sure renderer is enabled when we exit
+        renderer.enabled = true;
+        Destroy(gameObject);
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
     {
         if (!BeenHit)
         {
