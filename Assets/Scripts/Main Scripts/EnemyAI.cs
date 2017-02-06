@@ -429,6 +429,7 @@ public class EnemyAI : MonoBehaviour
                 enemy.autoBraking = true;
                 enemy.Stop();
                 animator.SetBool("IsEnemyDead", true);
+                return;
             }
 
             if (enemyHP <= runAwayHP)
