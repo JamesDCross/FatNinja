@@ -302,10 +302,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyHP: 10
   enemySpeed: 2
-  hurtMeSound: {fileID: 82345818289148286}
   runAwayHP: 3
   checkDistance: 2.2
   randomWalkRange: 1
+  painSounds:
+  - {fileID: 8300000, guid: ffad83ce35e6d45f6ac98dbe700eee96, type: 3}
+  - {fileID: 8300000, guid: 8e3393b05b74f44c08bcd0a1a61d1b2a, type: 3}
+  audio: {fileID: 82345818289148286}
 --- !u!114 &114558230605058554
 MonoBehaviour:
   m_ObjectHideFlags: 1

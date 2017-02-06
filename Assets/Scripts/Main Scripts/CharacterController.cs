@@ -35,8 +35,9 @@ public class CharacterController : MonoBehaviour {
     private static List<string[][]> refindComboList;
     private static string[][][] comboList;
 
-
-
+    //audio
+    public AudioClip[] attackSounds;	 
+     public AudioSource audio;
 
     void Start() {
         characterActions = new PlayerAction();
@@ -72,6 +73,11 @@ public class CharacterController : MonoBehaviour {
             new string[][] { new string[] { "Punch", "Punch", "Kick" }, new string[] { "UpperCut" }},
             new string[][] { new string[] {"Kick", "Kick", "Punch" }, new string[] { "HurricaneKick" } },
         };
+
+        //audio
+
+        int ran = UnityEngine.Random.Range (0, 1);
+         audio.clip = attackSounds [ran]; 
     }
 
     void OnTriggerEnter2D(Collider2D other) {
@@ -174,6 +180,13 @@ public class CharacterController : MonoBehaviour {
             //Plays the attack animation only once
             if (!hasAttackAnimationPlayed)
             {
+
+                //attacking sounds
+                    int rand = UnityEngine.Random.Range (0, attackSounds.Length);
+                    audio.clip = attackSounds [rand]; 
+                    audio.Play();    
+
+
                 anim.SetBool(attackString, playerAttacking);
                 hasAttackAnimationPlayed = true;
                 //testing
@@ -212,7 +225,12 @@ public class CharacterController : MonoBehaviour {
 
         //Need to add || characterActions.Roll || characterActions.Blank once other buttons are added
         if (characterActions.Kick || characterActions.Punch)
+
         {
+
+            
+                  
+
             //Can only attack if its your first attack or its been longer than .3 sec after you last attack
             //Only does this once every button push
             if (!pressed && timeSinceLastHit >= comboTimeMin || !hasAlreadyAttacked)
@@ -235,6 +253,10 @@ public class CharacterController : MonoBehaviour {
                     attackDamage = 2;
                     lastHitTime = Time.time;
                     comboTracker.Add("Kick");
+
+                    
+
+
                 } 
                 //Other buttons to enable DO NOT REMOVE!
                 /*else if (characterActions.Blank)
