@@ -105,16 +105,17 @@ public class EnemyAI : MonoBehaviour
         BeenHit = false;
     }
 
-    public void EnemyBeenHit(int damage)
+    public void EnemyBeenHit(int incomingdamage)
     {
         BeenHit = true;
         //hurtMeSound.Play();
-        enemyHP -= damage;
+        enemyHP -= incomingdamage;
         SetEnemyAnimation(AnimationParams.hitme);
         formerStatus[0] = animator.GetBool("PlayerMoving");
         formerStatus[1] = animator.GetBool("PlayerKicking");
         formerStatus[2] = animator.GetBool("EnemyWalking");
 
+        
         //BeenHit = false;
         //stop any current action
 
@@ -131,7 +132,7 @@ public class EnemyAI : MonoBehaviour
         //bloodPos.z = 50;
         blood.transform.position = bloodPos;
         float playerAngle = player.gameObject.GetComponent<CharacterController>().getPlayerAngle();
-        blood.GetComponent<BloodScript>().setBlood(playerAngle, (float)damage / 4f);
+        blood.GetComponent<BloodScript>().setBlood(playerAngle, (float)incomingdamage / 4f);
         //}
 
     }
@@ -297,6 +298,7 @@ public class EnemyAI : MonoBehaviour
         {
             enemy.Stop();
             SetEnemyAnimation(AnimationParams.PlayerKicking);
+
         }
         else
         {
@@ -431,6 +433,7 @@ public class EnemyAI : MonoBehaviour
         AnimationEvent ae = new AnimationEvent();
         ae.messageOptions = SendMessageOptions.DontRequireReceiver;
         PlayerHealth.doDamage(damage);
+        Debug.Log(damage);
     }
 
     // Update is called once per frame
