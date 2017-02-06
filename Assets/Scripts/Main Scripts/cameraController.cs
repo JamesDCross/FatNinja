@@ -22,7 +22,7 @@ public class cameraController : MonoBehaviour
         // Set the position of the camera's transform to be the same as the player's, but offset by the calculated offset distance.
 
         Vector3 test = player.transform.position + offset;
-        test.z = -10;
+        test.z = -100;
         transform.position = test;
     }
 }
