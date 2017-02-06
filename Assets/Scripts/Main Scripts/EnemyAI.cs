@@ -8,7 +8,8 @@ using Random = UnityEngine.Random;      //1Tells Random to use the Unity Engi
 
 public class EnemyAI : MonoBehaviour
 {
-    private bool isDead = false;
+    public GameObject enemyPrefab;
+    public bool isDead = false;
     public int enemyHP = 10;
     public int damage = 2;
     public float enemySpeed = 2f;
@@ -397,7 +398,8 @@ public class EnemyAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isDead){
+        if (isDead)
+        {
             return;
         }
         if (player.position.x - playerLastPosition.x > 1 ||
@@ -439,11 +441,17 @@ public class EnemyAI : MonoBehaviour
             //EnemyRestoreFromHit();
             if (enemyHP <= 0)
             {
-                //Destory
                 isDead = true;
-                enemy.autoBraking = true;
-                enemy.Stop();
-                animator.SetBool("IsEnemyDead", true);
+                // enemy.autoBraking = true;
+                // enemy.Stop();
+                // animator.SetBool("IsEnemyDead", true);
+                
+                Vector2 deadPlace = transform.position;
+                Destroy(gameObject);
+                GameObject newOne = Instantiate(enemyPrefab,deadPlace,Quaternion.identity);
+                newOne.GetComponent<EnemyAI>().isDead = true;
+                newOne.GetComponent<Animator>().SetBool("IsEnemyDead",true);
+                return;
             }
 
             if (enemyHP <= runAwayHP)
