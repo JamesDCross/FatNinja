@@ -124,16 +124,16 @@ public class EnemyAI : MonoBehaviour
         audio.Play();
 
         // spawn blood
-        
+
         //if (damage != 0) {
-            GameObject blood = Instantiate(bloodPrefab);
-            Vector3 bloodPos = this.transform.position;
-            //bloodPos.z = 50;
-            blood.transform.position = bloodPos;
-            float playerAngle = player.gameObject.GetComponent<CharacterController>().getPlayerAngle();
-            blood.GetComponent<BloodScript>().setBlood(playerAngle, (float)damage / 4f);
+        GameObject blood = Instantiate(bloodPrefab);
+        Vector3 bloodPos = this.transform.position;
+        //bloodPos.z = 50;
+        blood.transform.position = bloodPos;
+        float playerAngle = player.gameObject.GetComponent<CharacterController>().getPlayerAngle();
+        blood.GetComponent<BloodScript>().setBlood(playerAngle, (float)damage / 4f);
         //}
-        
+
     }
 
     Vector2 GetPlayerDirection()
@@ -170,11 +170,11 @@ public class EnemyAI : MonoBehaviour
             pos.y = 0;
         }
 
-        if (enemyHP <= runAwayHP)
-        {
-            pos.x *= -1;
-            pos.y *= -1;
-        }
+        // if (enemyHP <= runAwayHP)
+        // {
+        //     pos.x *= -1;
+        //     pos.y *= -1;
+        // }
 
         return pos;
     }
@@ -278,8 +278,16 @@ public class EnemyAI : MonoBehaviour
         }
         else
         {
-            animator.SetFloat("MoveX", pos.x);
-            animator.SetFloat("MoveY", pos.y);
+            if (enemyHP <= runAwayHP)
+            {
+                animator.SetFloat("MoveX", -1 * pos.x);
+                animator.SetFloat("MoveY", -1 * pos.y);
+            }
+            else
+            {
+                animator.SetFloat("MoveX", pos.x);
+                animator.SetFloat("MoveY", pos.y);
+            }
         }
     }
 
@@ -320,18 +328,48 @@ public class EnemyAI : MonoBehaviour
         Vector2 playerPosition = GetPlayerDirection();
         Vector2 newPosition = transform.position;
 
-        float moveX = 1.5f; // delta value to move
-        float moveY = 1.5f; // delta value to move
+        float moveX = 5.5f; // delta value to move
+        float moveY = 5.5f; // delta value to move
 
         if (playerPosition.x > 0) //player at the right side of enemy
         {
-            newPosition.x -= moveX;
+            if (playerPosition.y >= 0) //upper right
+            {
+                newPosition.x -= moveX;
+                newPosition.y -= moveY;
+            }
+            else if (playerPosition.y < 0) //down right
+            {
+                newPosition.x -= moveX;
+                newPosition.y += moveY;
+            }
         }
         else if (playerPosition.x < 0) //player at the left side of enemy
         {
-            newPosition.x += moveX;
+            if (playerPosition.y >= 0) //upper left
+            {
+                newPosition.x += moveX;
+                newPosition.y -= moveY;
+            }
+            else if (playerPosition.y < 0) //down left
+            {
+                newPosition.x += moveX;
+                newPosition.y += moveY;
+            }
         }
-        newPosition.y = AwayFromPlayerVertically(playerPosition.y, moveY);
+        else if (playerPosition.x == 0)
+        {
+            if (playerPosition.y > 0)
+            { //player is at vertical top
+                newPosition.x += Random.Range(-1 * moveX, moveX);
+                newPosition.y -= moveY;
+            }
+            else if (playerPosition.y < 0)
+            { //player is at vertical down
+                newPosition.x += Random.Range(-1 * moveX, moveX);
+                newPosition.y += moveY;
+            }
+        }
 
         return newPosition;
     }
@@ -402,6 +440,7 @@ public class EnemyAI : MonoBehaviour
         {
             return;
         }
+
         if (player.position.x - playerLastPosition.x > 1 ||
             player.position.y - playerLastPosition.y > 1)
         {
@@ -445,12 +484,12 @@ public class EnemyAI : MonoBehaviour
                 // enemy.autoBraking = true;
                 // enemy.Stop();
                 // animator.SetBool("IsEnemyDead", true);
-                
+
                 Vector2 deadPlace = transform.position;
                 Destroy(gameObject);
-                GameObject newOne = Instantiate(enemyPrefab,deadPlace,Quaternion.identity);
+                GameObject newOne = Instantiate(enemyPrefab, deadPlace, Quaternion.identity);
                 newOne.GetComponent<EnemyAI>().isDead = true;
-                newOne.GetComponent<Animator>().SetBool("IsEnemyDead",true);
+                newOne.GetComponent<Animator>().SetBool("IsEnemyDead", true);
                 return;
             }
 
@@ -458,7 +497,7 @@ public class EnemyAI : MonoBehaviour
             {
                 //makes enemy run away
                 enemy.Resume();
-                SetEnemyAnimation(AnimationParams.EnemyWalking);
+                SetEnemyAnimation(AnimationParams.PlayerMoving);
                 enemy.speed = 0.6f * enemySpeed;
                 enemy.destination = GetFurthestPointAfterPlayerToEnemy();
                 return;
