@@ -8,6 +8,7 @@ using Random = UnityEngine.Random;      //1Tells Random to use the Unity Engi
 
 public class EnemyAI : MonoBehaviour
 {
+    private bool isDead = false;
     public int enemyHP = 10;
     public int damage = 2;
     public float enemySpeed = 2f;
@@ -57,16 +58,39 @@ public class EnemyAI : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player").transform;
         formerStatus = new bool[3];
         playerCollider = null;
+        ApplyAnimationEventToKickAnimation(CreateAnimationEvent());
         //enemy.destination = player.position;
     }
+
+    private AnimationEvent CreateAnimationEvent()
+    {
+        // new event created
+        return new AnimationEvent()
+        {
+            time = 0.06f,
+            functionName = "KickPlayer"
+        };
+    }
 
     private void ApplyAnimationEventToKickAnimation(AnimationEvent evt)
     {
         foreach (AnimationClip clip in animator.runtimeAnimatorController.animationClips)
         {
-            if (clip.name.StartsWith("W"))
+            string name = clip.name;
+            if (name.StartsWith("Kick"))
             {
-                clip.AddEvent(evt);
+                bool isAdded = false;
+                foreach (AnimationEvent e in clip.events)
+                {
+                    if (e.functionName == evt.functionName)
+                    {
+                        isAdded = true;
+                    }
+                }
+                if (!isAdded)
+                {
+                    clip.AddEvent(evt);
+                }
             }
         }
     }
@@ -95,7 +119,6 @@ public class EnemyAI : MonoBehaviour
 
         //audio
         int rand = UnityEngine.Random.Range(0, painSounds.Length);
-        //Debug.Log(rand);
         audio.clip = painSounds[rand];
         audio.Play();
 
@@ -374,6 +397,9 @@ public class EnemyAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (isDead){
+            return;
+        }
         if (player.position.x - playerLastPosition.x > 1 ||
             player.position.y - playerLastPosition.y > 1)
         {
@@ -413,8 +439,11 @@ public class EnemyAI : MonoBehaviour
             //EnemyRestoreFromHit();
             if (enemyHP <= 0)
             {
-                //play a dead animation
-                Destroy(gameObject);
+                //Destory
+                isDead = true;
+                enemy.autoBraking = true;
+                enemy.Stop();
+                animator.SetBool("IsEnemyDead", true);
             }
 
             if (enemyHP <= runAwayHP)
@@ -462,15 +491,34 @@ public class EnemyAI : MonoBehaviour
         playerLastPosition = player.position;
     }
 
-    // void OnCollisionEnter2D(Collision2D coll)
-    // {
-    // }
+    // void OnCollisionEnter2D(Collision2D coll)
+    // {
+    // }
 
-    // void OnCollisionExit2D(Collision2D coll)
-    // {
-    // }
+    // void OnCollisionExit2D(Collision2D coll)
+    // {
+    // }
 
-    void OnTriggerEnter2D(Collider2D other)
+    IEnumerator DoBlinks(float duration, float blinkTime)
+    {
+        Renderer renderer = enemy.GetComponent<Renderer>();
+        while (duration > 0f)
+        {
+            duration -= Time.deltaTime;
+
+            //toggle renderer
+            renderer.enabled = !renderer.enabled;
+
+            //wait for a bit
+            yield return new WaitForSeconds(blinkTime);
+        }
+
+        //make sure renderer is enabled when we exit
+        renderer.enabled = true;
+        Destroy(gameObject);
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
     {
         if (!BeenHit)
         {

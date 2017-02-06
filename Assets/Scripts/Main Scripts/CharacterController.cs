@@ -41,7 +41,7 @@ public class CharacterController : MonoBehaviour {
 
     //audio
     public AudioClip[] attackSounds;	 
-     public AudioSource audio;
+    public AudioSource audio;
 
     void Start() {
         characterActions = new PlayerAction();
