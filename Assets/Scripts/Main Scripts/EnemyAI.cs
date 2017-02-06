@@ -54,14 +54,25 @@ public class EnemyAI : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player").transform;
         formerStatus = new bool[3];
         playerCollider = null;
+        ApplyAnimationEventToKickAnimation(CreateAnimationEvent());
         //enemy.destination = player.position;
     }
+
+    private AnimationEvent CreateAnimationEvent()
+    {
+        // new event created
+        return new AnimationEvent(){
+            time = 0.06f,
+            functionName = "KickPlayer"
+        };
+    }
 
     private void ApplyAnimationEventToKickAnimation(AnimationEvent evt)
     {
         foreach (AnimationClip clip in animator.runtimeAnimatorController.animationClips)
         {
-            if (clip.name.StartsWith("W"))
+            string name = clip.name;
+            if (name.StartsWith("Kick"))
             {
                 clip.AddEvent(evt);
             }
@@ -92,7 +103,6 @@ public class EnemyAI : MonoBehaviour
 
         //audio
         int rand = UnityEngine.Random.Range(0, painSounds.Length);
-        //Debug.Log(rand);
         audio.clip = painSounds[rand];
         audio.Play();
     }
@@ -222,7 +232,6 @@ public class EnemyAI : MonoBehaviour
             if (val.Equals(type))
             {
                 animator.SetBool(name, true);
-                Debug.Log("AAAGAHGAHAGHAA" + name + " " + val);
             }
             else
             {
