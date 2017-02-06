@@ -37,11 +37,6 @@ public class PlayerHealth : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-        if (Input.GetKeyDown("space"))
-        {
-            doDamage(1);
-        }
-
         if (PlayersHP <= 0)
         {
             //gameObject.SetActive(false);

@@ -57,4 +57,4 @@ MonoBehaviour:
     y: 50
     width: 360
     height: 110
-  Background: {fileID: 2800000, guid: a304dea6bc086e5408f002eee4d93d56, type: 3}
+  Background: {fileID: 2800000, guid: 2f8584fa4f0f4b149be2e49c6ca44ccb, type: 3}

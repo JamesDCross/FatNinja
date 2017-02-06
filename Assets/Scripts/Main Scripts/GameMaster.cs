@@ -8,9 +8,13 @@ public class GameMaster : MonoBehaviour {
     bool pressed;
     bool keyboard;
     bool combo;
-    public Rect PauseMenu;
+    private Rect PauseMenu;
     public Texture Background;
-    int x = 80;
+    private float posX = (Screen.width /2) - ((Screen.width * .3f) / 2);
+    private float posY = (Screen.height /2) - ((Screen.height * .7f) / 2);
+    private float width = (Screen.width * .3f);
+    private float height = (Screen.height * .7f);
+    private float exitsY;
 
     void Start () {
         
@@ -20,6 +24,8 @@ public class GameMaster : MonoBehaviour {
         pressed = false;
         characterActions.Pause.AddDefaultBinding(InputControlType.Command);
         characterActions.Pause.AddDefaultBinding(Key.Escape);
+        PauseMenu = new Rect(posX, posY, width, height);
+        exitsY = posY + (height * .34f);
     }
 
     // Update is called once per frame
@@ -44,66 +50,65 @@ public class GameMaster : MonoBehaviour {
     {
         if (pause)
         {
-            GUI.Window(0, PauseMenu, ThePauseMenu, "Main menu");
+            //GUI.Window(0, PauseMenu, ThePauseMenu, "Main menu");
             GUI.DrawTexture(PauseMenu, Background);
+            ThePauseMenu(); 
         }
     }
 
-    void ThePauseMenu(int windowID)
+    void ThePauseMenu()
     {
-        if (GUI.Button(new Rect(10, 20, 340, 20), "Resume"))
+        if (GUI.Button(new Rect(posX + (width * .15f), posY + (height * .22f), width *.7f, 20), "Resume"))
         {
             pause = false;
             Time.timeScale = 1;
         }
 
-        if (GUI.Button(new Rect(10, 50, 340, 20), "Combos"))
+        if (GUI.Button(new Rect(posX + (width * .15f), posY + (height * .28f), width * .7f, 20), "Combos"))
         {
             combo = combo ? false : true;
             if (combo)
             {
-                x = 260;
-                PauseMenu.size = new Vector2(360, 290);
+                exitsY = posY + (height * .64f);
+                //PauseMenu.size = new Vector2(360, 290);
             }
             else
             {
-                x = 80;
-                PauseMenu.size = new Vector2(360, 110);
+                exitsY = posY + (height * .34f);
+                //PauseMenu.size = new Vector2(360, 110);
             }
         }
 
-        if (GUI.Button(new Rect(10, x, 340, 20), "Quit"))
+        if (GUI.Button(new Rect(posX + (width * .15f), exitsY, width * .7f, 20), "Quit"))
         {
 
         }
 
-        if (x > 80)
+        if (combo)
         {
-            if (GUI.Button(new Rect(10, 80, 160, 20), "Controller"))
+            if (GUI.Button(new Rect(posX + (width * .15f), posY + (height * .34f), width * .34f , 20), "Controller"))
             {
                 keyboard = false;
             }
 
-            if (GUI.Button(new Rect(190, 80, 160, 20), "Keyboard"))
+            if (GUI.Button(new Rect(posX + (width * .51f), posY + (height * .34f), width * .34f, 20), "Keyboard"))
             {
                 keyboard = true;
             }
 
             if (keyboard)
             {
-                GUI.Label(new Rect(10, 110, 340, 20), "Kick X");
-                GUI.Label(new Rect(10, 140, 340, 20), "Punch Z");
-                GUI.Label(new Rect(10, 170, 340, 20), "Spinning kick X X C");
-                GUI.Label(new Rect(10, 200, 340, 20), "Sumo Slam C Z X C");
-                GUI.Label(new Rect(10, 230, 340, 20), "Rolling Sumo C X X Z V");
+                GUI.Label(new Rect(posX + (width * .15f), posY + (height * .40f), width * .7f, 20), "Kick X");
+                GUI.Label(new Rect(posX + (width * .15f), posY + (height * .46f), width * .7f, 20), "Punch Z");
+                GUI.Label(new Rect(posX + (width * .15f), posY + (height * .52f), width * .7f, 20), "Upper Cut Z Z X");
+                GUI.Label(new Rect(posX + (width * .15f), posY + (height * .58f), width * .7f, 20), "Hurricane Kick X X Z");
             } 
             else
             {
-                GUI.Label(new Rect(10, 110, 340, 20), "Kick B");
-                GUI.Label(new Rect(10, 140, 340, 20), "Punch A");
-                GUI.Label(new Rect(10, 170, 340, 20), "Spinning kick B B X");
-                GUI.Label(new Rect(10, 200, 340, 20), "Sumo Slam X A B X");
-                GUI.Label(new Rect(10, 230, 340, 20), "Rolling Sumo X B B A Y");
+                GUI.Label(new Rect(posX + (width * .15f), posY + (height * .40f), width * .7f, 20), "Kick B");
+                GUI.Label(new Rect(posX + (width * .15f), posY + (height * .46f), width * .7f, 20), "Punch A");
+                GUI.Label(new Rect(posX + (width * .15f), posY + (height * .52f), width * .7f, 20), "Upper Cut B B A");
+                GUI.Label(new Rect(posX + (width * .15f), posY + (height * .58f), width * .7f, 20), "Hurricane Kick A A B");
             }
         }
         
