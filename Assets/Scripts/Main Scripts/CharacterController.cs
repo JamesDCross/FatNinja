@@ -8,6 +8,10 @@ public class CharacterController : MonoBehaviour {
     public float speed;
     public float comboTimeMin;
     public float comboTimeMax;
+    public int punchDamage;
+    public int kickDamage;
+    public int upperCutDamage;
+    public int hurricaneKickDamage;
     public Sprite A;
     public Sprite B;
     public Sprite Y;
@@ -104,9 +108,7 @@ public class CharacterController : MonoBehaviour {
 
         if (attackString == "HurricaneKick")
             playerMoving = true;
-
-        if (attackString == "UpperCut")
-            playerMoving = false;
+        
         //playerAttacking = false once the attack antimation has been played.
         //Stops the player from moving whilst attacking.
         if (!anim.GetCurrentAnimatorStateInfo(0).IsName(attackString) && timeSinceLastHit >= comboTimeMin)
@@ -131,7 +133,7 @@ public class CharacterController : MonoBehaviour {
         else
             movementspeed = speed;
 
-        if (!playerAttacking)
+        if (!playerAttacking || attackString == "HurricaneKick")
         {
             //--movement
             if (h == 1 || h == -1)
@@ -163,7 +165,8 @@ public class CharacterController : MonoBehaviour {
             }
 
             //Calls the Action method which deals with attacks
-            Action();
+            if(attackString == "")
+                Action();
         }
         comboCheck();
 
@@ -183,16 +186,14 @@ public class CharacterController : MonoBehaviour {
             {
 
                 //attacking sounds
-                    int rand = UnityEngine.Random.Range (0, attackSounds.Length);
-                    audio.clip = attackSounds [rand]; 
-                    audio.Play();    
-
-
+                int rand = UnityEngine.Random.Range(0, attackSounds.Length);
+                audio.clip = attackSounds[rand];
+                audio.Play();
+                //attacking animation
                 anim.SetBool(attackString, playerAttacking);
                 hasAttackAnimationPlayed = true;
-                //testing
-                Debug.LogWarning(attackString);
             }
+
             //If an attack collies with an enemy calls a damage method on that enemy
             if (enemy != null)
             {
@@ -203,8 +204,6 @@ public class CharacterController : MonoBehaviour {
         }
         else if (attackString != "")
         {
-            //testing
-            Debug.Log("-------------------------");
             //Attack animation is set to false and attacking variables are reset
             anim.SetBool(attackString, playerAttacking);
             attackString = "";
@@ -243,21 +242,17 @@ public class CharacterController : MonoBehaviour {
 
                 if (characterActions.Punch)
                 {
-                    //attackString = "PlayerPunching";
-                    //attackDamage = 2;
+                    attackString = "PlayerPunching";
+                    attackDamage = punchDamage;
                     lastHitTime = Time.time;
                     comboTracker.Add("Punch");
                 } 
                 else if (characterActions.Kick)
                 {
                     attackString = "PlayerKicking";
-                    attackDamage = 2;
+                    attackDamage = kickDamage;
                     lastHitTime = Time.time;
                     comboTracker.Add("Kick");
-
-                    
-
-
                 } 
                 //Other buttons to enable DO NOT REMOVE!
                 /*else if (characterActions.Blank)
@@ -303,9 +298,9 @@ public class CharacterController : MonoBehaviour {
                         comboSuccess = true;
                         attackString = moveSet[1][0];
                         if (moveSet[1][0] == "HurricaneKick")
-                            attackDamage = 2;
+                            attackDamage = hurricaneKickDamage;
                         else if (moveSet[1][0] == "UpperCut")
-                            attackDamage = 3;
+                            attackDamage = upperCutDamage;
                     } else
                         tempComboList.Add(moveSet);
                 }
