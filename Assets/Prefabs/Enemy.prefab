@@ -301,10 +301,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyHP: 10
+  damage: 3
   enemySpeed: 2
   runAwayHP: 3
-  checkDistance: 2.2
   randomWalkRange: 1
+  checkDistance: 2.2
+  chanceToAttack: 4
   painSounds:
   - {fileID: 8300000, guid: ffad83ce35e6d45f6ac98dbe700eee96, type: 3}
   - {fileID: 8300000, guid: 8e3393b05b74f44c08bcd0a1a61d1b2a, type: 3}
