@@ -8,7 +8,8 @@ using Random = UnityEngine.Random;      //1Tells Random to use the Unity Engi
 
 public class EnemyAI : MonoBehaviour
 {
-    private bool isDead = false;
+    public GameObject enemyPrefab;
+    public bool isDead = false;
     public int enemyHP = 10;
     public int damage = 2;
     public float enemySpeed = 2f;
@@ -21,6 +22,9 @@ public class EnemyAI : MonoBehaviour
     //Audio
     public AudioClip[] painSounds;
     public AudioSource audio;
+
+    // Blood effect
+    public GameObject bloodPrefab;
 
     public static float lastHitTime;
     public static float timeSinceLastHit;
@@ -118,6 +122,18 @@ public class EnemyAI : MonoBehaviour
         int rand = UnityEngine.Random.Range(0, painSounds.Length);
         audio.clip = painSounds[rand];
         audio.Play();
+
+        // spawn blood
+        
+        //if (damage != 0) {
+            GameObject blood = Instantiate(bloodPrefab);
+            Vector3 bloodPos = this.transform.position;
+            //bloodPos.z = 50;
+            blood.transform.position = bloodPos;
+            float playerAngle = player.gameObject.GetComponent<CharacterController>().getPlayerAngle();
+            blood.GetComponent<BloodScript>().setBlood(playerAngle, (float)damage / 4f);
+        //}
+        
     }
 
     Vector2 GetPlayerDirection()
@@ -382,7 +398,8 @@ public class EnemyAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isDead){
+        if (isDead)
+        {
             return;
         }
         if (player.position.x - playerLastPosition.x > 1 ||
@@ -424,11 +441,17 @@ public class EnemyAI : MonoBehaviour
             //EnemyRestoreFromHit();
             if (enemyHP <= 0)
             {
-                //Destory
                 isDead = true;
-                enemy.autoBraking = true;
-                enemy.Stop();
-                animator.SetBool("IsEnemyDead", true);
+                // enemy.autoBraking = true;
+                // enemy.Stop();
+                // animator.SetBool("IsEnemyDead", true);
+                
+                Vector2 deadPlace = transform.position;
+                Destroy(gameObject);
+                GameObject newOne = Instantiate(enemyPrefab,deadPlace,Quaternion.identity);
+                newOne.GetComponent<EnemyAI>().isDead = true;
+                newOne.GetComponent<Animator>().SetBool("IsEnemyDead",true);
+                return;
             }
 
             if (enemyHP <= runAwayHP)

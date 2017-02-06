@@ -344,6 +344,13 @@ public class CharacterController : MonoBehaviour {
         }
     }
 
+    public float getPlayerAngle() {
+        Vector2 v = lastMove.normalized;
+        // multiply by lastMove.x for negative angles
+        float angle = lastMove.x * Vector2.Angle(Vector2.up, v);
+        return angle;
+    }
+
     private void displayComboUIReset()
     {
         //Resets all the combo UI variables 
