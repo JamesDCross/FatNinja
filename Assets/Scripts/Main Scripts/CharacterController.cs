@@ -6,6 +6,8 @@ using InControl;
 public class CharacterController : MonoBehaviour {
 
     public float speed;
+    public float comboTimeMin;
+    public float comboTimeMax;
     public Sprite A;
     public Sprite B;
     public Sprite Y;
@@ -33,8 +35,9 @@ public class CharacterController : MonoBehaviour {
     private static List<string[][]> refindComboList;
     private static string[][][] comboList;
 
-
-
+    //audio
+    public AudioClip[] attackSounds;	 
+     public AudioSource audio;
 
     void Start() {
         characterActions = new PlayerAction();
@@ -70,6 +73,11 @@ public class CharacterController : MonoBehaviour {
             new string[][] { new string[] { "Punch", "Punch", "Kick" }, new string[] { "UpperCut" }},
             new string[][] { new string[] {"Kick", "Kick", "Punch" }, new string[] { "HurricaneKick" } },
         };
+
+        //audio
+
+        int ran = UnityEngine.Random.Range (0, 1);
+         audio.clip = attackSounds [ran]; 
     }
 
     void OnTriggerEnter2D(Collider2D other) {
@@ -92,11 +100,14 @@ public class CharacterController : MonoBehaviour {
     private void PerformMovement()
     {
         //playerMoving = true if there is horizontal or vertical movement and the player is not attacking, otherwise false.
-        playerMoving = Input.GetAxisRaw("Horizontal") == 0 && Input.GetAxisRaw("Vertical") == 0 || playerAttacking ? false : true;
+        playerMoving = Input.GetAxisRaw("Horizontal") == 0 && Input.GetAxisRaw("Vertical") == 0 || playerAttacking  ? false : true;
 
+        if (attackString == "HurricaneKick")
+            playerMoving = true;
+        
         //playerAttacking = false once the attack antimation has been played.
         //Stops the player from moving whilst attacking.
-        if (!anim.GetCurrentAnimatorStateInfo(0).IsName("PlayerKicking") && timeSinceLastHit >= .3f)
+        if (!anim.GetCurrentAnimatorStateInfo(0).IsName(attackString) && timeSinceLastHit >= comboTimeMin)
             playerAttacking = false; 
         else
             myRigidbody.velocity = new Vector2(0f, 0f);
@@ -118,7 +129,7 @@ public class CharacterController : MonoBehaviour {
         else
             movementspeed = speed;
 
-        if (!playerAttacking)
+        if (!playerAttacking || attackString == "HurricaneKick")
         {
             //--movement
             if (h == 1 || h == -1)
@@ -150,7 +161,8 @@ public class CharacterController : MonoBehaviour {
             }
 
             //Calls the Action method which deals with attacks
-            Action();
+            if(attackString == "")
+                Action();
         }
         comboCheck();
 
@@ -168,12 +180,19 @@ public class CharacterController : MonoBehaviour {
             //Plays the attack animation only once
             if (!hasAttackAnimationPlayed)
             {
+
+                //attacking sounds
+                    int rand = UnityEngine.Random.Range (0, attackSounds.Length);
+                    audio.clip = attackSounds [rand]; 
+                    audio.Play();    
+
+
                 anim.SetBool(attackString, playerAttacking);
                 hasAttackAnimationPlayed = true;
                 //testing
-                Debug.Log(attackString);
+                Debug.LogWarning(attackString);
             }
-            //Checking to see if attacks have collied with enemys
+            //If an attack collies with an enemy calls a damage method on that enemy
             if (enemy != null)
             {
                 EnemyAI EAI = enemy.GetComponent<EnemyAI>();
@@ -195,7 +214,7 @@ public class CharacterController : MonoBehaviour {
 
     private void Action() {
         //If condtions are ture means you still have time to complete a combo
-        comboTiming =  timeSinceLastHit <= .8f;
+        comboTiming =  timeSinceLastHit <= comboTimeMax;
 
         //Resest combo if combo has run out of time or you have successfuly completed a combo
         if (comboTracker != null && comboTracker.Count >= 5 || !comboTiming)
@@ -206,10 +225,15 @@ public class CharacterController : MonoBehaviour {
 
         //Need to add || characterActions.Roll || characterActions.Blank once other buttons are added
         if (characterActions.Kick || characterActions.Punch)
+
         {
+
+            
+                  
+
             //Can only attack if its your first attack or its been longer than .3 sec after you last attack
             //Only does this once every button push
-            if (!pressed && timeSinceLastHit >= 0.3f || !hasAlreadyAttacked)
+            if (!pressed && timeSinceLastHit >= comboTimeMin || !hasAlreadyAttacked)
             {
                 pressed = true;
                 playerAttacking = true;
@@ -218,8 +242,8 @@ public class CharacterController : MonoBehaviour {
 
                 if (characterActions.Punch)
                 {
-                    //attackString = "PlayerPunching";
-                    //attackDamage = 2;
+                    attackString = "PlayerPunching";
+                    attackDamage = 2;
                     lastHitTime = Time.time;
                     comboTracker.Add("Punch");
                 } 
@@ -229,6 +253,10 @@ public class CharacterController : MonoBehaviour {
                     attackDamage = 2;
                     lastHitTime = Time.time;
                     comboTracker.Add("Kick");
+
+                    
+
+
                 } 
                 //Other buttons to enable DO NOT REMOVE!
                 /*else if (characterActions.Blank)
@@ -273,7 +301,10 @@ public class CharacterController : MonoBehaviour {
                     {
                         comboSuccess = true;
                         attackString = moveSet[1][0];
-                        attackDamage = 3;
+                        if (moveSet[1][0] == "HurricaneKick")
+                            attackDamage = 2;
+                        else if (moveSet[1][0] == "UpperCut")
+                            attackDamage = 3;
                     } else
                         tempComboList.Add(moveSet);
                 }

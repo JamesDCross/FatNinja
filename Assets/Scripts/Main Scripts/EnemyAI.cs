@@ -10,7 +10,7 @@ public class EnemyAI : MonoBehaviour
 {
     public int enemyHP = 10;
     public float enemySpeed = 2f;
-    public AudioSource hurtMeSound;
+    //public AudioSource hurtMeSound;
     public int runAwayHP = 3;
     private bool caughtPlayer = false;
     private bool attacking = false;
@@ -27,6 +27,10 @@ public class EnemyAI : MonoBehaviour
     private bool[] formerStatus; //1-move; 2-kick;
     private Vector3 playerLastPosition;
     public float randomWalkRange = 1f; //when enemy do a random action selection near player, how far should he go.
+
+    //Audio
+    public AudioClip[] painSounds;
+    public AudioSource audio;
     private enum AnimationParams
     {
         PlayerMoving,
@@ -59,7 +63,7 @@ public class EnemyAI : MonoBehaviour
     public void EnemyBeenHit(int damage)
     {
         BeenHit = true;
-        hurtMeSound.Play();
+        //hurtMeSound.Play();
         enemyHP -= damage;
         SetEnemyAnimation(AnimationParams.hitme);
         formerStatus[0] = animator.GetBool("PlayerMoving");
@@ -68,6 +72,12 @@ public class EnemyAI : MonoBehaviour
 
         //BeenHit = false;
         //stop any current action
+
+        //audio
+        int rand = UnityEngine.Random.Range(0, painSounds.Length);
+        //Debug.Log(rand);
+        audio.clip = painSounds[rand];
+        audio.Play();
     }
 
     Vector2 GetPlayerDirection()
