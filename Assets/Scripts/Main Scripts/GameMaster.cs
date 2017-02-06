@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using InControl;
 using UnityEngine.SceneManagement;
+
 public class GameMaster : MonoBehaviour {
     PlayerAction characterActions;
     public static bool pause;
