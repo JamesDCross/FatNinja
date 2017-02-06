@@ -8,10 +8,10 @@ public class CharacterController : MonoBehaviour {
     public float speed;
     public float comboTimeMin;
     public float comboTimeMax;
-    public int punchDamage;
-    public int kickDamage;
-    public int upperCutDamage;
-    public int hurricaneKickDamage;
+    public int punchDamage = 1;
+    public int kickDamage = 1;
+    public int upperCutDamage = 1;
+    public int hurricaneKickDamage = 1;
     public Sprite A;
     public Sprite B;
     public Sprite Y;

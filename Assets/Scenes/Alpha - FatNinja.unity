@@ -1966,6 +1966,7 @@ Prefab:
       propertyPath: hurricaneKickDamage
       value: 1
       objectReference: {fileID: 0}
+<<<<<<< HEAD
     - target: {fileID: 114327943213478830, guid: 2c081b361d5574412ae3042115686bae,
         type: 2}
       propertyPath: comboTimeMin
@@ -1976,6 +1977,8 @@ Prefab:
       propertyPath: comboTimeMax
       value: 0.7
       objectReference: {fileID: 0}
+=======
+>>>>>>> ee47cea3c0d03b6eb029c6a8905433e7376d0487
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2c081b361d5574412ae3042115686bae, type: 2}
   m_IsPrefabParent: 0
