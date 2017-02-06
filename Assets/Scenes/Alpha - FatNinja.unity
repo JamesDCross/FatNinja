@@ -1736,6 +1736,26 @@ Prefab:
       propertyPath: m_Name
       value: Shibo
       objectReference: {fileID: 0}
+    - target: {fileID: 114327943213478830, guid: 2c081b361d5574412ae3042115686bae,
+        type: 2}
+      propertyPath: punchDamage
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114327943213478830, guid: 2c081b361d5574412ae3042115686bae,
+        type: 2}
+      propertyPath: kickDamage
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114327943213478830, guid: 2c081b361d5574412ae3042115686bae,
+        type: 2}
+      propertyPath: upperCutDamage
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114327943213478830, guid: 2c081b361d5574412ae3042115686bae,
+        type: 2}
+      propertyPath: hurricaneKickDamage
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2c081b361d5574412ae3042115686bae, type: 2}
   m_IsPrefabParent: 0
