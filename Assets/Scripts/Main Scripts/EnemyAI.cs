@@ -4,11 +4,12 @@ using System.Reflection;
 using System.ComponentModel.Design;
 using System.Collections.Generic;
 using UnityEngine;
-using Random = UnityEngine.Random;      //Tells Random to use the Unity Engine random number generator.
+using Random = UnityEngine.Random;      //1Tells Random to use the Unity Engine random number generator.
 
 public class EnemyAI : MonoBehaviour
 {
     public int enemyHP = 10;
+    public int damage = 2;
     public float enemySpeed = 2f;
     //public AudioSource hurtMeSound;
     public int runAwayHP = 3;
@@ -20,7 +21,7 @@ public class EnemyAI : MonoBehaviour
     public AudioClip[] painSounds;
     public AudioSource audio;
 
-    public static float lastHitTime;
+    public static float lastHitTime;
     public static float timeSinceLastHit;
 
     private bool caughtPlayer = false;
@@ -53,8 +54,30 @@ public class EnemyAI : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player").transform;
         formerStatus = new bool[3];
         playerCollider = null;
+        ApplyAnimationEventToKickAnimation(CreateAnimationEvent());
         //enemy.destination = player.position;
     }
+
+    private AnimationEvent CreateAnimationEvent()
+    {
+        // new event created
+        return new AnimationEvent(){
+            time = 0.06f,
+            functionName = "KickPlayer"
+        };
+    }
+
+    private void ApplyAnimationEventToKickAnimation(AnimationEvent evt)
+    {
+        foreach (AnimationClip clip in animator.runtimeAnimatorController.animationClips)
+        {
+            string name = clip.name;
+            if (name.StartsWith("Kick"))
+            {
+                clip.AddEvent(evt);
+            }
+        }
+    }
 
     public void EnemyRestoreFromHit()
     {
@@ -80,10 +103,9 @@ public class EnemyAI : MonoBehaviour
 
         //audio
         int rand = UnityEngine.Random.Range(0, painSounds.Length);
-        //Debug.Log(rand);
         audio.clip = painSounds[rand];
         audio.Play();
-    }
+    }
 
     Vector2 GetPlayerDirection()
     {
@@ -119,7 +141,8 @@ public class EnemyAI : MonoBehaviour
             pos.y = 0;
         }
 
-        if (enemyHP <= runAwayHP){
+        if (enemyHP <= runAwayHP)
+        {
             pos.x *= -1;
             pos.y *= -1;
         }
@@ -209,7 +232,6 @@ public class EnemyAI : MonoBehaviour
             if (val.Equals(type))
             {
                 animator.SetBool(name, true);
-                Debug.Log("AAAGAHGAHAGHAA" + name + " " + val);
             }
             else
             {
@@ -339,7 +361,9 @@ public class EnemyAI : MonoBehaviour
 
     public void KickPlayer()
     {
-        PlayerHealth.doDamage(2);
+        AnimationEvent ae = new AnimationEvent();
+        ae.messageOptions = SendMessageOptions.DontRequireReceiver;
+        PlayerHealth.doDamage(damage);
     }
 
     // Update is called once per frame

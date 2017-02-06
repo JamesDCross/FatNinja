@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using InControl;
-
+using UnityEngine.SceneManagement;
 public class GameMaster : MonoBehaviour {
     PlayerAction characterActions;
     public static bool pause;
@@ -115,7 +115,9 @@ public class GameMaster : MonoBehaviour {
     public static void SoftReset()
     {
         PlayerHealth.Damage = 0;
-        PlayerHealth.PlayersHP = PlayerHealth.MaxHP;        
+        PlayerHealth.PlayersHP = PlayerHealth.MaxHP; 
+         SceneManager.LoadScene("Alpha - FatNinja");
+
     }
 
     public static void HardReset()
