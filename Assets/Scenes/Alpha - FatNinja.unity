@@ -610,11 +610,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PauseMenu:
     serializedVersion: 2
-    x: 0
-    y: 0
-    width: 0
-    height: 0
-  Background: {fileID: 0}
+    x: 450
+    y: 50
+    width: 360
+    height: 110
+  Background: {fileID: 2800000, guid: a304dea6bc086e5408f002eee4d93d56, type: 3}
 --- !u!4 &745504520
 Transform:
   m_ObjectHideFlags: 0
