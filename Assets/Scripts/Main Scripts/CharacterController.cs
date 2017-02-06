@@ -98,9 +98,7 @@ public class CharacterController : MonoBehaviour {
 
         if (attackString == "HurricaneKick")
             playerMoving = true;
-
-        if (attackString == "UpperCut")
-            playerMoving = false;
+        
         //playerAttacking = false once the attack antimation has been played.
         //Stops the player from moving whilst attacking.
         if (!anim.GetCurrentAnimatorStateInfo(0).IsName(attackString) && timeSinceLastHit >= comboTimeMin)
@@ -125,7 +123,7 @@ public class CharacterController : MonoBehaviour {
         else
             movementspeed = speed;
 
-        if (!playerAttacking)
+        if (!playerAttacking || attackString == "HurricaneKick")
         {
             //--movement
             if (h == 1 || h == -1)
@@ -157,7 +155,8 @@ public class CharacterController : MonoBehaviour {
             }
 
             //Calls the Action method which deals with attacks
-            Action();
+            if(attackString == "")
+                Action();
         }
         comboCheck();
 
@@ -225,8 +224,8 @@ public class CharacterController : MonoBehaviour {
 
                 if (characterActions.Punch)
                 {
-                    //attackString = "PlayerPunching";
-                    //attackDamage = 2;
+                    attackString = "PlayerPunching";
+                    attackDamage = 2;
                     lastHitTime = Time.time;
                     comboTracker.Add("Punch");
                 } 
