@@ -4,11 +4,12 @@ using System.Reflection;
 using System.ComponentModel.Design;
 using System.Collections.Generic;
 using UnityEngine;
-using Random = UnityEngine.Random;      //Tells Random to use the Unity Engine random number generator.
+using Random = UnityEngine.Random;      //1Tells Random to use the Unity Engine random number generator.
 
 public class EnemyAI : MonoBehaviour
 {
     public int enemyHP = 10;
+    public int damage = 2;
     public float enemySpeed = 2f;
     //public AudioSource hurtMeSound;
     public int runAwayHP = 3;
@@ -20,7 +21,7 @@ public class EnemyAI : MonoBehaviour
     public AudioClip[] painSounds;
     public AudioSource audio;
 
-    public static float lastHitTime;
+    public static float lastHitTime;
     public static float timeSinceLastHit;
 
     private bool caughtPlayer = false;
@@ -56,6 +57,17 @@ public class EnemyAI : MonoBehaviour
         //enemy.destination = player.position;
     }
 
+    private void ApplyAnimationEventToKickAnimation(AnimationEvent evt)
+    {
+        foreach (AnimationClip clip in animator.runtimeAnimatorController.animationClips)
+        {
+            if (clip.name.StartsWith("W"))
+            {
+                clip.AddEvent(evt);
+            }
+        }
+    }
+
     public void EnemyRestoreFromHit()
     {
         animator.SetBool("PlayerMoving", formerStatus[0]);
@@ -83,7 +95,7 @@ public class EnemyAI : MonoBehaviour
         //Debug.Log(rand);
         audio.clip = painSounds[rand];
         audio.Play();
-    }
+    }
 
     Vector2 GetPlayerDirection()
     {
@@ -119,7 +131,8 @@ public class EnemyAI : MonoBehaviour
             pos.y = 0;
         }
 
-        if (enemyHP <= runAwayHP){
+        if (enemyHP <= runAwayHP)
+        {
             pos.x *= -1;
             pos.y *= -1;
         }
@@ -339,7 +352,9 @@ public class EnemyAI : MonoBehaviour
 
     public void KickPlayer()
     {
-        PlayerHealth.doDamage(2);
+        AnimationEvent ae = new AnimationEvent();
+        ae.messageOptions = SendMessageOptions.DontRequireReceiver;
+        PlayerHealth.doDamage(damage);
     }
 
     // Update is called once per frame
