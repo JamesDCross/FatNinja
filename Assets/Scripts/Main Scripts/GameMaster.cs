@@ -10,17 +10,14 @@ public class GameMaster : MonoBehaviour {
     bool combo;
     public Rect PauseMenu;
     public Texture Background;
-
-    private bool gameStarting;
     int x = 80;
 
     void Start () {
         
         characterActions = new PlayerAction();
-        pause = true;
+        pause = false;
         combo = false;
         pressed = false;
-        gameStarting  = true;
         characterActions.Pause.AddDefaultBinding(InputControlType.Command);
         characterActions.Pause.AddDefaultBinding(Key.Escape);
     }
@@ -28,7 +25,7 @@ public class GameMaster : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        if (characterActions.Pause || gameStarting)
+        if (characterActions.Pause)
         {
             if (!pressed)
             {
