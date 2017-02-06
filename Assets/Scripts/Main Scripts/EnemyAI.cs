@@ -8,6 +8,7 @@ using Random = UnityEngine.Random;      //1Tells Random to use the Unity Engi
 
 public class EnemyAI : MonoBehaviour
 {
+    private bool isDead = false;
     public int enemyHP = 10;
     public int damage = 2;
     public float enemySpeed = 2f;
@@ -378,14 +379,12 @@ public class EnemyAI : MonoBehaviour
         PlayerHealth.doDamage(damage);
     }
 
-    public void EnemyDead()
-    {
-        StartCoroutine(DoBlinks(3f, 0.2f));
-    }
-
     // Update is called once per frame
     void Update()
     {
+        if (isDead){
+            return;
+        }
         if (player.position.x - playerLastPosition.x > 1 ||
             player.position.y - playerLastPosition.y > 1)
         {
@@ -425,7 +424,10 @@ public class EnemyAI : MonoBehaviour
             //EnemyRestoreFromHit();
             if (enemyHP <= 0)
             {
-                //play a dead animation
+                //Destory
+                isDead = true;
+                enemy.autoBraking = true;
+                enemy.Stop();
                 animator.SetBool("IsEnemyDead", true);
             }
 
