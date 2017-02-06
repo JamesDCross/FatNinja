@@ -78,7 +78,7 @@ public class EnemyAI : MonoBehaviour
         foreach (AnimationClip clip in animator.runtimeAnimatorController.animationClips)
         {
             string name = clip.name;
-            if (name.StartsWith("Kick"))
+            if (name.StartsWith("Kick") || name.StartsWith("sword-slash")) 
             {
                 bool isAdded = false;
                 foreach (AnimationEvent e in clip.events)
