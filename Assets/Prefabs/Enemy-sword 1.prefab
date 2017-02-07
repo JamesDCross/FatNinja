@@ -318,13 +318,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c851ab1578dd74bbab4f034030ecc64a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyHP: 20
-  damage: 2
+  enemyPrefab: {fileID: 1263747191270464, guid: 82230a6f880a44071aa2bdebf493e381,
+    type: 2}
+  isDead: 0
+  enemyHP: 2
+  damage: 5
   enemySpeed: 1
   runAwayHP: 0
   randomWalkRange: 2
-  checkDistance: 4
-  chanceToAttack: 8
+  checkDistance: 2
+  chanceToAttack: 9
   painSounds:
   - {fileID: 8300000, guid: ffad83ce35e6d45f6ac98dbe700eee96, type: 3}
   - {fileID: 8300000, guid: 8e3393b05b74f44c08bcd0a1a61d1b2a, type: 3}
