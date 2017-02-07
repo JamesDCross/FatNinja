@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using InControl;
 
 
@@ -35,7 +36,7 @@ public class CharacterController : MonoBehaviour {
     private static string attackString;
     private static int attackDamage;
 
-    private static List<string> comboTracker;
+    public static List<string> comboTracker;
     private static List<string[][]> refindComboList;
     private static string[][][] comboList;
 
@@ -60,6 +61,8 @@ public class CharacterController : MonoBehaviour {
 
         anim = GetComponent<Animator>();
         myRigidbody = GetComponent<Rigidbody2D>();
+
+
         enemy = null;
         lastHitTime = 1f;
         attackDamage = 0;
@@ -70,6 +73,7 @@ public class CharacterController : MonoBehaviour {
         hasAlreadyAttacked = false;
         comboSuccess = false;
         hasAttackAnimationPlayed = false;
+
 
         comboTracker = new List<string>();
         refindComboList = new List<string[][]>();
@@ -168,7 +172,8 @@ public class CharacterController : MonoBehaviour {
             if(attackString == "")
                 Action();
         }
-        comboCheck();
+        if(comboTracker != null || comboTracker.Count > 0)
+            comboCheck();
 
         anim.SetFloat("MoveX", h);
         anim.SetFloat("MoveY", v);
@@ -207,6 +212,7 @@ public class CharacterController : MonoBehaviour {
             //Attack animation is set to false and attacking variables are reset
             anim.SetBool(attackString, playerAttacking);
             attackString = "";
+            TextCanvas.setText("");
             attackDamage = 0;
             hasAttackAnimationPlayed = false;
         }
@@ -225,12 +231,7 @@ public class CharacterController : MonoBehaviour {
 
         //Need to add || characterActions.Roll || characterActions.Blank once other buttons are added
         if (characterActions.Kick || characterActions.Punch)
-
         {
-
-            
-                  
-
             //Can only attack if its your first attack or its been longer than .3 sec after you last attack
             //Only does this once every button push
             if (!pressed && timeSinceLastHit >= comboTimeMin || !hasAlreadyAttacked)
@@ -274,6 +275,7 @@ public class CharacterController : MonoBehaviour {
     private void comboCheck()
     {
         List<string[][]> tempComboList = new List<string[][]>();
+        
         //Adds the first move in a combo to the refindComboList
         if (comboTracker.Count == 1)
         {
@@ -290,22 +292,48 @@ public class CharacterController : MonoBehaviour {
         {
             foreach (string[][] moveSet in refindComboList)
             {
-                if (moveSet[0][comboTracker.Count - 1] == comboTracker[comboTracker.Count - 1])
+                bool addMoveSet = true;
+                for (int i = 0; i < comboTracker.Count; i++)
                 {
-                    //Successful Combo
+                    if (moveSet[0][i] != comboTracker[i])
+                        addMoveSet = false;
+                }
+                if (addMoveSet)
+                {
                     if (moveSet[0].Length == comboTracker.Count)
                     {
                         comboSuccess = true;
                         attackString = moveSet[1][0];
                         if (moveSet[1][0] == "HurricaneKick")
+                        {
                             attackDamage = hurricaneKickDamage;
-                        else if (moveSet[1][0] == "UpperCut")
+                            TextCanvas.setText("Hurricane Kick");
+                        } else if (moveSet[1][0] == "UpperCut")
+                        {
                             attackDamage = upperCutDamage;
+                            TextCanvas.setText("Upper Cut");
+                        }
                     } else
                         tempComboList.Add(moveSet);
                 }
             }
-            refindComboList = tempComboList;           
+            if (tempComboList == null || tempComboList.Count == 0 && !comboSuccess)
+            {
+                comboTracker.RemoveAt(0);
+                foreach (string[][] moveSet in comboList)
+                {
+                    bool addMove = true;
+                    for (int i = 0; i < comboTracker.Count; i++)
+                    {
+                        if (moveSet[0][i] != comboTracker[i])
+                            addMove = false;
+                    }
+                    if (addMove)
+                        tempComboList.Add(moveSet);
+                }
+            }
+            displayComboUIReset();
+            refindComboList = tempComboList;
         }
     
         //Fail combo, reset combo variables

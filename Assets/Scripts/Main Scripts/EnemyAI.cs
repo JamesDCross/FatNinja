@@ -433,7 +433,6 @@ public class EnemyAI : MonoBehaviour
         AnimationEvent ae = new AnimationEvent();
         ae.messageOptions = SendMessageOptions.DontRequireReceiver;
         PlayerHealth.doDamage(damage);
-        Debug.Log(damage);
     }
 
     // Update is called once per frame
