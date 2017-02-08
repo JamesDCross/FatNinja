@@ -3,18 +3,15 @@ using UnityEngine.UI;
 
 public class TextCanvas : MonoBehaviour {
 
-    public static Text combo;
+    public static Text comboText;
 
     void Start()
     {
-        combo = GetComponent<Text>();
+        comboText = this.GetComponent<Text>();
     }
 
-    void Update()
+    public static void setText(string combo)
     {
-        if (!GameMaster.pause)
-        {
-            combo.text = "";            
-        }
+        comboText.text = combo;
     }
 }

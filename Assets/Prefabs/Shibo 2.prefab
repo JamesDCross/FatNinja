@@ -482,16 +482,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 6
-  comboTimeMin: 0.3
-  comboTimeMax: 0.8
+  comboTimeMin: 0.2
+  comboTimeMax: 2
   punchDamage: 2
   kickDamage: 2
   upperCutDamage: 3
-  hurricaneKickDamage: 2
+  hurricaneKickDamage: 1
   A: {fileID: 21300000, guid: 0b8d64663a9e8d14ca4d39e86e6346d7, type: 3}
   B: {fileID: 21300000, guid: cfd96d1e7e099684e8dbd6f43627df18, type: 3}
   Y: {fileID: 21300000, guid: 5bd6be8569fe6ff4186d2caa048ebfe7, type: 3}
   X: {fileID: 21300000, guid: 6f47493ff1f3c1e42a24386beffb26e4, type: 3}
+  comboText: {fileID: 0}
+  font: {fileID: 12800000, guid: f7b495acb3de8c7498534205ee6bc80c, type: 3}
   combo:
   - {fileID: 212727530780714314}
   - {fileID: 212524883686967354}
