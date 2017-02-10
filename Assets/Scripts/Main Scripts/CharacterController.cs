@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using InControl;
+using UnityEngine.SceneManagement;
 
 
 public class CharacterController : MonoBehaviour {
@@ -17,6 +18,7 @@ public class CharacterController : MonoBehaviour {
     public Sprite B;
     public Sprite Y;
     public Sprite X;
+    public Sprite comboButtonFlashing;
     public SpriteRenderer[] combo = new SpriteRenderer[5];
 
     private Animator anim;
@@ -95,6 +97,11 @@ public class CharacterController : MonoBehaviour {
             GameObject temp = other.gameObject;
             enemy = other.gameObject.transform.parent.gameObject;
         }
+
+        if (attackString != "" && enemy == null && other.tag == "PunchingBagHitBox")
+        {
+            //Training.training();
+        }
     }
 
     void Update() {
@@ -103,6 +110,13 @@ public class CharacterController : MonoBehaviour {
             timeSinceLastHit = Time.time - lastHitTime;
             PerformMovement();
         }
+        checkTraining();
+    }
+
+    private static void checkTraining()
+    {
+        Scene scene = SceneManager.GetActiveScene();
+        Training.setTrainingMode(scene.name == "Training");
     }
 
     private void PerformMovement()
@@ -139,6 +153,12 @@ public class CharacterController : MonoBehaviour {
 
         if (!playerAttacking || attackString == "HurricaneKick")
         {
+            if (comboTracker.Count != 0 && Training.getTrainingMode())
+            {
+                combo[comboTracker.Count].GetComponent<SpriteRenderer>().sprite = comboButtonFlashing;
+                combo[comboTracker.Count].GetComponent<SpriteRenderer>().enabled = true;
+            }
+
             //--movement
             if (h == 1 || h == -1)
             { 
@@ -308,10 +328,13 @@ public class CharacterController : MonoBehaviour {
                         {
                             attackDamage = hurricaneKickDamage;
                             TextCanvas.setText("Hurricane Kick");
-                        } else if (moveSet[1][0] == "UpperCut")
+                            Training.training("Hurricane Kick");
+                        } 
+                        else if (moveSet[1][0] == "UpperCut")
                         {
                             attackDamage = upperCutDamage;
                             TextCanvas.setText("Upper Cut");
+                            Training.training("Upper Cut");
                         }
                     } else
                         tempComboList.Add(moveSet);
@@ -386,7 +409,15 @@ public class CharacterController : MonoBehaviour {
         {
             if (i >= comboTracker.Count)
             {
-                combo[i].GetComponent<SpriteRenderer>().enabled = false;
+                if (Training.getTrainingMode())
+                {
+                    if (i > comboTracker.Count || i == 0)
+                        combo[i].GetComponent<SpriteRenderer>().enabled = false;
+                }
+                else
+                    combo[i].GetComponent<SpriteRenderer>().enabled = false;
+
+
             }
         }
     }

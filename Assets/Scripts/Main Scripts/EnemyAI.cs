@@ -19,6 +19,8 @@ public class EnemyAI : MonoBehaviour
     public float checkDistance = 1.5f; // The distance between enemy and player, when real distance is smaller, enemy will start to walk.
     public int chanceToAttack = 4; // min 0, max 10;
 
+    public float chanceToBeStunned = 0;
+
     //Audio
     public AudioClip[] painSounds;
     public AudioSource audio;
@@ -110,10 +112,14 @@ public class EnemyAI : MonoBehaviour
         BeenHit = true;
         //hurtMeSound.Play();
         enemyHP -= incomingdamage;
-        SetEnemyAnimation(AnimationParams.hitme);
-        formerStatus[0] = animator.GetBool("PlayerMoving");
-        formerStatus[1] = animator.GetBool("PlayerKicking");
-        formerStatus[2] = animator.GetBool("EnemyWalking");
+
+        if (Random.Range(0, 1) < chanceToBeStunned)
+        {
+            SetEnemyAnimation(AnimationParams.hitme);
+            formerStatus[0] = animator.GetBool("PlayerMoving");
+            formerStatus[1] = animator.GetBool("PlayerKicking");
+            formerStatus[2] = animator.GetBool("EnemyWalking");
+        }
 
         
         //BeenHit = false;
