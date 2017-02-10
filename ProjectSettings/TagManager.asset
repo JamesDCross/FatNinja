@@ -12,6 +12,7 @@ TagManager:
   - Shibos Attack
   - EnemyHitBox
   - DeadEnemy
+  - PunchingBagHitBox
   layers:
   - Default
   - TransparentFX
