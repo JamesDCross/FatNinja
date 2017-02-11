@@ -10,6 +10,8 @@ public class EnemyAI : MonoBehaviour
 {
     public GameObject enemyPrefab;
     public bool isDead = false;
+    public bool isSit = false;
+    public float sitTime = 2f;
     public int enemyHP = 10;
     public int damage = 2;
     public float enemySpeed = 2f;
@@ -61,6 +63,11 @@ public class EnemyAI : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player").transform;
         formerStatus = new bool[3];
         playerCollider = null;
+
+        if (isSit){
+            animator.SetBool("IsSit",true);
+        }
+
         ApplyAnimationEventToKickAnimation(CreateAnimationEvent());
         //enemy.destination = player.position;
     }
@@ -469,6 +476,15 @@ public class EnemyAI : MonoBehaviour
             EnemyDead();
         }
 
+        if (isSit)
+        {
+            Wait(sitTime,()=>{
+                isSit = false;
+                animator.SetBool("IsSit",false);
+            });
+            return;
+        }
+
         if (player.position.x - playerLastPosition.x > 1 ||
             player.position.y - playerLastPosition.y > 1)
         {
@@ -543,7 +559,7 @@ public class EnemyAI : MonoBehaviour
                     enemy.destination = player.position;
                 }
             }
-            else if (remainingDistance <= 0.2f)
+            else if (remainingDistance <= 0.3f)
             { // caught the player
                 EnemyRandomMove();
             }
@@ -559,6 +575,16 @@ public class EnemyAI : MonoBehaviour
     // void OnCollisionExit2D(Collision2D coll)
     // {
     // }
+
+    public void Wait(float seconds, Action action)
+    {
+        StartCoroutine(_wait(seconds, action));
+    }
+    IEnumerator _wait(float time, Action callback)
+    {
+        yield return new WaitForSeconds(time);
+        callback();
+    }
 
     IEnumerator DoBlinks(float duration, float blinkTime)
     {
