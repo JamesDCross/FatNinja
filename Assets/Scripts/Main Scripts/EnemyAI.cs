@@ -23,13 +23,13 @@ public class EnemyAI : MonoBehaviour
 
     //Audio
     public AudioClip[] painSounds;
-    public AudioSource audio;
+    public AudioSource audioE;
 
     // Blood effect
     public GameObject bloodPrefab;
 
-    public static float lastHitTime;
-    public static float timeSinceLastHit;
+    private float lastHitTime;
+    private float timeSinceLastHit;
 
     private bool caughtPlayer = false;
     private bool attacking = false;
@@ -80,7 +80,7 @@ public class EnemyAI : MonoBehaviour
         foreach (AnimationClip clip in animator.runtimeAnimatorController.animationClips)
         {
             string name = clip.name;
-            if (name.StartsWith("Kick") || name.StartsWith("sword-slash")) 
+            if (name.StartsWith("Kick") || name.StartsWith("sword-slash"))
             {
                 bool isAdded = false;
                 foreach (AnimationEvent e in clip.events)
@@ -113,22 +113,22 @@ public class EnemyAI : MonoBehaviour
         //hurtMeSound.Play();
         enemyHP -= incomingdamage;
 
-        if (Random.Range(0, 1) < chanceToBeStunned)
-        {
-            SetEnemyAnimation(AnimationParams.hitme);
-            formerStatus[0] = animator.GetBool("PlayerMoving");
-            formerStatus[1] = animator.GetBool("PlayerKicking");
-            formerStatus[2] = animator.GetBool("EnemyWalking");
-        }
+        // if (Random.Range(0, 1) < chanceToBeStunned)
+        // {
+        SetEnemyAnimation(AnimationParams.hitme);
+        formerStatus[0] = animator.GetBool("PlayerMoving");
+        formerStatus[1] = animator.GetBool("PlayerKicking");
+        formerStatus[2] = animator.GetBool("EnemyWalking");
+        //}
 
-        
-        //BeenHit = false;
-        //stop any current action
+
+        //BeenHit = false;
+        //stop any current action
 
         //audio
         int rand = UnityEngine.Random.Range(0, painSounds.Length);
-        audio.clip = painSounds[rand];
-        audio.Play();
+        audioE.clip = painSounds[rand];
+        audioE.Play();
 
         // spawn blood
 
@@ -140,7 +140,7 @@ public class EnemyAI : MonoBehaviour
         float playerAngle = player.gameObject.GetComponent<CharacterController>().getPlayerAngle();
         blood.GetComponent<BloodScript>().setBlood(playerAngle, (float)incomingdamage / 4f);
         //}
-
+        if (enemyHP <= 0) { EnemyDead(); }
     }
 
     Vector2 GetPlayerDirection()
@@ -441,12 +441,32 @@ public class EnemyAI : MonoBehaviour
         PlayerHealth.doDamage(damage);
     }
 
+    void EnemyDead()
+    {
+        isDead = true;
+        // enemy.autoBraking = true;
+        // enemy.Stop();
+        // animator.SetBool("IsEnemyDead", true);
+
+        Vector2 deadPlace = transform.position;
+        Destroy(gameObject);
+        GameObject newOne = Instantiate(enemyPrefab, deadPlace, Quaternion.identity);
+        newOne.GetComponent<EnemyAI>().isDead = true;
+        newOne.GetComponent<Animator>().SetBool("IsEnemyDead", true);
+        return;
+    }
+
     // Update is called once per frame
     void Update()
     {
         if (isDead)
         {
             return;
+        }
+
+        if (enemyHP <= 0)
+        {
+            EnemyDead();
         }
 
         if (player.position.x - playerLastPosition.x > 1 ||
@@ -486,20 +506,6 @@ public class EnemyAI : MonoBehaviour
         {
             float remainingDistance = Vector2.Distance(transform.position, player.position);
             //EnemyRestoreFromHit();
-            if (enemyHP <= 0)
-            {
-                isDead = true;
-                // enemy.autoBraking = true;
-                // enemy.Stop();
-                // animator.SetBool("IsEnemyDead", true);
-
-                Vector2 deadPlace = transform.position;
-                Destroy(gameObject);
-                GameObject newOne = Instantiate(enemyPrefab, deadPlace, Quaternion.identity);
-                newOne.GetComponent<EnemyAI>().isDead = true;
-                newOne.GetComponent<Animator>().SetBool("IsEnemyDead", true);
-                return;
-            }
 
             if (enemyHP <= runAwayHP)
             {
@@ -537,9 +543,9 @@ public class EnemyAI : MonoBehaviour
                     enemy.destination = player.position;
                 }
             }
-            else if (remainingDistance <= 0)
+            else if (remainingDistance <= 0.2f)
             { // caught the player
-                StartToAttack();
+                EnemyRandomMove();
             }
         }
 
