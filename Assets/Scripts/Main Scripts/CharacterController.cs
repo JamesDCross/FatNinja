@@ -100,6 +100,7 @@ public class CharacterController : MonoBehaviour {
 
         if (attackString != "" && enemy == null && other.tag == "PunchingBagHitBox")
         {
+            Training.animate(true);
             //Training.training();
         }
     }
@@ -229,6 +230,8 @@ public class CharacterController : MonoBehaviour {
         }
         else if (attackString != "")
         {
+            if(Training.getTrainingMode())
+                Training.animate(false);
             //Attack animation is set to false and attacking variables are reset
             anim.SetBool(attackString, playerAttacking);
             attackString = "";
@@ -328,13 +331,15 @@ public class CharacterController : MonoBehaviour {
                         {
                             attackDamage = hurricaneKickDamage;
                             TextCanvas.setText("Hurricane Kick");
-                            Training.training("Hurricane Kick");
+                            if(Training.getTrainingMode())
+                                Training.training("Hurricane Kick");
                         } 
                         else if (moveSet[1][0] == "UpperCut")
                         {
                             attackDamage = upperCutDamage;
                             TextCanvas.setText("Upper Cut");
-                            Training.training("Upper Cut");
+                            if (Training.getTrainingMode())
+                                Training.training("Upper Cut");
                         }
                     } else
                         tempComboList.Add(moveSet);
@@ -428,5 +433,10 @@ public class CharacterController : MonoBehaviour {
     public static string getAttack()
     {
         return attackString;
+    }
+
+    public static bool isAttacking()
+    {
+        return playerAttacking;
     }
 }
