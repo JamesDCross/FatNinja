@@ -230,6 +230,7 @@ public class CharacterController : MonoBehaviour {
         }
         else if (attackString != "")
         {
+            Training.animate(false);
             //Attack animation is set to false and attacking variables are reset
             anim.SetBool(attackString, playerAttacking);
             attackString = "";

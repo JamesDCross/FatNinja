@@ -540,7 +540,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 7
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1640,21 +1640,6 @@ Prefab:
     - target: {fileID: 1786155032380602, guid: a6aaa7a97499d40289bcf9bb9f48ae15, type: 2}
       propertyPath: m_Name
       value: Enemy-sword
-      objectReference: {fileID: 0}
-    - target: {fileID: 114617377269384578, guid: a6aaa7a97499d40289bcf9bb9f48ae15,
-        type: 2}
-      propertyPath: enemyHP
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 114617377269384578, guid: a6aaa7a97499d40289bcf9bb9f48ae15,
-        type: 2}
-      propertyPath: isDead
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 61898609609991540, guid: a6aaa7a97499d40289bcf9bb9f48ae15,
-        type: 2}
-      propertyPath: m_IsTrigger
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a6aaa7a97499d40289bcf9bb9f48ae15, type: 2}
