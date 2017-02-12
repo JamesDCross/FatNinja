@@ -5,6 +5,7 @@
         [PerRendererData] _MainTex ("Sprite Texture", 2D) = "white" {}
 		_ChromaBG ("Base (RGB)", 2D) = "white" {}
         _Color ("Tint", Color) = (1,1,1,1)
+        _cameraSize ("Cam Size", Float) = 5
         [MaterialToggle] PixelSnap ("Pixel snap", Float) = 0
     }
 
@@ -53,6 +54,7 @@
 			sampler2D _MainTex;
 			sampler2D _ChromaBG;
             fixed4 _Color;
+            float _cameraSize;
 
             v2f vert(appdata_t IN)
             {
@@ -80,8 +82,8 @@
 				float2 screenUV = (IN.screenPos.xy / IN.screenPos.w);
 				screenUV.y += 0.5;
 
-                screenUV.y += _WorldSpaceCameraPos.y / 10; // orth cam size * 2
-                screenUV.x += _WorldSpaceCameraPos.x / (10 * (_ScreenParams.x / _ScreenParams.y)); // 
+                screenUV.y += _WorldSpaceCameraPos.y / (2 * _cameraSize); // orth cam size * 2
+                screenUV.x += _WorldSpaceCameraPos.x / ((2 * _cameraSize) * (_ScreenParams.x / _ScreenParams.y)); // 
 
 				//screenUV *= float2(8, 6);
 				float3 test = tex2D(_ChromaBG, screenUV).rgb;
