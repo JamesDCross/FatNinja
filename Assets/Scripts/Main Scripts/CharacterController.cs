@@ -100,6 +100,7 @@ public class CharacterController : MonoBehaviour {
 
         if (attackString != "" && enemy == null && other.tag == "PunchingBagHitBox")
         {
+            Training.animate(true);
             //Training.training();
         }
     }
@@ -428,5 +429,10 @@ public class CharacterController : MonoBehaviour {
     public static string getAttack()
     {
         return attackString;
+    }
+
+    public static bool isAttacking()
+    {
+        return playerAttacking;
     }
 }
