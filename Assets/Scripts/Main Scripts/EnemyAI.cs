@@ -10,8 +10,6 @@ public class EnemyAI : MonoBehaviour
 {
     public GameObject enemyPrefab;
     public bool isDead = false;
-    public bool isSit = false;
-    public float sitTime = 2f;
     public int enemyHP = 10;
     public int damage = 2;
     public float enemySpeed = 2f;
@@ -21,17 +19,17 @@ public class EnemyAI : MonoBehaviour
     public float checkDistance = 1.5f; // The distance between enemy and player, when real distance is smaller, enemy will start to walk.
     public int chanceToAttack = 4; // min 0, max 10;
 
-    public float chanceToBeStunned = 0.5f;//Chance to be stunned between 0 and 1;
+    public float chanceToBeStunned = 0;
 
     //Audio
     public AudioClip[] painSounds;
-    public AudioSource audioE;
+    public AudioSource audio;
 
     // Blood effect
     public GameObject bloodPrefab;
 
-    private float lastHitTime;
-    private float timeSinceLastHit;
+    public static float lastHitTime;
+    public static float timeSinceLastHit;
 
     private bool caughtPlayer = false;
     private bool attacking = false;
@@ -63,11 +61,6 @@ public class EnemyAI : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player").transform;
         formerStatus = new bool[3];
         playerCollider = null;
-
-        if (isSit){
-            animator.SetBool("IsSit",true);
-        }
-
         ApplyAnimationEventToKickAnimation(CreateAnimationEvent());
         //enemy.destination = player.position;
     }
@@ -87,7 +80,7 @@ public class EnemyAI : MonoBehaviour
         foreach (AnimationClip clip in animator.runtimeAnimatorController.animationClips)
         {
             string name = clip.name;
-            if (name.StartsWith("Kick") || name.StartsWith("sword-slash"))
+            if (name.StartsWith("Kick") || name.StartsWith("sword-slash")) 
             {
                 bool isAdded = false;
                 foreach (AnimationEvent e in clip.events)
@@ -120,22 +113,22 @@ public class EnemyAI : MonoBehaviour
         //hurtMeSound.Play();
         enemyHP -= incomingdamage;
 
-        // if (Random.Range(0, 1) < chanceToBeStunned)
-        // {
-        SetEnemyAnimation(AnimationParams.hitme);
-        formerStatus[0] = animator.GetBool("PlayerMoving");
-        formerStatus[1] = animator.GetBool("PlayerKicking");
-        formerStatus[2] = animator.GetBool("EnemyWalking");
-        //}
+        if (Random.Range(0, 1) < chanceToBeStunned)
+        {
+            SetEnemyAnimation(AnimationParams.hitme);
+            formerStatus[0] = animator.GetBool("PlayerMoving");
+            formerStatus[1] = animator.GetBool("PlayerKicking");
+            formerStatus[2] = animator.GetBool("EnemyWalking");
+        }
 
-
-        //BeenHit = false;
-        //stop any current action
+        
+        //BeenHit = false;
+        //stop any current action
 
         //audio
         int rand = UnityEngine.Random.Range(0, painSounds.Length);
-        audioE.clip = painSounds[rand];
-        audioE.Play();
+        audio.clip = painSounds[rand];
+        audio.Play();
 
         // spawn blood
 
@@ -147,7 +140,7 @@ public class EnemyAI : MonoBehaviour
         float playerAngle = player.gameObject.GetComponent<CharacterController>().getPlayerAngle();
         blood.GetComponent<BloodScript>().setBlood(playerAngle, (float)incomingdamage / 4f);
         //}
-        if (enemyHP <= 0) { EnemyDead(); }
+
     }
 
     Vector2 GetPlayerDirection()
@@ -448,21 +441,6 @@ public class EnemyAI : MonoBehaviour
         PlayerHealth.doDamage(damage);
     }
 
-    void EnemyDead()
-    {
-        isDead = true;
-        // enemy.autoBraking = true;
-        // enemy.Stop();
-        // animator.SetBool("IsEnemyDead", true);
-
-        Vector2 deadPlace = transform.position;
-        Destroy(gameObject);
-        GameObject newOne = Instantiate(enemyPrefab, deadPlace, Quaternion.identity);
-        newOne.GetComponent<EnemyAI>().isDead = true;
-        newOne.GetComponent<Animator>().SetBool("IsEnemyDead", true);
-        return;
-    }
-
     // Update is called once per frame
     void Update()
     {
@@ -471,28 +449,11 @@ public class EnemyAI : MonoBehaviour
             return;
         }
 
-        if (enemyHP <= 0)
-        {
-            EnemyDead();
-        }
-
-        if (isSit)
-        {
-            Wait(sitTime,()=>{
-                isSit = false;
-                animator.SetBool("IsSit",false);
-            });
-            return;
-        }
-
-        if (isRandomMove)
-        {
-            if (player.position.x - playerLastPosition.x > 1 ||
+        if (player.position.x - playerLastPosition.x > 1 ||
             player.position.y - playerLastPosition.y > 1)
-            {
-                isRandomMove = false;
-                enemy.destination = player.position;
-            }
+        {
+            isRandomMove = false;
+            enemy.destination = player.position;
         }
 
         if (isRandomMove)
@@ -524,8 +485,21 @@ public class EnemyAI : MonoBehaviour
         if (!BeenHit)
         {
             float remainingDistance = Vector2.Distance(transform.position, player.position);
-            animator.SetFloat("Distance" , remainingDistance);
             //EnemyRestoreFromHit();
+            if (enemyHP <= 0)
+            {
+                isDead = true;
+                // enemy.autoBraking = true;
+                // enemy.Stop();
+                // animator.SetBool("IsEnemyDead", true);
+
+                Vector2 deadPlace = transform.position;
+                Destroy(gameObject);
+                GameObject newOne = Instantiate(enemyPrefab, deadPlace, Quaternion.identity);
+                newOne.GetComponent<EnemyAI>().isDead = true;
+                newOne.GetComponent<Animator>().SetBool("IsEnemyDead", true);
+                return;
+            }
 
             if (enemyHP <= runAwayHP)
             {
@@ -543,17 +517,7 @@ public class EnemyAI : MonoBehaviour
                 return;
             }
 
-            if(remainingDistance > 10)
-            {
-                enemy.Stop();
-                animator.SetBool("PlayerMoving", false);
-                animator.SetBool("PlayerKicking", false);
-                animator.SetBool("EnemyWalking", false);
-                animator.SetBool("hitme", false);
-                return;
-            }
-
-            if (remainingDistance > 0 && remainingDistance < 10)
+            if (remainingDistance > 0)
             {
                 enemy.Resume();
                 if (remainingDistance > checkDistance)
@@ -573,9 +537,9 @@ public class EnemyAI : MonoBehaviour
                     enemy.destination = player.position;
                 }
             }
-            else if (remainingDistance <= 0.3f)
+            else if (remainingDistance <= 0)
             { // caught the player
-                EnemyRandomMove();
+                StartToAttack();
             }
         }
 
@@ -589,16 +553,6 @@ public class EnemyAI : MonoBehaviour
     // void OnCollisionExit2D(Collision2D coll)
     // {
     // }
-
-    public void Wait(float seconds, Action action)
-    {
-        StartCoroutine(_wait(seconds, action));
-    }
-    IEnumerator _wait(float time, Action callback)
-    {
-        yield return new WaitForSeconds(time);
-        callback();
-    }
 
     IEnumerator DoBlinks(float duration, float blinkTime)
     {
