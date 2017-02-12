@@ -125,16 +125,15 @@ public class EnemyAI : MonoBehaviour
         audio.Play();
 
         // spawn blood
-
-        //if (damage != 0) {
         GameObject blood = Instantiate(bloodPrefab);
+        // set blood position
         Vector3 bloodPos = this.transform.position;
-        //bloodPos.z = 50;
         blood.transform.position = bloodPos;
+        // set blood direction
         float playerAngle = player.gameObject.GetComponent<CharacterController>().getPlayerAngle();
         blood.GetComponent<BloodScript>().setBlood(playerAngle, (float)incomingdamage / 4f);
-        //}
-
+        // set blood damage text
+        blood.GetComponentInChildren<damageTextScr>().setDamage(damage);
     }
 
     Vector2 GetPlayerDirection()
