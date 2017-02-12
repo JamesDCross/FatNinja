@@ -2,13 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class Training : MonoBehaviour {
     private static bool trainingMode;
     private static Animator anim;
+    private static ParticleSystem part;
 
     void Start()
     {
         anim = GetComponent<Animator>();
+        part = GetComponentInChildren <ParticleSystem>();
     }
 
     void Update()
@@ -24,8 +27,7 @@ public class Training : MonoBehaviour {
 
     public static void training(string combo)
     {
-
-
+       part.Play();
     }
 
     public static void setTrainingMode(bool train)

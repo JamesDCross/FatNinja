@@ -485,11 +485,14 @@ public class EnemyAI : MonoBehaviour
             return;
         }
 
-        if (player.position.x - playerLastPosition.x > 1 ||
-            player.position.y - playerLastPosition.y > 1)
+        if (isRandomMove)
         {
-            isRandomMove = false;
-            enemy.destination = player.position;
+            if (player.position.x - playerLastPosition.x > 1 ||
+            player.position.y - playerLastPosition.y > 1)
+            {
+                isRandomMove = false;
+                enemy.destination = player.position;
+            }
         }
 
         if (isRandomMove)
@@ -521,6 +524,7 @@ public class EnemyAI : MonoBehaviour
         if (!BeenHit)
         {
             float remainingDistance = Vector2.Distance(transform.position, player.position);
+            animator.SetFloat("Distance" , remainingDistance);
             //EnemyRestoreFromHit();
 
             if (enemyHP <= runAwayHP)
@@ -539,7 +543,17 @@ public class EnemyAI : MonoBehaviour
                 return;
             }
 
-            if (remainingDistance > 0)
+            if(remainingDistance > 10)
+            {
+                enemy.Stop();
+                animator.SetBool("PlayerMoving", false);
+                animator.SetBool("PlayerKicking", false);
+                animator.SetBool("EnemyWalking", false);
+                animator.SetBool("hitme", false);
+                return;
+            }
+
+            if (remainingDistance > 0 && remainingDistance < 10)
             {
                 enemy.Resume();
                 if (remainingDistance > checkDistance)
