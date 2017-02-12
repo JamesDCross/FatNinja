@@ -2817,7 +2817,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95c387d3e32404bcc91c60318d766bb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  viewSize: 3
+  viewSize: 2.322094
   primaryAspectRatio: {x: 17, y: 10}
   secondaryAspectRatio: {x: 16, y: 9}
 --- !u!4 &1116660338 stripped
@@ -4030,6 +4030,7 @@ GameObject:
   - component: {fileID: 1430084093}
   - component: {fileID: 1430084094}
   - component: {fileID: 1430084086}
+  - component: {fileID: 1430084096}
   - component: {fileID: 1430084095}
   m_Layer: 0
   m_Name: Flowchart
@@ -4051,7 +4052,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   version: 1
-  scrollPos: {x: 0, y: -1}
+  scrollPos: {x: -1, y: 0}
   variablesScrollPos: {x: 0, y: 0}
   variablesExpanded: 1
   blockViewHeight: 357
@@ -4063,7 +4064,7 @@ MonoBehaviour:
     width: 1114
     height: 859
   selectedBlocks:
-  - {fileID: 1430083958}
+  - {fileID: 1430083976}
   selectedCommands: []
   variables: []
   description: 
@@ -4122,7 +4123,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: 143
   indentLevel: 0
-  storyText: You have combos!
+  storyText: he fights
   description: 
   character: {fileID: 0}
   portrait: {fileID: 0}
@@ -4160,7 +4161,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: 1
   indentLevel: 0
-  storyText: Here is the story.
+  storyText: Here is the story
   description: 
   character: {fileID: 0}
   portrait: {fileID: 0}
@@ -4199,7 +4200,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: 3
   indentLevel: 0
-  storyText: There is a bad ninja.
+  storyText: There was an evil lord
   description: 
   character: {fileID: 0}
   portrait: {fileID: 0}
@@ -4329,7 +4330,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: 9
   indentLevel: 0
-  storyText: Long long time ago.
+  storyText: A long time ago
   description: 
   character: {fileID: 0}
   portrait: {fileID: 0}
@@ -4372,7 +4373,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: 13
   indentLevel: 0
-  storyText: He robs people on a daily basis.
+  storyText: The people suffered
   description: 
   character: {fileID: 0}
   portrait: {fileID: 0}
@@ -4397,7 +4398,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: 15
   indentLevel: 0
-  storyText: He hides in a big house.
+  storyText: They called for a hero
   description: 
   character: {fileID: 0}
   portrait: {fileID: 0}
@@ -4473,7 +4474,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nodeRect:
     serializedVersion: 2
-    x: 243
+    x: 242
     y: 112
     width: 120
     height: 40
@@ -4498,6 +4499,7 @@ MonoBehaviour:
   - {fileID: 1430083989}
   - {fileID: 1430084001}
   - {fileID: 1430083995}
+  - {fileID: 1430084096}
   - {fileID: 1430083988}
   - {fileID: 1430083994}
   - {fileID: 1430083987}
@@ -4570,7 +4572,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: 19
   indentLevel: 0
-  storyText: but, wait...
+  storyText: it will not be easy
   description: 
   character: {fileID: 0}
   portrait: {fileID: 0}
@@ -4659,7 +4661,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: 24
   indentLevel: 0
-  storyText: He hires thugs.
+  storyText: He hires thugs
   description: 
   character: {fileID: 0}
   portrait: {fileID: 0}
@@ -4684,7 +4686,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: 33
   indentLevel: 0
-  storyText: many thugs.
+  storyText: many thugs
   description: 
   character: {fileID: 0}
   portrait: {fileID: 0}
@@ -4972,7 +4974,7 @@ MonoBehaviour:
   indentLevel: 0
   _duration:
     floatRef: {fileID: 0}
-    floatVal: 0.3
+    floatVal: 0.8
   durationOLD: 0
 --- !u!114 &1430083996
 MonoBehaviour:
@@ -5072,7 +5074,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: 43
   indentLevel: 0
-  storyText: many many.
+  storyText: many many
   description: 
   character: {fileID: 0}
   portrait: {fileID: 0}
@@ -5332,7 +5334,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: 54
   indentLevel: 0
-  storyText: Now you know your job...
+  storyText: and you answered
   description: 
   character: {fileID: 0}
   portrait: {fileID: 0}
@@ -5418,7 +5420,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: 55
   indentLevel: 0
-  storyText: But hero never fears,
+  storyText: But a hero never fears
   description: 
   character: {fileID: 0}
   portrait: {fileID: 0}
@@ -7521,6 +7523,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parentBlock: {fileID: 1430083958}
   waitForFrames: 1
+--- !u!114 &1430084096
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1430083956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec422cd568a9c4a31ad7c36d0572b9da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 153
+  indentLevel: 0
+  storyText: thugs
+  description: 
+  character: {fileID: 0}
+  portrait: {fileID: 0}
+  voiceOverClip: {fileID: 0}
+  showAlways: 1
+  showCount: 1
+  extendPrevious: 0
+  fadeWhenDone: 0
+  waitForClick: 0
+  stopVoiceover: 1
+  setSayDialog: {fileID: 0}
 --- !u!1 &1435858117
 GameObject:
   m_ObjectHideFlags: 0

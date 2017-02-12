@@ -35,7 +35,7 @@ LoadLevel1();
         if (characterActions.Level1)
          //if(Input.GetKeyDown(KeyCode.C))
         {
-            SceneManager.LoadScene("Alpha - FatNinja");
+            SceneManager.LoadScene("LVL1-Balcony");
          }
     }
 
