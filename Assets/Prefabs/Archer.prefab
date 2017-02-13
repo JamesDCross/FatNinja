@@ -20,6 +20,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4340063667629376}
   - component: {fileID: 212667601770737994}
+  - component: {fileID: 114754488828342064}
+  - component: {fileID: 95146431250115634}
+  - component: {fileID: 114638398079852498}
   m_Layer: 0
   m_Name: Archer
   m_TagString: Untagged
@@ -34,12 +37,66 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1635246712760814}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.68, y: 3.92, z: 0}
+  m_LocalPosition: {x: 4.23, y: -4.26, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &95146431250115634
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1635246712760814}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 194c5d84e1bd14d1ebf95c4ea5139790, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114638398079852498
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1635246712760814}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad705bba33f3642f4bc26cd844e12c6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  radius: 0.1
+  speed: 3.5
+  angularSpeed: 100
+  acceleration: 1
+  stoppingDistance: 0
+  autoBraking: 1
+  nextPos: {x: 0, y: 0}
+--- !u!114 &114754488828342064
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1635246712760814}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebc00b8a95a604c219b3f07cf9a3a9aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HP: 10
+  keepDistance: 4
+  alertDistance: 12
+  damage: 4
+  speed: 4
+  randomWalkRange: 1.5
+  chanceToAttack: 5
+  attackTimeGap: 2
 --- !u!212 &212667601770737994
 SpriteRenderer:
   m_ObjectHideFlags: 1

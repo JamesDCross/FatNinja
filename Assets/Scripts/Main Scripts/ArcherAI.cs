@@ -9,19 +9,20 @@ public class ArcherAI : MonoBehaviour
     public int HP = 10;
     public float keepDistance = 6f; // if player is in this range, then we should walk back
     public float alertDistance = 15f; // if player is greater than this range, do nothing
-    public int damange = 4;
+    public int damage = 4;
     public float speed = 4f;
-    public float randomWalkRange = 3f;
+    public float randomWalkRange = 2f;
     public int chanceToAttack = 5;
     public float attackTimeGap = 1f; // time gap between each attack
 
     // private variables starts here
     private bool isDead = false;
     private bool isRandomWalk = false;
-    private int walkState = Animator.StringToHash("Base Layer.isWalk");
-    private int aimState = Animator.StringToHash("Base Layer.isAim");
-    private int idleState = Animator.StringToHash("Base Layer.isIdle");
+    private int walkState = Animator.StringToHash("Base Layer.walk");
+    private int aimState = Animator.StringToHash("Base Layer.aim");
+    private int idleState = Animator.StringToHash("Base Layer.idle");
     private float lastHitTime;
+    private bool hasAttacked;
     private Animator animator;
     private NavMeshAgent2D enemy;
     private Transform player;
@@ -37,7 +38,7 @@ public class ArcherAI : MonoBehaviour
         lastHitTime = 1f;
         enemy = GetComponent<NavMeshAgent2D>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
-
+        enemy.speed = speed;
         //ApplyAnimationEventToKickAnimation(CreateAnimationEvent());
     }
 
@@ -69,19 +70,30 @@ public class ArcherAI : MonoBehaviour
             setToThisAnimation(AnimationParams.isWalk);
         }
 
+        /**************************************************/
         /* A Simple State Machine Management starts here */
+        /************************************************/
         if (currentBaseState.fullPathHash.Equals(aimState))
         {
             //fire the arrow
-            enemy.Stop();
+            if (!hasAttacked)
+            {
+                enemy.Stop();
+                lastHitTime = Time.time;
+                PlayerHealth.doDamage(damage, this.transform.position);
+                hasAttacked = true;
+            }
+            setToThisAnimation(AnimationParams.isWalk);
         }
         else if (currentBaseState.fullPathHash.Equals(walkState))
         {
+            hasAttacked = false;
+
             // we are at random walk range, check if we have reach the deatination.
             if (isRandomWalk)
             {
                 float rDistance = Vector2.Distance(transform.position, enemy.destination);
-                if (rDistance <= 0.2f)
+                if (rDistance <= 0.01f)
                 {
                     isRandomWalk = false;
                 }
@@ -114,6 +126,8 @@ public class ArcherAI : MonoBehaviour
             else
             {
                 // should walk back
+                enemy.Resume();
+                enemy.destination = GetFurthestPointAfterPlayerToEnemy();
             }
         }
         //Debug.Log(Vector2.Distance(transform.position, player.position));
@@ -122,16 +136,7 @@ public class ArcherAI : MonoBehaviour
     void whenEnemyDead()
     {
         isDead = true;
-    }
-
-    void OnTriggerEnter2D(Collider2D other)
-    {
-
-    }
-
-    void OnTriggerExit2D(Collider2D other)
-    {
-
+        Destroy(gameObject);
     }
 
     Vector2 GetRandomNearPosition()
@@ -146,7 +151,6 @@ public class ArcherAI : MonoBehaviour
 
     void setToThisAnimation(AnimationParams type)
     {
-        string targetAnimation = Enum.GetName(typeof(AnimationParams), type);
         Array values = Enum.GetValues(typeof(AnimationParams));
         foreach (AnimationParams val in values)
         {
@@ -162,9 +166,9 @@ public class ArcherAI : MonoBehaviour
         }
 
         // set the direction of the animationClips
-        Vector2 pos = EnemyUtils.GetPlayerDirection(player,transform);
-        animator.SetFloat("MoveX", pos.x);
-        animator.SetFloat("MoveY", pos.y);
+        Vector2 pos = GetPlayerDirection(player, transform);
+        animator.SetFloat("moveX", pos.x);
+        animator.SetFloat("moveY", pos.y);
     }
 
     private AnimationEvent CreateAnimationEvent()
@@ -198,5 +202,99 @@ public class ArcherAI : MonoBehaviour
                 }
             }
         }
+    }
+
+    private Vector2 GetPlayerDirection(Transform player, Transform enemy)
+    {
+        Transform transform = enemy;
+        float horizontal = player.position.x - transform.position.x;
+        float vertical = player.position.y - transform.position.y;
+
+        Vector2 pos = new Vector2(0, 0);
+        float offset = 0.7f; //use to make the enemy not that sensetive to direction
+
+        if (horizontal > offset)
+        {
+            pos.x = 1;
+        }
+        else if (horizontal < offset * -1)
+        {
+            pos.x = -1;
+        }
+        else if (horizontal >= offset * -1 && horizontal <= offset)
+        {
+            pos.x = 0;
+        }
+
+        if (vertical > offset)
+        {
+            pos.y = 1;
+        }
+        else if (vertical < offset * -1)
+        {
+            pos.y = -1;
+        }
+        else if (vertical >= offset * -1 && vertical <= offset)
+        {
+            pos.y = 0;
+        }
+
+        // if (enemyHP <= runAwayHP)
+        // {
+        //     pos.x *= -1;
+        //     pos.y *= -1;
+        // }
+
+        return pos;
+    }
+    Vector2 GetFurthestPointAfterPlayerToEnemy()
+    {
+        Vector2 playerPosition = GetPlayerDirection(player, transform);
+        Vector2 newPosition = transform.position;
+
+        float moveX = 1.5f; // delta value to move
+        float moveY = 1.5f; // delta value to move
+
+        if (playerPosition.x > 0) //player at the right side of enemy
+        {
+            if (playerPosition.y >= 0) //upper right
+            {
+                newPosition.x -= moveX;
+                newPosition.y -= moveY;
+            }
+            else if (playerPosition.y < 0) //down right
+            {
+                newPosition.x -= moveX;
+                newPosition.y += moveY;
+            }
+        }
+        else if (playerPosition.x < 0) //player at the left side of enemy
+        {
+            if (playerPosition.y >= 0) //upper left
+            {
+                newPosition.x += moveX;
+                newPosition.y -= moveY;
+            }
+            else if (playerPosition.y < 0) //down left
+            {
+                newPosition.x += moveX;
+                newPosition.y += moveY;
+            }
+        }
+        else if (playerPosition.x == 0)
+        {
+            if (playerPosition.y > 0)
+            { //player is at vertical top
+                newPosition.x += Random.Range(-1 * moveX, moveX);
+                newPosition.y -= moveY;
+            }
+            else if (playerPosition.y < 0)
+            { //player is at vertical down
+                newPosition.x += Random.Range(-1 * moveX, moveX);
+                newPosition.y += moveY;
+            }
+        }
+
+        return newPosition;
     }
 }
