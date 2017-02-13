@@ -10,10 +10,11 @@ public class SpawnWaves : MonoBehaviour
     public float timeBetweenEnemies;
     public float timeBeforeWavesStart;
     public float timeBetweenWaves;
-
     public float numberOfWaves;
 
     public GameObject shibo;
+
+    private Random rand;
     
 
     void Start()
@@ -31,7 +32,16 @@ public class SpawnWaves : MonoBehaviour
             {
                 Vector2 spawnPosition = new Vector2(gameObject.transform.position.x, gameObject.transform.position.y);
                 Quaternion spawnRotation = Quaternion.identity;
+
                 Instantiate(enemyType, spawnPosition, spawnRotation);
+
+                //enemies have a random chance to run away
+                int rand = UnityEngine.Random.Range(0, 6);
+
+                if (enemyType.tag == "Enemy") {
+                    enemyType.GetComponent<EnemyAI>().runAwayHP = rand;
+                }
+
                 //Instantiate(Resources.Load<GameObject>("Prefabs/Enemy"));
                 yield return new WaitForSeconds(timeBetweenEnemies);
             }
