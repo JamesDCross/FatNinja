@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using UnityEngine;
 using Random = UnityEngine.Random;      //1Tells Random to use the Unity Engine random number generator.
 
@@ -11,7 +10,7 @@ public class ArcherAI : MonoBehaviour
     public float alertDistance = 15f; // if player is greater than this range, do nothing
     public int damage = 4;
     public float speed = 4f;
-    public float randomWalkRange = 2f;
+    private float chaseWalkDelta = 1f;
     public int chanceToAttack = 5;
     public float attackTimeGap = 1f; // time gap between each attack
 
@@ -24,7 +23,7 @@ public class ArcherAI : MonoBehaviour
 
     // private variables starts here
     private bool isDead = false;
-    private bool isRandomWalk = false;
+    private bool isWalking = false;
     private int walkState = Animator.StringToHash("Base Layer.walk");
     private int aimState = Animator.StringToHash("Base Layer.aim");
     private int idleState = Animator.StringToHash("Base Layer.idle");
@@ -86,62 +85,77 @@ public class ArcherAI : MonoBehaviour
         /************************************************/
         if (currentBaseState.fullPathHash.Equals(aimState))
         {
-            //fire the arrow
-            if (!hasAttacked)
-            {
-                enemy.Stop();
-                lastHitTime = Time.time;
-                PlayerHealth.doDamage(damage, this.transform.position);
-                hasAttacked = true;
-            }
-            setToThisAnimation(AnimationParams.isWalk);
+            //TODO: fire the arrow
+            Attack();
         }
         else if (currentBaseState.fullPathHash.Equals(walkState))
         {
             hasAttacked = false;
 
             // we are at random walk range, check if we have reach the deatination.
-            if (isRandomWalk)
+            if (isWalking)
             {
-                float rDistance = Vector2.Distance(transform.position, enemy.destination);
-                if (rDistance <= 0.01f)
+                if (enemy.remainingDistance <= 0.01f)
                 {
-                    isRandomWalk = false;
+                    isWalking = false;
                 }
             }
 
             if (distance > keepDistance)
             {
-                if (!isRandomWalk)
+                if (!isWalking)
                 {
                     //use chance System to determine whether we should attack or not
-                    int randomNumber = Random.Range(0, 10);
-
-                    if (randomNumber <= chanceToAttack)
-                    {
-                        //check the god damn time
-                        float timeSinceLastHit = Time.time - lastHitTime;
-                        if (timeSinceLastHit >= attackTimeGap)
-                        {
-                            setToThisAnimation(AnimationParams.isAim);
-                        }
-                    }
-                    else
+                    RandomlyChooseAttackOrMove(chanceToAttack, () =>
                     {
                         enemy.Resume();
                         enemy.destination = GetRandomNearPosition();
-                        isRandomWalk = true;
-                    }
+                        isWalking = true;
+                    });
                 }
             }
             else
             {
-                // should walk back
-                enemy.Resume();
-                enemy.destination = GetFurthestPointAfterPlayerToEnemy();
+                //use chance System to determine whether we should attack or not
+                RandomlyChooseAttackOrMove(chanceToAttack / 2, () =>
+                {
+                    // should walk back
+                    enemy.Resume();
+                    enemy.destination = GetFurthestPointAfterPlayerToEnemy();
+                });
             }
         }
         //Debug.Log(Vector2.Distance(transform.position, player.position));
+    }
+
+    private void RandomlyChooseAttackOrMove(int chance, Action callback)
+    {
+        int randomNumber = Random.Range(0, 10);
+        if (randomNumber <= chance)
+        {
+            //check the god damn time
+            float timeSinceLastHit = Time.time - lastHitTime;
+            if (timeSinceLastHit >= attackTimeGap)
+            {
+                setToThisAnimation(AnimationParams.isAim);
+            }
+        }
+        else
+        {
+            callback();
+        }
+    }
+
+    private void Attack()
+    {
+        if (!hasAttacked)
+        {
+            enemy.Stop();
+            lastHitTime = Time.time;
+            PlayerHealth.doDamage(damage, this.transform.position);
+            hasAttacked = true;
+        }
+        setToThisAnimation(AnimationParams.isWalk);
     }
 
     public void EnemyBeenHit(int incomingDamage)
@@ -164,20 +178,56 @@ public class ArcherAI : MonoBehaviour
     void whenEnemyDead()
     {
         isDead = true;
-
-
-
         Destroy(gameObject);
     }
 
     Vector2 GetRandomNearPosition()
     {
-        Vector2 enemyPos = transform.position;
+        Vector2 newPosition = transform.position;
 
-        enemyPos.x += Random.Range(-1 * randomWalkRange, randomWalkRange);
-        enemyPos.y += Random.Range(-1 * randomWalkRange, randomWalkRange);
+        Vector2 playerPosition = GetPlayerDirection(player, transform);
 
-        return enemyPos;
+        if (playerPosition.x > 0) //player at the right side of enemy
+        {
+            if (playerPosition.y >= 0) //upper right
+            {
+                newPosition.x = player.position.x - chaseWalkDelta;
+                newPosition.y = player.position.x - chaseWalkDelta;
+            }
+            else if (playerPosition.y < 0) //down right
+            {
+                newPosition.x = player.position.x - chaseWalkDelta;
+                newPosition.y = player.position.y + chaseWalkDelta;
+            }
+        }
+        else if (playerPosition.x < 0) //player at the left side of enemy
+        {
+            if (playerPosition.y >= 0) //upper left
+            {
+                newPosition.x = player.position.x + chaseWalkDelta;
+                newPosition.y = player.position.y - chaseWalkDelta;
+            }
+            else if (playerPosition.y < 0) //down left
+            {
+                newPosition.x = player.position.x + chaseWalkDelta;
+                newPosition.y = player.position.y + chaseWalkDelta;
+            }
+        }
+        else if (playerPosition.x == 0)
+        {
+            if (playerPosition.y > 0)
+            { //player is at vertical top
+                newPosition.x -= Random.Range(-1 * chaseWalkDelta, chaseWalkDelta);
+                newPosition.y -= chaseWalkDelta;
+            }
+            else if (playerPosition.y < 0)
+            { //player is at vertical down
+                newPosition.x -= Random.Range(-1 * chaseWalkDelta, chaseWalkDelta);
+                newPosition.y += chaseWalkDelta;
+            }
+        }
+
+        return newPosition;
     }
 
     void setToThisAnimation(AnimationParams type)
@@ -297,8 +347,8 @@ public class ArcherAI : MonoBehaviour
         Vector2 playerPosition = GetPlayerDirection(player, transform);
         Vector2 newPosition = transform.position;
 
-        float moveX = 1.5f; // delta value to move
-        float moveY = 1.5f; // delta value to move
+        float moveX = 1.1f; // delta value to move
+        float moveY = 1.1f; // delta value to move
 
         if (playerPosition.x > 0) //player at the right side of enemy
         {

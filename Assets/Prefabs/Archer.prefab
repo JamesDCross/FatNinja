@@ -301,9 +301,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   radius: 0.5
   speed: 3.5
-  angularSpeed: 100
+  angularSpeed: 70
   acceleration: 1
-  stoppingDistance: 0
+  stoppingDistance: 2
   autoBraking: 1
   nextPos: {x: 0, y: 0}
 --- !u!114 &114754488828342064
@@ -318,12 +318,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HP: 10
-  keepDistance: 4
+  keepDistance: 8
   alertDistance: 12
   damage: 4
   speed: 4
-  randomWalkRange: 1.5
-  chanceToAttack: 5
+  randomWalkRange: 1
+  chanceToAttack: 7
   attackTimeGap: 2
   painSounds:
   - {fileID: 8300000, guid: 8e3393b05b74f44c08bcd0a1a61d1b2a, type: 3}
