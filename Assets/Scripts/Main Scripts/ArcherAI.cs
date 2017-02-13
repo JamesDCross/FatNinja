@@ -446,7 +446,7 @@ public class ArcherAI : MonoBehaviour
     {
         AnimationEvent ae = new AnimationEvent();
         ae.messageOptions = SendMessageOptions.DontRequireReceiver;
-        PlayerHealth.doDamage(damage);
+        PlayerHealth.doDamage(damage, this.transform.position);
     }
 
     void EnemyDead()

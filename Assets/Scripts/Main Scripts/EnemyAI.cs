@@ -68,6 +68,10 @@ public class EnemyAI : MonoBehaviour
             animator.SetBool("IsSit",true);
         }
 
+        if (audioE == null) {
+            audioE = GetComponentInChildren<AudioSource>();
+        }
+
         ApplyAnimationEventToKickAnimation(CreateAnimationEvent());
         //enemy.destination = player.position;
     }
@@ -138,15 +142,16 @@ public class EnemyAI : MonoBehaviour
         audioE.Play();
 
         // spawn blood
-
-        //if (damage != 0) {
         GameObject blood = Instantiate(bloodPrefab);
+        // set blood position
         Vector3 bloodPos = this.transform.position;
-        //bloodPos.z = 50;
         blood.transform.position = bloodPos;
+        // set blood direction
         float playerAngle = player.gameObject.GetComponent<CharacterController>().getPlayerAngle();
-        blood.GetComponent<BloodScript>().setBlood(playerAngle, (float)incomingdamage / 4f);
-        //}
+        blood.GetComponent<BloodScript>().setBlood(playerAngle, (float)incomingdamage / 2f);
+        // set blood damage text
+        blood.GetComponentInChildren<damageTextScr>().setDamage(incomingdamage);
+
         if (enemyHP <= 0) { EnemyDead(); }
     }
 
@@ -449,7 +454,7 @@ public class EnemyAI : MonoBehaviour
 
     public void DoDamage()
     {
-        PlayerHealth.doDamage(damage);
+        PlayerHealth.doDamage(damage, this.transform.position);
     }
 
     void EnemyDead()
