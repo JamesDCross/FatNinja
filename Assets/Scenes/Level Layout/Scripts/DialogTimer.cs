@@ -8,7 +8,7 @@ public class DialogTimer : MonoBehaviour
 {
     public float pauseBeforeText;
     public float displayTextTime;
-    public float nextLine;//should be when the enemy runs away
+   
 
 
     public string quote;
