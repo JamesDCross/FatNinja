@@ -15,6 +15,13 @@ public class ArcherAI : MonoBehaviour
     public int chanceToAttack = 5;
     public float attackTimeGap = 1f; // time gap between each attack
 
+    //Audio
+    public AudioClip[] painSounds;
+    public AudioSource audioE;
+
+    // Blood effect
+    public GameObject bloodPrefab;
+
     // private variables starts here
     private bool isDead = false;
     private bool isRandomWalk = false;
@@ -39,6 +46,10 @@ public class ArcherAI : MonoBehaviour
         enemy = GetComponent<NavMeshAgent2D>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
         enemy.speed = speed;
+        if (audioE == null)
+        {
+            audioE = GetComponentInChildren<AudioSource>();
+        }
         //ApplyAnimationEventToKickAnimation(CreateAnimationEvent());
     }
 
@@ -133,9 +144,29 @@ public class ArcherAI : MonoBehaviour
         //Debug.Log(Vector2.Distance(transform.position, player.position));
     }
 
+    public void EnemyBeenHit(int incomingDamage)
+    {
+        HP -= incomingDamage;
+
+        int rand = UnityEngine.Random.Range(0, painSounds.Length);
+        audioE.clip = painSounds[rand];
+        audioE.Play();
+
+        showSomeBlood(incomingDamage);
+
+        if (HP <= 0)
+        {
+            whenEnemyDead();
+        }
+        Debug.Log("asd");
+    }
+
     void whenEnemyDead()
     {
         isDead = true;
+
+
+
         Destroy(gameObject);
     }
 
@@ -247,6 +278,20 @@ public class ArcherAI : MonoBehaviour
 
         return pos;
     }
+
+    void showSomeBlood(int incomingdamage)
+    {
+        GameObject blood = Instantiate(bloodPrefab);
+        // set blood position
+        Vector3 bloodPos = this.transform.position;
+        blood.transform.position = bloodPos;
+        // set blood direction
+        float playerAngle = player.gameObject.GetComponent<CharacterController>().getPlayerAngle();
+        blood.GetComponent<BloodScript>().setBlood(playerAngle, (float)incomingdamage / 2f);
+        // set blood damage text
+        blood.GetComponentInChildren<damageTextScr>().setDamage(incomingdamage);
+    }
+
     Vector2 GetFurthestPointAfterPlayerToEnemy()
     {
         Vector2 playerPosition = GetPlayerDirection(player, transform);
