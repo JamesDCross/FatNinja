@@ -95,8 +95,10 @@ public class ArcherAI : MonoBehaviour
             // we are at random walk range, check if we have reach the deatination.
             if (isWalking)
             {
-                if (enemy.remainingDistance <= 0.01f)
+                if (enemy.remainingDistance == 0)
                 {
+                    Debug.Log("Really");
+                    StartToAttack();
                     isWalking = false;
                 }
             }
@@ -109,7 +111,9 @@ public class ArcherAI : MonoBehaviour
                     RandomlyChooseAttackOrMove(chanceToAttack, () =>
                     {
                         enemy.Resume();
-                        enemy.destination = GetRandomNearPosition();
+                        enemy.ResetPath();
+                        //enemy.destination = GetRandomNearPosition();
+                        enemy.destination = (transform.position - player.position).normalized * keepDistance + player.position;
                         isWalking = true;
                     });
                 }
@@ -121,6 +125,7 @@ public class ArcherAI : MonoBehaviour
                 {
                     // should walk back
                     enemy.Resume();
+                    enemy.ResetPath();                    
                     enemy.destination = GetFurthestPointAfterPlayerToEnemy();
                 });
             }
@@ -133,16 +138,21 @@ public class ArcherAI : MonoBehaviour
         int randomNumber = Random.Range(0, 10);
         if (randomNumber <= chance)
         {
-            //check the god damn time
-            float timeSinceLastHit = Time.time - lastHitTime;
-            if (timeSinceLastHit >= attackTimeGap)
-            {
-                setToThisAnimation(AnimationParams.isAim);
-            }
+            StartToAttack();
         }
         else
         {
             callback();
+        }
+    }
+
+    private void StartToAttack()
+    {
+        //check the god damn time
+        float timeSinceLastHit = Time.time - lastHitTime;
+        if (timeSinceLastHit >= attackTimeGap)
+        {
+            setToThisAnimation(AnimationParams.isAim);
         }
     }
 
@@ -347,8 +357,8 @@ public class ArcherAI : MonoBehaviour
         Vector2 playerPosition = GetPlayerDirection(player, transform);
         Vector2 newPosition = transform.position;
 
-        float moveX = 1.1f; // delta value to move
-        float moveY = 1.1f; // delta value to move
+        float moveX = 1f; // delta value to move
+        float moveY = 1f; // delta value to move
 
         if (playerPosition.x > 0) //player at the right side of enemy
         {

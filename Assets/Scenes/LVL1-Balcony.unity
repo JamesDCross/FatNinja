@@ -2984,21 +2984,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 17
       objectReference: {fileID: 0}
-    - target: {fileID: 212667601770737994, guid: 15b7d439b064446ca82685499c295913,
-        type: 2}
-      propertyPath: m_SortingLayerID
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114638398079852498, guid: 15b7d439b064446ca82685499c295913,
-        type: 2}
-      propertyPath: stoppingDistance
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114754488828342064, guid: 15b7d439b064446ca82685499c295913,
-        type: 2}
-      propertyPath: keepDistance
-      value: 7
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 15b7d439b064446ca82685499c295913, type: 2}
   m_IsPrefabParent: 0

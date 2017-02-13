@@ -303,7 +303,7 @@ MonoBehaviour:
   speed: 3.5
   angularSpeed: 70
   acceleration: 1
-  stoppingDistance: 2
+  stoppingDistance: 0
   autoBraking: 1
   nextPos: {x: 0, y: 0}
 --- !u!114 &114754488828342064
@@ -318,12 +318,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HP: 10
-  keepDistance: 8
+  keepDistance: 9
   alertDistance: 12
   damage: 4
   speed: 4
-  randomWalkRange: 1
-  chanceToAttack: 7
+  chanceToAttack: 6
   attackTimeGap: 2
   painSounds:
   - {fileID: 8300000, guid: 8e3393b05b74f44c08bcd0a1a61d1b2a, type: 3}
@@ -360,7 +359,7 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -273009415
+  m_SortingLayerID: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 83463ffaaacf04024b1004562700ebe6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
