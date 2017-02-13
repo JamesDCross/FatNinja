@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Reflection;
-using System.ComponentModel.Design;
-using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;      //1Tells Random to use the Unity Engine random number generator.
 
@@ -64,11 +61,13 @@ public class EnemyAI : MonoBehaviour
         formerStatus = new bool[3];
         playerCollider = null;
 
-        if (isSit){
-            animator.SetBool("IsSit",true);
+        if (isSit)
+        {
+            animator.SetBool("IsSit", true);
         }
 
-        if (audioE == null) {
+        if (audioE == null)
+        {
             audioE = GetComponentInChildren<AudioSource>();
         }
 
@@ -153,49 +152,6 @@ public class EnemyAI : MonoBehaviour
         blood.GetComponentInChildren<damageTextScr>().setDamage(incomingdamage);
 
         if (enemyHP <= 0) { EnemyDead(); }
-    }
-
-    Vector2 GetPlayerDirection()
-    {
-        float horizontal = player.position.x - transform.position.x;
-        float vertical = player.position.y - transform.position.y;
-
-        Vector2 pos = new Vector2(0, 0);
-        float offset = 0.4f; //use to make the enemy not that sensetive to direction
-
-        if (horizontal > offset)
-        {
-            pos.x = 1;
-        }
-        else if (horizontal < offset * -1)
-        {
-            pos.x = -1;
-        }
-        else if (horizontal >= offset * -1 && horizontal <= offset)
-        {
-            pos.x = 0;
-        }
-
-        if (vertical > offset)
-        {
-            pos.y = 1;
-        }
-        else if (vertical < offset * -1)
-        {
-            pos.y = -1;
-        }
-        else if (vertical >= offset * -1 && vertical <= offset)
-        {
-            pos.y = 0;
-        }
-
-        // if (enemyHP <= runAwayHP)
-        // {
-        //     pos.x *= -1;
-        //     pos.y *= -1;
-        // }
-
-        return pos;
     }
 
     Vector2 GetDestination(Vector2 playerRawAxis)
@@ -287,7 +243,7 @@ public class EnemyAI : MonoBehaviour
             }
         }
 
-        Vector2 pos = GetPlayerDirection();
+        Vector2 pos = GetPlayerDirection(player, transform);
         if (targetAnimation.Equals("PlayerKicking"))
         {
             lastHitTime = Time.time;
@@ -345,7 +301,7 @@ public class EnemyAI : MonoBehaviour
 
     Vector2 GetFurthestPointAfterPlayerToEnemy()
     {
-        Vector2 playerPosition = GetPlayerDirection();
+        Vector2 playerPosition = GetPlayerDirection(player, transform);
         Vector2 newPosition = transform.position;
 
         float moveX = 5.5f; // delta value to move
@@ -396,9 +352,8 @@ public class EnemyAI : MonoBehaviour
 
     Vector2 GetRandomNearPlayerPosition()
     {
-        Vector2 playerPos = GetPlayerDirection();
+        Vector2 playerPos = GetPlayerDirection(player, transform);
         Vector2 oldEnemyPos = transform.position;
-        Vector2 newEnemyPos = new Vector2(0, 0);
 
         float offSet = randomWalkRange;
 
@@ -487,9 +442,10 @@ public class EnemyAI : MonoBehaviour
 
         if (isSit)
         {
-            Wait(sitTime,()=>{
+            Wait(sitTime, () =>
+            {
                 isSit = false;
-                animator.SetBool("IsSit",false);
+                animator.SetBool("IsSit", false);
             });
             return;
         }
@@ -533,7 +489,7 @@ public class EnemyAI : MonoBehaviour
         if (!BeenHit)
         {
             float remainingDistance = Vector2.Distance(transform.position, player.position);
-            animator.SetFloat("Distance" , remainingDistance);
+            animator.SetFloat("Distance", remainingDistance);
             //EnemyRestoreFromHit();
 
             if (enemyHP <= runAwayHP)
@@ -552,7 +508,7 @@ public class EnemyAI : MonoBehaviour
                 return;
             }
 
-            if(remainingDistance > 10)
+            if (remainingDistance > 10)
             {
                 enemy.Stop();
                 animator.SetBool("PlayerMoving", false);
@@ -663,5 +619,49 @@ public class EnemyAI : MonoBehaviour
         {
             Debug.Log("Enemy");
         }
+    }
+
+    private Vector2 GetPlayerDirection(Transform player, Transform enemy)
+    {
+        Transform transform = enemy;
+        float horizontal = player.position.x - transform.position.x;
+        float vertical = player.position.y - transform.position.y;
+
+        Vector2 pos = new Vector2(0, 0);
+        float offset = 0.4f; //use to make the enemy not that sensetive to direction
+
+        if (horizontal > offset)
+        {
+            pos.x = 1;
+        }
+        else if (horizontal < offset * -1)
+        {
+            pos.x = -1;
+        }
+        else if (horizontal >= offset * -1 && horizontal <= offset)
+        {
+            pos.x = 0;
+        }
+
+        if (vertical > offset)
+        {
+            pos.y = 1;
+        }
+        else if (vertical < offset * -1)
+        {
+            pos.y = -1;
+        }
+        else if (vertical >= offset * -1 && vertical <= offset)
+        {
+            pos.y = 0;
+        }
+
+        // if (enemyHP <= runAwayHP)
+        // {
+        //     pos.x *= -1;
+        //     pos.y *= -1;
+        // }
+
+        return pos;
     }
 }
