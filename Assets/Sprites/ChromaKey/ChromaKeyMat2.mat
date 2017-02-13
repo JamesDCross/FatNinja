@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: ChromaKeyMat2
-  m_Shader: {fileID: 4800000, guid: 3f169417a44f04f539231261587c5ee3, type: 3}
+  m_Shader: {fileID: 4800000, guid: 7259159379fc6410b975699d199adf12, type: 3}
   m_ShaderKeywords: _EMISSION
   m_LightmapFlags: 1
   m_CustomRenderQueue: -1
@@ -24,7 +24,7 @@ Material:
     - first:
         name: _ChromaBG
       second:
-        m_Texture: {fileID: 2800000, guid: 52c9d38668da0448eb8783be0689cb2c, type: 3}
+        m_Texture: {fileID: 2800000, guid: cdaa072a42a65412c8b627fa72d0f6e0, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - first:
