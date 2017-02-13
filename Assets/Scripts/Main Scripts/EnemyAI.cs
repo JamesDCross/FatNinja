@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Reflection;
-using System.ComponentModel.Design;
-using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;      //1Tells Random to use the Unity Engine random number generator.
 
@@ -155,49 +152,6 @@ public class EnemyAI : MonoBehaviour
         if (enemyHP <= 0) { EnemyDead(); }
     }
 
-    Vector2 GetPlayerDirection()
-    {
-        float horizontal = player.position.x - transform.position.x;
-        float vertical = player.position.y - transform.position.y;
-
-        Vector2 pos = new Vector2(0, 0);
-        float offset = 0.4f; //use to make the enemy not that sensetive to direction
-
-        if (horizontal > offset)
-        {
-            pos.x = 1;
-        }
-        else if (horizontal < offset * -1)
-        {
-            pos.x = -1;
-        }
-        else if (horizontal >= offset * -1 && horizontal <= offset)
-        {
-            pos.x = 0;
-        }
-
-        if (vertical > offset)
-        {
-            pos.y = 1;
-        }
-        else if (vertical < offset * -1)
-        {
-            pos.y = -1;
-        }
-        else if (vertical >= offset * -1 && vertical <= offset)
-        {
-            pos.y = 0;
-        }
-
-        // if (enemyHP <= runAwayHP)
-        // {
-        //     pos.x *= -1;
-        //     pos.y *= -1;
-        // }
-
-        return pos;
-    }
-
     Vector2 GetDestination(Vector2 playerRawAxis)
     {
         /*
@@ -287,7 +241,7 @@ public class EnemyAI : MonoBehaviour
             }
         }
 
-        Vector2 pos = GetPlayerDirection();
+        Vector2 pos = EnemyUtils.GetPlayerDirection(player,transform);
         if (targetAnimation.Equals("PlayerKicking"))
         {
             lastHitTime = Time.time;
@@ -345,7 +299,7 @@ public class EnemyAI : MonoBehaviour
 
     Vector2 GetFurthestPointAfterPlayerToEnemy()
     {
-        Vector2 playerPosition = GetPlayerDirection();
+        Vector2 playerPosition = EnemyUtils.GetPlayerDirection(player,transform);
         Vector2 newPosition = transform.position;
 
         float moveX = 5.5f; // delta value to move
@@ -396,7 +350,7 @@ public class EnemyAI : MonoBehaviour
 
     Vector2 GetRandomNearPlayerPosition()
     {
-        Vector2 playerPos = GetPlayerDirection();
+        Vector2 playerPos = EnemyUtils.GetPlayerDirection(player,transform);
         Vector2 oldEnemyPos = transform.position;
         Vector2 newEnemyPos = new Vector2(0, 0);
 
