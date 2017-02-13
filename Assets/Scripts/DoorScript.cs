@@ -22,7 +22,7 @@ public class DoorScript : MonoBehaviour {
 	{
 		Debug.Log("HIT DOOR WITH OBJECT: " + other.tag);
 		if (other.tag == "Player"){
-			SceneManager.LoadScene ("Dojo", LoadSceneMode.Single);
+			SceneManager.LoadScene ("LVL-SwordMiniBoss", LoadSceneMode.Single);
 		}
 	}
 }

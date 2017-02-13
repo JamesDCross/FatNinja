@@ -127,6 +127,9 @@ Material:
     - first:
         name: _ZWrite
       second: 1
+    - first:
+        name: _cameraSize
+      second: 7
     m_Colors:
     - first:
         name: _Color

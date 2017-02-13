@@ -5,7 +5,7 @@
 public class PlayerHealth : MonoBehaviour {
 
     public static float MaxHP;
-    public static float PlayersHP;
+    public static float PlayersHP = 0;
     public static float Damage;
     public Texture HP_Indercator;
     public Texture HP_Container;
@@ -17,6 +17,7 @@ public class PlayerHealth : MonoBehaviour {
         MaxHP = 20;
         PlayersHP = MaxHP;
         Damage = 0;
+
 	}
 
     void OnGUI()
