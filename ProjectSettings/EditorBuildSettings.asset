@@ -11,7 +11,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Start Menu.unity
   - enabled: 0
     path: Assets/Scenes/Controls.unity
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Alpha - FatNinja.unity
   - enabled: 0
     path: Assets/Scenes/Dojo.unity
