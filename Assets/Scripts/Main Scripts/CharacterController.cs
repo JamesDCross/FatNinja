@@ -223,8 +223,7 @@ public class CharacterController : MonoBehaviour {
             //If an attack collies with an enemy calls a damage method on that enemy
             if (enemy != null)
             {
-                EnemyAI EAI = enemy.GetComponent<EnemyAI>();
-                EAI.EnemyBeenHit(attackDamage);
+                enemy.SendMessage("EnemyBeenHit",attackDamage);
                 enemy = null;
             }
         }
