@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class DoorScript : MonoBehaviour {
 
+    private string level;
+
 	// Use this for initialization
 	void Start () {
 		
