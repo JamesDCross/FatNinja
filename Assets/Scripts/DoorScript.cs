@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class DoorScript : MonoBehaviour {
 
-    private string level;
+    public string level;
 
 	// Use this for initialization
 	void Start () {
@@ -24,7 +24,7 @@ public class DoorScript : MonoBehaviour {
 	{
 		Debug.Log("HIT DOOR WITH OBJECT: " + other.tag);
 		if (other.tag == "Player"){
-			SceneManager.LoadScene ("LVL-SwordMiniBoss", LoadSceneMode.Single);
+			SceneManager.LoadScene (level, LoadSceneMode.Single);
 		}
 	}
 }
