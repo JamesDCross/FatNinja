@@ -35,8 +35,8 @@ public class SpawnWaves : MonoBehaviour
 
                 Instantiate(enemyType, spawnPosition, spawnRotation);
 
-                //enemies have a chance to run away
-                int rand = UnityEngine.Random.Range(3, 8);
+                //enemies have a random chance to run away
+                int rand = UnityEngine.Random.Range(0, 6);
 
                 if (enemyType.tag == "Enemy") {
                     enemyType.GetComponent<EnemyAI>().runAwayHP = rand;
