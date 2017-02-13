@@ -445,6 +445,10 @@ public class EnemyAI : MonoBehaviour
     {
         AnimationEvent ae = new AnimationEvent();
         ae.messageOptions = SendMessageOptions.DontRequireReceiver;
+    }
+
+    public void DoDamage()
+    {
         PlayerHealth.doDamage(damage);
     }
 
