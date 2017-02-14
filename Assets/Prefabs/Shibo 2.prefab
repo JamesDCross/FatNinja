@@ -252,7 +252,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1842082821315410}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.62, y: 3.11, z: 0}
+  m_LocalPosition: {x: 5.23, y: -4.38, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4411377374814452}
@@ -486,9 +486,9 @@ MonoBehaviour:
   speed: 6
   comboTimeMin: 0.2
   comboTimeMax: 2
-  punchDamage: 2
+  punchDamage: 1
   kickDamage: 2
-  upperCutDamage: 3
+  upperCutDamage: 4
   hurricaneKickDamage: 1
   A: {fileID: 21300000, guid: 0b8d64663a9e8d14ca4d39e86e6346d7, type: 3}
   B: {fileID: 21300000, guid: cfd96d1e7e099684e8dbd6f43627df18, type: 3}
@@ -572,7 +572,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 0580b0e9b19cd43f18c5f6c1b9c1372d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 83d5ff777daea46d6ba1c9b400ff3602, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
