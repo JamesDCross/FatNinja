@@ -486,6 +486,10 @@ public class EnemyAI : MonoBehaviour
         }
 
 
+        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("hit")) {
+            BeenHit = false;
+        }
+
         if (!BeenHit)
         {
             float remainingDistance = Vector2.Distance(transform.position, player.position);
@@ -609,15 +613,8 @@ public class EnemyAI : MonoBehaviour
         {
             caughtPlayer = false;
             playerCollider = null;
-            if (BeenHit)
-            {
-                BeenHit = false;
-            }
+            BeenHit = false;
             enemy.Resume();
-        }
-        else if (other.tag == "Enemy")
-        {
-            Debug.Log("Enemy");
         }
     }
 

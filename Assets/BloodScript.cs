@@ -11,6 +11,15 @@ public class BloodScript : MonoBehaviour {
 		Setup();
 	}
 
+	void Update()
+	{
+		if (particles) {
+			if (!particles.IsAlive()) {
+				Destroy(gameObject);
+			}
+		}
+	}
+
 	void Setup() {
 		if (particles == null) {
 			particles = GetComponentInChildren<ParticleSystem>();
