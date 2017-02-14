@@ -42,6 +42,7 @@ public class EnemyAI : MonoBehaviour
     private Transform playerCollider;
     private bool[] formerStatus; //1-move; 2-kick;
     private Vector3 playerLastPosition;
+    private float timeSinceRanAway;
 
     private enum AnimationParams
     {
@@ -429,6 +430,18 @@ public class EnemyAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (enemyHP < runAwayHP)
+        {
+            timeSinceRanAway += Time.deltaTime;
+            Debug.Log(timeSinceRanAway);
+        }
+        if (timeSinceRanAway > 5f)
+        {
+            timeSinceRanAway = 0f;
+            enemyHP = (runAwayHP * 2);
+        }
+
+
         if (isDead)
         {
             return;
