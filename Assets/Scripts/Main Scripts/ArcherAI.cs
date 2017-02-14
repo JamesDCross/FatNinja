@@ -134,10 +134,14 @@ public class ArcherAI : MonoBehaviour
     private void fireArrow()
     {
         GameObject myArrow = Instantiate(arrow);
-        myArrow.transform.position = transform.position;
         var arrowAI = myArrow.GetComponent<ArrowAI>();
+        var arrowRigid = myArrow.GetComponent<Rigidbody2D>();
+        
+        myArrow.transform.position = transform.position;
         arrowAI.damage = damage;
         arrowAI.destination = arrowAI.computeDestination(player.position);
+        float angle1 = Mathf.Atan2(arrowAI.destination.y, arrowAI.destination.x) * Mathf.Rad2Deg;
+        arrowRigid.MoveRotation(angle1+90);
     }
 
     private void RandomlyChooseAttackOrMove(int chance, Action callback)

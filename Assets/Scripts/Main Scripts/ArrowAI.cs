@@ -17,16 +17,13 @@ public class ArrowAI : MonoBehaviour
     void Update()
     {
         float distance = Vector2.Distance(transform.position, destination);
-        if (distance.Equals(0))
-        {
-            Destroy(gameObject);
-        }
+        if (distance.Equals(0)) { Destroy(gameObject); }
         transform.position = Vector2.MoveTowards(transform.position, destination, speed * Time.deltaTime);
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "Player")
+        if (other.tag.Equals("Player"))
         {
             //Let me hit you.
             PlayerHealth.doDamage(damage, this.transform.position);
@@ -37,5 +34,10 @@ public class ArrowAI : MonoBehaviour
     public Vector2 computeDestination(Vector3 playerPosition)
     {
         return transform.position + (playerPosition - transform.position).normalized * 80.0f;
+    }
+
+    public Quaternion computeRotation(Vector3 playerPosition)
+    {
+        return Quaternion.LookRotation(Vector3.forward, playerPosition - transform.position) * Quaternion.Euler(0, 0, -180);
     }
 }
