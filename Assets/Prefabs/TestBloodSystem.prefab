@@ -37,6 +37,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4370495443710128}
   - component: {fileID: 114407826608220818}
+  - component: {fileID: 114699917565145656}
   m_Layer: 0
   m_Name: TestBloodSystem
   m_TagString: Untagged
@@ -97,7 +98,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1098130290637650}
   m_LocalRotation: {x: -0.28401542, y: 0, z: 0, w: 0.95881975}
-  m_LocalPosition: {x: -0.05, y: -6.49, z: 0}
+  m_LocalPosition: {x: 4.73, y: -7.22, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4173601902869528}
@@ -206,8 +207,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f9c39f3de6b7438bbcdc732a73891d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  risingSpeed: 2
-  finalSize: 0.4
+--- !u!114 &114699917565145656
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1098130290637650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2463b2b263a04190826d13d4c28b733, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!198 &198940980975452362
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -263,7 +273,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 0
-  randomSeed: -1929293552
+  randomSeed: -1367542468
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -307,31 +317,31 @@ ParticleSystem:
         m_Curve:
         - serializedVersion: 2
           time: 0
-          value: 1
+          value: 0.9363395
           inSlope: 0
           outSlope: 0
           tangentMode: 0
         - serializedVersion: 2
-          time: 0.5606226
-          value: 0.31663084
-          inSlope: -3.8311398
-          outSlope: -3.8311398
+          time: 0.55114394
+          value: -0.60114104
+          inSlope: -0.009114276
+          outSlope: -0.009114276
           tangentMode: 0
         - serializedVersion: 2
-          time: 0.6463667
-          value: 0.69482553
-          inSlope: 4.9404206
-          outSlope: 4.9404206
+          time: 0.62977904
+          value: 0.8433666
+          inSlope: -0.026873983
+          outSlope: -0.026873983
           tangentMode: 0
         - serializedVersion: 2
-          time: 0.78723663
-          value: 0.30726123
-          inSlope: -6.697034
-          outSlope: -6.697034
+          time: 0.8014546
+          value: -0.62642574
+          inSlope: -0.08405631
+          outSlope: -0.08405631
           tangentMode: 0
         - serializedVersion: 2
           time: 1
-          value: 0.34013605
+          value: 0.27647558
           inSlope: 3.1338768
           outSlope: 3.1338768
           tangentMode: 0
@@ -448,7 +458,7 @@ ParticleSystem:
         m_NumColorKeys: 2
         m_NumAlphaKeys: 2
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.61960787, g: 0, b: 0, a: 0.7019608}
+      maxColor: {r: 0.8156863, g: 0, b: 0, a: 0.7019608}
       minMaxState: 0
     startSize:
       scalar: 1
@@ -2903,7 +2913,7 @@ ParticleSystemRenderer:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_RenderMode: 0
-  m_SortMode: 0
+  m_SortMode: 3
   m_MinParticleSize: 0
   m_MaxParticleSize: 0.5
   m_CameraVelocityScale: 0
