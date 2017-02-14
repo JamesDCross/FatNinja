@@ -87,7 +87,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1635246712760814}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -66.32836, y: 22.620747, z: 0}
+  m_LocalPosition: {x: 6.15, y: -2.79, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4387880597627382}
@@ -319,8 +319,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HP: 10
   keepDistance: 9
-  alertDistance: 10
-  damage: 1
+  alertDistance: 12
+  damage: 4
   speed: 4
   chanceToAttack: 6
   attackTimeGap: 2
@@ -330,6 +330,7 @@ MonoBehaviour:
   audioE: {fileID: 0}
   bloodPrefab: {fileID: 1098130290637650, guid: 6a16bf338f2c3409bb4e4c16139198f7,
     type: 2}
+  arrow: {fileID: 1827085134929166, guid: adf71657c56254557b54411a052fcbfe, type: 2}
 --- !u!212 &212667601770737994
 SpriteRenderer:
   m_ObjectHideFlags: 1

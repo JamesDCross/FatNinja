@@ -21,12 +21,15 @@ public class ArcherAI : MonoBehaviour
     // Blood effect
     public GameObject bloodPrefab;
 
+    public GameObject arrow;
+
     // private variables starts here
     private bool isDead = false;
-    private bool isWalking = false;
     private int walkState = Animator.StringToHash("Base Layer.walk");
     private int aimState = Animator.StringToHash("Base Layer.aim");
     private int idleState = Animator.StringToHash("Base Layer.idle");
+    private int deadState = Animator.StringToHash("Base Layer.dead");
+    private int beenHitState = Animator.StringToHash("Base Layer.beenHit");
     private float lastHitTime;
     private bool hasAttacked;
     private Animator animator;
@@ -35,7 +38,7 @@ public class ArcherAI : MonoBehaviour
     private AnimatorStateInfo currentBaseState;
     private enum AnimationParams
     {
-        isWalk, isAim, isIdle
+        isWalk, isAim, isIdle, isDead, isHit
     }
 
     void Awake()
@@ -54,17 +57,7 @@ public class ArcherAI : MonoBehaviour
 
     void Update()
     {
-        if (isDead)
-        {
-            return;
-        }
-
-        if (HP <= 0)
-        {
-            //do something
-            whenEnemyDead();
-            return;
-        }
+        if (isDead) { return; }
 
         currentBaseState = animator.GetCurrentAnimatorStateInfo(0);
         float distance = Vector2.Distance(transform.position, player.position);
@@ -77,8 +70,13 @@ public class ArcherAI : MonoBehaviour
         }
         else
         {
-            setToThisAnimation(AnimationParams.isWalk);
+            if (currentBaseState.fullPathHash.Equals(idleState))
+            {
+                setToThisAnimation(AnimationParams.isWalk);
+            }
         }
+
+        setEnemyDirection();
 
         /**************************************************/
         /* A Simple State Machine Management starts here */
@@ -88,35 +86,35 @@ public class ArcherAI : MonoBehaviour
             //TODO: fire the arrow
             Attack();
         }
+        else if (currentBaseState.fullPathHash.Equals(beenHitState))
+        {
+            // anything related to the beenHit state should locates here.
+            setToThisAnimation(AnimationParams.isWalk);
+        }
+        else if (currentBaseState.fullPathHash.Equals(deadState))
+        {
+            whenEnemyDead();
+        }
         else if (currentBaseState.fullPathHash.Equals(walkState))
         {
             hasAttacked = false;
 
-            // we are at random walk range, check if we have reach the deatination.
-            if (isWalking)
+            // if i am adjusting the distance to the player,.
+            if (enemy.remainingDistance <= 0.5f)
             {
-                if (enemy.remainingDistance == 0)
-                {
-                    Debug.Log("Really");
-                    StartToAttack();
-                    isWalking = false;
-                }
+                Debug.Log("Really");
+                StartToAttack();
             }
 
             if (distance > keepDistance)
             {
-                if (!isWalking)
+                RandomlyChooseAttackOrMove(chanceToAttack, () =>
                 {
-                    //use chance System to determine whether we should attack or not
-                    RandomlyChooseAttackOrMove(chanceToAttack, () =>
-                    {
-                        enemy.Resume();
-                        enemy.ResetPath();
-                        //enemy.destination = GetRandomNearPosition();
-                        enemy.destination = (transform.position - player.position).normalized * keepDistance + player.position;
-                        isWalking = true;
-                    });
-                }
+                    enemy.Resume();
+                    enemy.ResetPath();
+                    //enemy.destination = GetRandomNearPosition();
+                    enemy.destination = (transform.position - player.position).normalized * keepDistance + player.position;
+                });
             }
             else
             {
@@ -125,12 +123,27 @@ public class ArcherAI : MonoBehaviour
                 {
                     // should walk back
                     enemy.Resume();
-                    enemy.ResetPath();                    
+                    enemy.ResetPath();
                     enemy.destination = GetFurthestPointAfterPlayerToEnemy();
                 });
             }
         }
         //Debug.Log(Vector2.Distance(transform.position, player.position));
+    }
+
+    private void fireArrow()
+    {
+        GameObject myArrow = Instantiate(arrow);
+        var arrowAI = myArrow.GetComponent<ArrowAI>();
+        var arrowRigid = myArrow.GetComponent<Rigidbody2D>();
+        
+        myArrow.transform.position = transform.position;
+        myArrow.transform.rotation = arrowAI.computeRotation(player.position);
+        arrowAI.damage = damage;
+        arrowAI.destination = arrowAI.computeDestination(player.position);
+        
+        //float angle1 = Mathf.Atan2(arrowAI.destination.y, arrowAI.destination.x) * Mathf.Rad2Deg;
+        //arrowRigid.MoveRotation(angle1+90);
     }
 
     private void RandomlyChooseAttackOrMove(int chance, Action callback)
@@ -162,9 +175,9 @@ public class ArcherAI : MonoBehaviour
         {
             enemy.Stop();
             lastHitTime = Time.time;
-            PlayerHealth.doDamage(damage, this.transform.position);
+            fireArrow();
             hasAttacked = true;
-                    //Debug.Log("FUCK");
+            //Debug.Log("FUCK");
         }
         setToThisAnimation(AnimationParams.isWalk);
     }
@@ -181,15 +194,36 @@ public class ArcherAI : MonoBehaviour
 
         if (HP <= 0)
         {
-            whenEnemyDead();
+            enemy.Stop();
+            setToThisAnimation(AnimationParams.isDead);
         }
+        else
+        {
+            setToThisAnimation(AnimationParams.isHit);
+        }
+
         Debug.Log("asd");
     }
 
     void whenEnemyDead()
     {
+        enemy.Stop();
         isDead = true;
-        Destroy(gameObject);
+        setToThisAnimation(AnimationParams.isDead);
+
+        foreach (Transform child in transform)
+        {
+            if (child.GetComponent<AudioSource>().Equals(null))
+            {
+                Destroy(child.gameObject);
+            }
+        }
+
+        foreach (Collider2D c in GetComponents<Collider2D>())
+        {
+            c.enabled = false;
+        }
+        //Destroy(gameObject);
     }
 
     Vector2 GetRandomNearPosition()
@@ -241,26 +275,23 @@ public class ArcherAI : MonoBehaviour
         return newPosition;
     }
 
+    void setEnemyDirection()
+    {
+        // set the direction of the animationClips
+        Vector2 pos = GetPlayerDirection(player, transform);
+        animator.SetFloat("moveX", pos.x);
+        animator.SetFloat("moveY", pos.y);
+    }
+
     void setToThisAnimation(AnimationParams type)
     {
         Array values = Enum.GetValues(typeof(AnimationParams));
         foreach (AnimationParams val in values)
         {
             string name = Enum.GetName(typeof(AnimationParams), val);
-            if (val.Equals(type))
-            {
-                animator.SetBool(name, true);
-            }
-            else
-            {
-                animator.SetBool(name, false);
-            }
+            if (val.Equals(type)) { animator.SetBool(name, true); }
+            else { animator.SetBool(name, false); }
         }
-
-        // set the direction of the animationClips
-        Vector2 pos = GetPlayerDirection(player, transform);
-        animator.SetFloat("moveX", pos.x);
-        animator.SetFloat("moveY", pos.y);
     }
 
     private AnimationEvent CreateAnimationEvent()
@@ -283,15 +314,10 @@ public class ArcherAI : MonoBehaviour
                 bool isAdded = false;
                 foreach (AnimationEvent e in clip.events)
                 {
-                    if (e.functionName == evt.functionName)
-                    {
-                        isAdded = true;
-                    }
+                    if (e.functionName.Equals(evt.functionName))
+                    { isAdded = true; }
                 }
-                if (!isAdded)
-                {
-                    clip.AddEvent(evt);
-                }
+                if (!isAdded) { clip.AddEvent(evt); }
             }
         }
     }
