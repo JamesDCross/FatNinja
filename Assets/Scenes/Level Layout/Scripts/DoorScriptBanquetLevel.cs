@@ -23,7 +23,7 @@ public class DoorScriptBanquetLevel : MonoBehaviour
       
         if (other.tag == "Player")
         {
-            SceneManager.LoadScene("BanquetHall", LoadSceneMode.Single);
+            SceneManager.LoadScene("LVL6-BanquetHall", LoadSceneMode.Single);
         }
     }
 }
