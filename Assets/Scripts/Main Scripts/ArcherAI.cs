@@ -21,6 +21,8 @@ public class ArcherAI : MonoBehaviour
     // Blood effect
     public GameObject bloodPrefab;
 
+    public GameObject arrow;
+
     // private variables starts here
     private bool isDead = false;
     private int walkState = Animator.StringToHash("Base Layer.walk");
@@ -129,6 +131,15 @@ public class ArcherAI : MonoBehaviour
         //Debug.Log(Vector2.Distance(transform.position, player.position));
     }
 
+    private void fireArrow()
+    {
+        GameObject myArrow = Instantiate(arrow);
+        myArrow.transform.position = transform.position;
+        var arrowAI = myArrow.GetComponent<ArrowAI>();
+        arrowAI.damage = damage;
+        arrowAI.destination = arrowAI.computeDestination(player.position);
+    }
+
     private void RandomlyChooseAttackOrMove(int chance, Action callback)
     {
         int randomNumber = Random.Range(0, 10);
@@ -158,7 +169,7 @@ public class ArcherAI : MonoBehaviour
         {
             enemy.Stop();
             lastHitTime = Time.time;
-            PlayerHealth.doDamage(damage, this.transform.position);
+            fireArrow();
             hasAttacked = true;
             //Debug.Log("FUCK");
         }
@@ -272,14 +283,8 @@ public class ArcherAI : MonoBehaviour
         foreach (AnimationParams val in values)
         {
             string name = Enum.GetName(typeof(AnimationParams), val);
-            if (val.Equals(type))
-            {
-                animator.SetBool(name, true);
-            }
-            else
-            {
-                animator.SetBool(name, false);
-            }
+            if (val.Equals(type)) { animator.SetBool(name, true); }
+            else { animator.SetBool(name, false); }
         }
     }
 
@@ -303,15 +308,10 @@ public class ArcherAI : MonoBehaviour
                 bool isAdded = false;
                 foreach (AnimationEvent e in clip.events)
                 {
-                    if (e.functionName == evt.functionName)
-                    {
-                        isAdded = true;
-                    }
+                    if (e.functionName.Equals(evt.functionName))
+                    { isAdded = true; }
                 }
-                if (!isAdded)
-                {
-                    clip.AddEvent(evt);
-                }
+                if (!isAdded) { clip.AddEvent(evt); }
             }
         }
     }
