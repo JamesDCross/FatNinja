@@ -29,7 +29,6 @@
         {
         CGPROGRAM
 // Upgrade NOTE: excluded shader from DX11; has structs without semantics (struct appdata_t members screenPos)
-#pragma exclude_renderers d3d11
             #pragma vertex vert
             #pragma fragment frag
             #pragma multi_compile DUMMY PIXELSNAP_ON

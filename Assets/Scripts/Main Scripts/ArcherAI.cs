@@ -164,6 +164,7 @@ public class ArcherAI : MonoBehaviour
             lastHitTime = Time.time;
             PlayerHealth.doDamage(damage, this.transform.position);
             hasAttacked = true;
+                    //Debug.Log("FUCK");
         }
         setToThisAnimation(AnimationParams.isWalk);
     }
