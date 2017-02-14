@@ -430,13 +430,14 @@ public class EnemyAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (enemyHP < runAwayHP)
+        if (enemyHP <= runAwayHP)
         {
             timeSinceRanAway += Time.deltaTime;
-            Debug.Log(timeSinceRanAway);
+            //Debug.Log(timeSinceRanAway);
         }
         if (timeSinceRanAway > 5f)
         {
+            //Debug.Log("restored health");
             timeSinceRanAway = 0f;
             enemyHP = (runAwayHP * 2);
         }
