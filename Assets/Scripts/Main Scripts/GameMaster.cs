@@ -81,7 +81,7 @@ public class GameMaster : MonoBehaviour {
 
         if (GUI.Button(new Rect(posX + (width * .15f), exitsY, width * .7f, 20), "Quit"))
         {
-
+            HardReset();
         }
 
         if (combo)
@@ -117,14 +117,15 @@ public class GameMaster : MonoBehaviour {
 
     public static void SoftReset()
     {
+        Scene scene = SceneManager.GetActiveScene();
         PlayerHealth.Damage = 0;
-        PlayerHealth.PlayersHP = PlayerHealth.MaxHP; 
-         SceneManager.LoadScene("Alpha - FatNinja");
+        PlayerHealth.PlayersHP = PlayerHealth.MaxHP;
+        SceneManager.LoadScene(scene.name, LoadSceneMode.Single);
 
     }
 
     public static void HardReset()
     {
-        SoftReset();
+        SceneManager.LoadScene("Start Menu", LoadSceneMode.Single);
     }
 }

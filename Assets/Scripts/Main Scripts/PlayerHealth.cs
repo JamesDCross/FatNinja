@@ -4,9 +4,9 @@
 
 public class PlayerHealth : MonoBehaviour {
 
-    public static float MaxHP;
-    public static float PlayersHP = 0;
-    public static float Damage;
+    public static float MaxHP = 20;
+    public static float PlayersHP = MaxHP;
+    public static float Damage = 0;
     public Texture HP_Indercator;
     public Texture HP_Container;
     Vector2 pos  = new Vector2(10,30);
@@ -15,11 +15,10 @@ public class PlayerHealth : MonoBehaviour {
 public GameObject bloodPrefabTEMP;
     private static GameObject bloodPrefab;
 
+
 	// Use this for initialization
 	void Start () {
-        MaxHP = 20;
-        PlayersHP = MaxHP;
-        Damage = 0;
+
         bloodPrefab = bloodPrefabTEMP;
 	}
 
