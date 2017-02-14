@@ -23,7 +23,6 @@ public class ArcherAI : MonoBehaviour
 
     // private variables starts here
     private bool isDead = false;
-    private bool isWalking = false;
     private int walkState = Animator.StringToHash("Base Layer.walk");
     private int aimState = Animator.StringToHash("Base Layer.aim");
     private int idleState = Animator.StringToHash("Base Layer.idle");
@@ -71,7 +70,6 @@ public class ArcherAI : MonoBehaviour
         {
             if (currentBaseState.fullPathHash.Equals(idleState))
             {
-                // that means the game just start, and we need to set the enemy to walk
                 setToThisAnimation(AnimationParams.isWalk);
             }
         }
@@ -89,7 +87,7 @@ public class ArcherAI : MonoBehaviour
         else if (currentBaseState.fullPathHash.Equals(beenHitState))
         {
             // anything related to the beenHit state should locates here.
-            animator.SetBool("isHit", false);
+            setToThisAnimation(AnimationParams.isWalk);
         }
         else if (currentBaseState.fullPathHash.Equals(deadState))
         {
@@ -114,7 +112,6 @@ public class ArcherAI : MonoBehaviour
                     enemy.ResetPath();
                     //enemy.destination = GetRandomNearPosition();
                     enemy.destination = (transform.position - player.position).normalized * keepDistance + player.position;
-                    isWalking = true;
                 });
             }
             else
@@ -180,11 +177,14 @@ public class ArcherAI : MonoBehaviour
 
         if (HP <= 0)
         {
+            enemy.Stop();
             setToThisAnimation(AnimationParams.isDead);
-            return;
+        }
+        else
+        {
+            setToThisAnimation(AnimationParams.isHit);
         }
 
-        setToThisAnimation(AnimationParams.isHit);
         Debug.Log("asd");
     }
 
@@ -196,7 +196,10 @@ public class ArcherAI : MonoBehaviour
 
         foreach (Transform child in transform)
         {
-            Destroy(child.gameObject);
+            if (child.GetComponent<AudioSource>().Equals(null))
+            {
+                Destroy(child.gameObject);
+            }
         }
 
         foreach (Collider2D c in GetComponents<Collider2D>())
