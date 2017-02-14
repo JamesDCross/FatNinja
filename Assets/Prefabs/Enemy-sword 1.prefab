@@ -330,7 +330,7 @@ MonoBehaviour:
   randomWalkRange: 2
   checkDistance: 2
   chanceToAttack: 9
-  chanceToBeStunned: 0.5
+  chanceToBeStunned: 0.25
   painSounds:
   - {fileID: 8300000, guid: ffad83ce35e6d45f6ac98dbe700eee96, type: 3}
   - {fileID: 8300000, guid: 8e3393b05b74f44c08bcd0a1a61d1b2a, type: 3}

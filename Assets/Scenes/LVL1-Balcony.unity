@@ -379,26 +379,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 6
       objectReference: {fileID: 0}
-    - target: {fileID: 114130215305431428, guid: ea3f7a35f3db43540bfab27e5c10a0f9,
-        type: 2}
-      propertyPath: enemyPrefab
-      value: 
-      objectReference: {fileID: 1157782197505970, guid: 8bc86bfd871814709abb388316801fc5,
-        type: 2}
-    - target: {fileID: 114130215305431428, guid: ea3f7a35f3db43540bfab27e5c10a0f9,
-        type: 2}
-      propertyPath: enemySpeed
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 114130215305431428, guid: ea3f7a35f3db43540bfab27e5c10a0f9,
-        type: 2}
-      propertyPath: audioE
-      value: 
-      objectReference: {fileID: 690801034}
-    - target: {fileID: 1437075115828070, guid: ea3f7a35f3db43540bfab27e5c10a0f9, type: 2}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ea3f7a35f3db43540bfab27e5c10a0f9, type: 2}
   m_IsPrefabParent: 0
@@ -658,11 +638,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!82 &690801034 stripped
-AudioSource:
-  m_PrefabParentObject: {fileID: 82345818289148286, guid: ea3f7a35f3db43540bfab27e5c10a0f9,
-    type: 2}
-  m_PrefabInternal: {fileID: 582221860}
 --- !u!82 &777132557 stripped
 AudioSource:
   m_PrefabParentObject: {fileID: 82345818289148286, guid: ea3f7a35f3db43540bfab27e5c10a0f9,
