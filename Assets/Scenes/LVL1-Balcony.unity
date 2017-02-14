@@ -2041,7 +2041,7 @@ Prefab:
     - target: {fileID: 114875961823752620, guid: 2a90496b395c65544a826c8d4c24b5b7,
         type: 2}
       propertyPath: howManyInWave
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114875961823752620, guid: 2a90496b395c65544a826c8d4c24b5b7,
         type: 2}
