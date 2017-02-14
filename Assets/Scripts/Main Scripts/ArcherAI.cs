@@ -27,6 +27,8 @@ public class ArcherAI : MonoBehaviour
     private int walkState = Animator.StringToHash("Base Layer.walk");
     private int aimState = Animator.StringToHash("Base Layer.aim");
     private int idleState = Animator.StringToHash("Base Layer.idle");
+    private int deadState = Animator.StringToHash("Base Layer.dead");
+    private int beenHitState = Animator.StringToHash("Base Layer.beenHit");
     private float lastHitTime;
     private bool hasAttacked;
     private Animator animator;
@@ -35,7 +37,7 @@ public class ArcherAI : MonoBehaviour
     private AnimatorStateInfo currentBaseState;
     private enum AnimationParams
     {
-        isWalk, isAim, isIdle
+        isWalk, isAim, isIdle, isDead, isHit
     }
 
     void Awake()
@@ -54,17 +56,7 @@ public class ArcherAI : MonoBehaviour
 
     void Update()
     {
-        if (isDead)
-        {
-            return;
-        }
-
-        if (HP <= 0)
-        {
-            //do something
-            whenEnemyDead();
-            return;
-        }
+        if (isDead) { return; }
 
         currentBaseState = animator.GetCurrentAnimatorStateInfo(0);
         float distance = Vector2.Distance(transform.position, player.position);
@@ -77,8 +69,14 @@ public class ArcherAI : MonoBehaviour
         }
         else
         {
-            setToThisAnimation(AnimationParams.isWalk);
+            if (currentBaseState.fullPathHash.Equals(idleState))
+            {
+                // that means the game just start, and we need to set the enemy to walk
+                setToThisAnimation(AnimationParams.isWalk);
+            }
         }
+
+        setEnemyDirection();
 
         /**************************************************/
         /* A Simple State Machine Management starts here */
@@ -88,35 +86,36 @@ public class ArcherAI : MonoBehaviour
             //TODO: fire the arrow
             Attack();
         }
+        else if (currentBaseState.fullPathHash.Equals(beenHitState))
+        {
+            // anything related to the beenHit state should locates here.
+            animator.SetBool("isHit", false);
+        }
+        else if (currentBaseState.fullPathHash.Equals(deadState))
+        {
+            whenEnemyDead();
+        }
         else if (currentBaseState.fullPathHash.Equals(walkState))
         {
             hasAttacked = false;
 
-            // we are at random walk range, check if we have reach the deatination.
-            if (isWalking)
+            // if i am adjusting the distance to the player,.
+            if (enemy.remainingDistance <= 0.5f)
             {
-                if (enemy.remainingDistance == 0)
-                {
-                    Debug.Log("Really");
-                    StartToAttack();
-                    isWalking = false;
-                }
+                Debug.Log("Really");
+                StartToAttack();
             }
 
             if (distance > keepDistance)
             {
-                if (!isWalking)
+                RandomlyChooseAttackOrMove(chanceToAttack, () =>
                 {
-                    //use chance System to determine whether we should attack or not
-                    RandomlyChooseAttackOrMove(chanceToAttack, () =>
-                    {
-                        enemy.Resume();
-                        enemy.ResetPath();
-                        //enemy.destination = GetRandomNearPosition();
-                        enemy.destination = (transform.position - player.position).normalized * keepDistance + player.position;
-                        isWalking = true;
-                    });
-                }
+                    enemy.Resume();
+                    enemy.ResetPath();
+                    //enemy.destination = GetRandomNearPosition();
+                    enemy.destination = (transform.position - player.position).normalized * keepDistance + player.position;
+                    isWalking = true;
+                });
             }
             else
             {
@@ -125,7 +124,7 @@ public class ArcherAI : MonoBehaviour
                 {
                     // should walk back
                     enemy.Resume();
-                    enemy.ResetPath();                    
+                    enemy.ResetPath();
                     enemy.destination = GetFurthestPointAfterPlayerToEnemy();
                 });
             }
@@ -164,7 +163,7 @@ public class ArcherAI : MonoBehaviour
             lastHitTime = Time.time;
             PlayerHealth.doDamage(damage, this.transform.position);
             hasAttacked = true;
-                    //Debug.Log("FUCK");
+            //Debug.Log("FUCK");
         }
         setToThisAnimation(AnimationParams.isWalk);
     }
@@ -181,15 +180,30 @@ public class ArcherAI : MonoBehaviour
 
         if (HP <= 0)
         {
-            whenEnemyDead();
+            setToThisAnimation(AnimationParams.isDead);
+            return;
         }
+
+        setToThisAnimation(AnimationParams.isHit);
         Debug.Log("asd");
     }
 
     void whenEnemyDead()
     {
+        enemy.Stop();
         isDead = true;
-        Destroy(gameObject);
+        setToThisAnimation(AnimationParams.isDead);
+
+        foreach (Transform child in transform)
+        {
+            Destroy(child.gameObject);
+        }
+
+        foreach (Collider2D c in GetComponents<Collider2D>())
+        {
+            c.enabled = false;
+        }
+        //Destroy(gameObject);
     }
 
     Vector2 GetRandomNearPosition()
@@ -241,6 +255,14 @@ public class ArcherAI : MonoBehaviour
         return newPosition;
     }
 
+    void setEnemyDirection()
+    {
+        // set the direction of the animationClips
+        Vector2 pos = GetPlayerDirection(player, transform);
+        animator.SetFloat("moveX", pos.x);
+        animator.SetFloat("moveY", pos.y);
+    }
+
     void setToThisAnimation(AnimationParams type)
     {
         Array values = Enum.GetValues(typeof(AnimationParams));
@@ -256,11 +278,6 @@ public class ArcherAI : MonoBehaviour
                 animator.SetBool(name, false);
             }
         }
-
-        // set the direction of the animationClips
-        Vector2 pos = GetPlayerDirection(player, transform);
-        animator.SetFloat("moveX", pos.x);
-        animator.SetFloat("moveY", pos.y);
     }
 
     private AnimationEvent CreateAnimationEvent()
