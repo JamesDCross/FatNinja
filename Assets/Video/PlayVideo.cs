@@ -7,7 +7,7 @@ public class PlayVideo : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        ((MovieTexture)GetComponent<Renderer>().material.mainTexture).Play();
+        //((MovieTexture)GetComponent<Renderer>().material.mainTexture).Play();
         StartCoroutine(WaitAndLoad(8f, "Start Menu"));
         
 

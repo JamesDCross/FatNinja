@@ -117,7 +117,7 @@ public class CharacterController : MonoBehaviour {
     private static void checkTraining()
     {
         Scene scene = SceneManager.GetActiveScene();
-        Training.setTrainingMode(scene.name == "Training");
+        Training.setTrainingMode(scene.name == "LVL3-Training");
     }
 
     private void PerformMovement()
