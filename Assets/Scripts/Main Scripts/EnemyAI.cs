@@ -122,12 +122,12 @@ public class EnemyAI : MonoBehaviour
         BeenHit = true;
         //hurtMeSound.Play();
         enemyHP -= incomingdamage;
-        if (Random.Range(0f, 1f)< chanceToBeStunned || CharacterController.getAttack() == "UpperCut")
+        if (Random.Range(0f, 1f) < chanceToBeStunned || CharacterController.getAttack() == "UpperCut")
         {
-        SetEnemyAnimation(AnimationParams.hitme);
-        formerStatus[0] = animator.GetBool("PlayerMoving");
-        formerStatus[1] = animator.GetBool("PlayerKicking");
-        formerStatus[2] = animator.GetBool("EnemyWalking");
+            SetEnemyAnimation(AnimationParams.hitme);
+            formerStatus[0] = animator.GetBool("PlayerMoving");
+            formerStatus[1] = animator.GetBool("PlayerKicking");
+            formerStatus[2] = animator.GetBool("EnemyWalking");
         }
 
 
@@ -485,7 +485,8 @@ public class EnemyAI : MonoBehaviour
         }
 
 
-        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("hit")) {
+        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("hit"))
+        {
             BeenHit = false;
         }
 
