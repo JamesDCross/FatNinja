@@ -89,7 +89,8 @@ public class ArcherAI : MonoBehaviour
         else if (currentBaseState.fullPathHash.Equals(beenHitState))
         {
             // anything related to the beenHit state should locates here.
-            setToThisAnimation(AnimationParams.isWalk);
+            //setToThisAnimation(AnimationParams.isWalk);
+            animator.SetBool("isHit",false);
         }
         else if (currentBaseState.fullPathHash.Equals(deadState))
         {
