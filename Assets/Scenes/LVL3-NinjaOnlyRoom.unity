@@ -1564,6 +1564,16 @@ Prefab:
       value: 
       objectReference: {fileID: 21300000, guid: 4a3fd68192a204393894d61bdc8f7193,
         type: 3}
+    - target: {fileID: 114521733678021618, guid: 2c081b361d5574412ae3042115686bae,
+        type: 2}
+      propertyPath: quote
+      value: four on one seems fair
+      objectReference: {fileID: 0}
+    - target: {fileID: 114521733678021618, guid: 2c081b361d5574412ae3042115686bae,
+        type: 2}
+      propertyPath: displayTextTime
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2c081b361d5574412ae3042115686bae, type: 2}
   m_IsPrefabParent: 0
