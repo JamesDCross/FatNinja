@@ -77,11 +77,12 @@ public GameObject bloodPrefabTEMP;
         GameObject[] allObjects = UnityEngine.Object.FindObjectsOfType<GameObject>();
         float alpha = 1f;
 
-        // make player invisible
+        // make player invisible, and stop moving
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         Vector3 pos = player.transform.position;
         player.GetComponent<SpriteRenderer>().enabled = false;
 		player.GetComponent<CharacterController> ().enabled = false;
+		player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
         //player.GetComponent<CircleCollider2D>().enabled = false;
 
         // spawn dying prefab
