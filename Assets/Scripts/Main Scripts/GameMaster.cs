@@ -126,6 +126,7 @@ public class GameMaster : MonoBehaviour {
 
     public static void HardReset()
     {
+        MusicPlayer.destroyMusic();
         SceneManager.LoadScene("Start Menu", LoadSceneMode.Single);
     }
 }

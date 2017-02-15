@@ -5,6 +5,7 @@ public class MusicPlayer : MonoBehaviour
 {
 
     static MusicPlayer INSTANCE = null;
+    private static bool destroyObj = false;
 
     void Awake()
     {
@@ -21,16 +22,24 @@ public class MusicPlayer : MonoBehaviour
         }
     }
 
+    void Update()
+    {
+        if (destroyObj)
+        {
+            Destroy(gameObject);
+            destroyObj = false;
+        }
+    }
+
+    public static void destroyMusic()
+    {
+        destroyObj = true;
+    }
     // Use this for initialization
     void Start()
     {
         Debug.Log("Music player Start " + GetInstanceID());
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 }
 
