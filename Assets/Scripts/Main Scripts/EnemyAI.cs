@@ -44,6 +44,10 @@ public class EnemyAI : MonoBehaviour
     private Vector3 playerLastPosition;
     private float timeSinceRanAway;
 
+    //audio
+    public AudioClip[] attackSounds;
+    public AudioSource audio;
+
     private enum AnimationParams
     {
         PlayerMoving,
@@ -272,6 +276,12 @@ public class EnemyAI : MonoBehaviour
         {
             enemy.Stop();
             SetEnemyAnimation(AnimationParams.PlayerKicking);
+
+            //attacking sounds
+            int rand = UnityEngine.Random.Range(0, attackSounds.Length);
+            audio.clip = attackSounds[rand];
+            audio.Play();
+           // Debug.Log("enemy attacks");
 
         }
         else
