@@ -1,11 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class MusicPlayer : MonoBehaviour
 {
 
     static MusicPlayer INSTANCE = null;
     private static bool destroyObj = false;
+    //Scene scene;
+
+
+
 
     void Awake()
     {
@@ -20,6 +25,7 @@ public class MusicPlayer : MonoBehaviour
             INSTANCE = this;
             GameObject.DontDestroyOnLoad(gameObject);
         }
+       
     }
 
     void Update()
@@ -29,6 +35,10 @@ public class MusicPlayer : MonoBehaviour
             Destroy(gameObject);
             destroyObj = false;
         }
+        /*scene = SceneManager.GetActiveScene();
+        if (scene.name == "LVL4-SwordMiniBoss") {
+            Destroy(gameObject);
+        }*/
     }
 
     public static void destroyMusic()
@@ -38,6 +48,7 @@ public class MusicPlayer : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        
         Debug.Log("Music player Start " + GetInstanceID());
     }
 
