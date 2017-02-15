@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
-
-
+using System.Collections;
 
 public class PlayerHealth : MonoBehaviour {
 
@@ -12,14 +11,20 @@ public class PlayerHealth : MonoBehaviour {
     Vector2 pos  = new Vector2(10,30);
     Vector2 size  = new Vector2(200,20);
 
+    // fade and die coroutine
+    private IEnumerator coroutine;
+    private bool startedDying = false;
+    public GameObject dyingPrefabTEMP;
+    private static GameObject dyingPrefab;
+
 public GameObject bloodPrefabTEMP;
     private static GameObject bloodPrefab;
 
 
 	// Use this for initialization
 	void Start () {
-
         bloodPrefab = bloodPrefabTEMP;
+        dyingPrefab = dyingPrefabTEMP;
 	}
 
     void OnGUI()
@@ -40,10 +45,12 @@ public GameObject bloodPrefabTEMP;
 
     // Update is called once per frame
     void Update () {
-        if (PlayersHP <= 0)
+        // restart level on 0 health
+        if (PlayersHP <= 0 && !startedDying)
         {
-            //gameObject.SetActive(false);
-            GameMaster.SoftReset();
+            startedDying = true;
+            coroutine = FadeAndDie();
+            StartCoroutine(coroutine);
         }
     }
 
@@ -65,6 +72,54 @@ public GameObject bloodPrefabTEMP;
         // set blood damage text
         blood.GetComponentInChildren<damageTextScr>().setDamage(damageAmount);
     }
+
+    IEnumerator FadeAndDie() {
+        GameObject[] allObjects = UnityEngine.Object.FindObjectsOfType<GameObject>();
+        float alpha = 1f;
+
+        // make player invisible
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        Vector3 pos = player.transform.position;
+        player.GetComponent<SpriteRenderer>().enabled = false;
+        //player.GetComponent<CircleCollider2D>().enabled = false;
+
+        // spawn dying prefab
+        GameObject dyingPlayer = Instantiate(dyingPrefab);
+        dyingPlayer.transform.position = pos;
+        dyingPlayer.transform.parent = player.transform;
+        dyingPlayer.GetComponent<EnemyAI>().isDead = true;
+        dyingPlayer.GetComponent<Animator>().SetBool("IsEnemyDead", true);
+
+        // slowly fade out all other objects
+        while (alpha > -1f) {
+            foreach(GameObject go in allObjects) {
+                if (go == null) continue;
+                if (go.gameObject.tag == "Player") continue;
+                
+                NavMeshAgent2D e = go.gameObject.GetComponent<NavMeshAgent2D>();
+                if (e) {
+                    e.Stop();
+                }
+
+                SpriteRenderer sr = go.GetComponent<SpriteRenderer>();
+                if (sr) {
+                    Color c = sr.color;
+                    c.a = Mathf.Max(0f, alpha);
+                    sr.color = c;
+                }
+            }
+            alpha -= Time.deltaTime * 0.3f;
+            //player.transform.position = pos;
+            yield return new WaitForEndOfFrame();
+        }
+
+
+
+        startedDying = false;
+        GameMaster.SoftReset();
+
+    }
+
 
     public static void heal(int healAmount)
     {
