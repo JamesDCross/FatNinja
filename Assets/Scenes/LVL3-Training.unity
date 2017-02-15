@@ -434,7 +434,7 @@ ParticleSystem:
   m_GameObject: {fileID: 204141111}
   serializedVersion: 5
   lengthInSec: 1
-  speed: 1
+  simulationSpeed: 1
   looping: 0
   prewarm: 0
   playOnAwake: 0
@@ -3853,6 +3853,16 @@ Prefab:
       value: 
       objectReference: {fileID: 21300000, guid: 41717304d2e01c440a467b305563cc22,
         type: 3}
+    - target: {fileID: 114521733678021618, guid: 2c081b361d5574412ae3042115686bae,
+        type: 2}
+      propertyPath: quote
+      value: Do I hit bag or does bag hit me?
+      objectReference: {fileID: 0}
+    - target: {fileID: 114521733678021618, guid: 2c081b361d5574412ae3042115686bae,
+        type: 2}
+      propertyPath: displayTextTime
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2c081b361d5574412ae3042115686bae, type: 2}
   m_IsPrefabParent: 0

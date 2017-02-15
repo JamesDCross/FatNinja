@@ -1615,6 +1615,11 @@ Prefab:
       value: 
       objectReference: {fileID: 21300000, guid: 83d5ff777daea46d6ba1c9b400ff3602,
         type: 3}
+    - target: {fileID: 114521733678021618, guid: 2c081b361d5574412ae3042115686bae,
+        type: 2}
+      propertyPath: quote
+      value: should I practice?
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2c081b361d5574412ae3042115686bae, type: 2}
   m_IsPrefabParent: 0

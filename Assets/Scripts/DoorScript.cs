@@ -17,8 +17,11 @@ public class DoorScript : MonoBehaviour {
 		GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
 		if (enemies.Length == 0) {
 			this.GetComponent<Animator>().SetBool("OpenDoor", true);
-		}
-	}
+           // GetComponentInChildren<BoxCollider2D>().enabled = false;//doesnt work wtf
+            transform.GetChild(0).GetComponent<BoxCollider2D>().enabled = false;
+          
+        }
+    }
 
 	void OnTriggerEnter2D(Collider2D other)
 	{
