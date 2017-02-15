@@ -146,13 +146,9 @@ public class EnemyAI : MonoBehaviour
 
         // spawn blood
         GameObject blood = Instantiate(bloodPrefab);
-        // set blood position
-        Vector3 bloodPos = this.transform.position;
-        blood.transform.position = bloodPos;
-        // set blood direction
+		blood.transform.position = this.transform.position;
         float playerAngle = player.gameObject.GetComponent<CharacterController>().getPlayerAngle();
         blood.GetComponent<BloodScript>().setBlood(playerAngle, (float)incomingdamage / 2f);
-        // set blood damage text
         blood.GetComponentInChildren<damageTextScr>().setDamage(incomingdamage);
 
         if (enemyHP <= 0) { EnemyDead(); }
