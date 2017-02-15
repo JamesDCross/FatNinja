@@ -81,6 +81,7 @@ public GameObject bloodPrefabTEMP;
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         Vector3 pos = player.transform.position;
         player.GetComponent<SpriteRenderer>().enabled = false;
+		player.GetComponent<CharacterController> ().enabled = false;
         //player.GetComponent<CircleCollider2D>().enabled = false;
 
         // spawn dying prefab
