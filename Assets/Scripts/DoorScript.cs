@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class DoorScript : MonoBehaviour {
 
     public string level;
+	public BoxCollider2D blockExitCollider = null;
 
 	// Use this for initialization
 	void Start () {
@@ -18,8 +19,8 @@ public class DoorScript : MonoBehaviour {
 		if (enemies.Length == 0) {
 			this.GetComponent<Animator>().SetBool("OpenDoor", true);
            // GetComponentInChildren<BoxCollider2D>().enabled = false;//doesnt work wtf
-            transform.GetChild(0).GetComponent<BoxCollider2D>().enabled = false;
-          
+			if (blockExitCollider != null)
+				blockExitCollider.enabled = false;
         }
     }
 
