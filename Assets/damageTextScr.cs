@@ -12,7 +12,6 @@ public class damageTextScr : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		currentSize = transform.localScale.x;
-		setDamage(2);
 	}
 	
 	public void setDamage(int damage) {
