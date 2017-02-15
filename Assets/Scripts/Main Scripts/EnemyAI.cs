@@ -281,7 +281,7 @@ public class EnemyAI : MonoBehaviour
             int rand = UnityEngine.Random.Range(0, attackSounds.Length);
             audio.clip = attackSounds[rand];
             audio.Play();
-           // Debug.Log("enemy attacks");
+            // Debug.Log("enemy attacks");
 
         }
         else
@@ -425,15 +425,20 @@ public class EnemyAI : MonoBehaviour
     void EnemyDead()
     {
         isDead = true;
-        // enemy.autoBraking = true;
-        // enemy.Stop();
-        // animator.SetBool("IsEnemyDead", true);
+        enemy.Stop();
+        animator.SetBool("IsEnemyDead", true);
+        foreach (Transform child in transform)
+        {
+            if (child.GetComponent<AudioSource>().Equals(null))
+            {
+                Destroy(child.gameObject);
+            }
+        }
 
-        Vector2 deadPlace = transform.position;
-        Destroy(gameObject);
-        GameObject newOne = Instantiate(enemyPrefab, deadPlace, Quaternion.identity);
-        newOne.GetComponent<EnemyAI>().isDead = true;
-        newOne.GetComponent<Animator>().SetBool("IsEnemyDead", true);
+        foreach (Collider2D c in GetComponents<Collider2D>())
+        {
+            c.enabled = false;
+        }
         return;
     }
 
@@ -461,6 +466,7 @@ public class EnemyAI : MonoBehaviour
         if (enemyHP <= 0)
         {
             EnemyDead();
+            return;
         }
 
         if (isSit)
