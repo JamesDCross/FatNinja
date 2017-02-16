@@ -1,17 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.SceneManagement;
+﻿using UnityEngine;
 
 public class DoorScript : MonoBehaviour {
 
     public string level;
 	public BoxCollider2D blockExitCollider = null;
+    private bool loadLevel;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
+    // Use this for initialization
+    void Start () {
+        loadLevel = false;
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -28,13 +26,18 @@ public class DoorScript : MonoBehaviour {
 			if (blockExitCollider != null)
 				blockExitCollider.enabled = false;
         }
+        if (loadLevel)
+        {
+            loadLevel = false;
+            Loading.loadLevel(level);
+        }
     }
 
 	void OnTriggerEnter2D(Collider2D other)
 	{
 		Debug.Log("HIT DOOR WITH OBJECT: " + other.tag);
 		if (other.tag == "Player"){
-			SceneManager.LoadScene (level);
+            loadLevel = true;
 		}
 	}
 }
