@@ -1723,7 +1723,6 @@ GameObject:
   - component: {fileID: 922747883}
   - component: {fileID: 922747882}
   - component: {fileID: 922747884}
-  - component: {fileID: 922747885}
   - component: {fileID: 922747886}
   m_Layer: 0
   m_Name: ladder
@@ -1790,17 +1789,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b2463b2b263a04190826d13d4c28b733, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &922747885
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 922747881}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64e2eb32cc787bb4db5454c5490835e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!58 &922747886
