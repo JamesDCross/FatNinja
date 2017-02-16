@@ -14,6 +14,7 @@ public class CharacterController : MonoBehaviour {
     public int kickDamage = 1;
     public int upperCutDamage = 1;
     public int hurricaneKickDamage = 1;
+    public int surasshuSlashDamage = 1;
     public Sprite A;
     public Sprite B;
     public Sprite Y;
@@ -81,7 +82,8 @@ public class CharacterController : MonoBehaviour {
         refindComboList = new List<string[][]>();
         comboList = new string[][][] {
             new string[][] { new string[] { "Punch", "Punch", "Kick" }, new string[] { "UpperCut" }},
-            new string[][] { new string[] {"Kick", "Kick", "Punch" }, new string[] { "HurricaneKick" } },
+            new string[][] { new string[] {"Kick", "Kick", "Punch" }, new string[] { "HurricaneKick" }},
+            new string[][] { new string[] {"Kick", "Punch", "Punch", "Kick" }, new string[] { "SurasshuSlash" }},
         };
 
         //audio
@@ -186,6 +188,7 @@ public class CharacterController : MonoBehaviour {
             if (comboSuccess == true)
             {
                 comboSuccess = false;
+                comboReset();
                 displayComboUIReset();
             }
 
@@ -339,6 +342,13 @@ public class CharacterController : MonoBehaviour {
                             TextCanvas.setText("Upper Cut");
                             if (Training.getTrainingMode())
                                 Training.training("Upper Cut");
+                        } 
+                        else if (moveSet[1][0] == "SurasshuSlash")
+                        {
+                            attackDamage = surasshuSlashDamage;
+                            TextCanvas.setText("Surasshu Slash");
+                            if (Training.getTrainingMode())
+                                Training.training("Surasshu Slash");
                         }
                     } else
                         tempComboList.Add(moveSet);
