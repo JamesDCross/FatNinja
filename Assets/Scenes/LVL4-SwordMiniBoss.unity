@@ -2473,7 +2473,7 @@ Prefab:
     - target: {fileID: 114769454782630468, guid: ee69fabab52b44a0e8752e56d70e1301,
         type: 2}
       propertyPath: damage
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 114769454782630468, guid: ee69fabab52b44a0e8752e56d70e1301,
         type: 2}

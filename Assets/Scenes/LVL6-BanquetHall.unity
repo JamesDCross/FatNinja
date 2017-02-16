@@ -3608,6 +3608,16 @@ Prefab:
       propertyPath: audioE
       value: 
       objectReference: {fileID: 13002011}
+    - target: {fileID: 114617377269384578, guid: a6aaa7a97499d40289bcf9bb9f48ae15,
+        type: 2}
+      propertyPath: enemyHP
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 114617377269384578, guid: a6aaa7a97499d40289bcf9bb9f48ae15,
+        type: 2}
+      propertyPath: damage
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a6aaa7a97499d40289bcf9bb9f48ae15, type: 2}
   m_IsPrefabParent: 0
