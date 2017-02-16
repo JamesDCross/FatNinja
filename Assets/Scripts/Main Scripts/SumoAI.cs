@@ -20,7 +20,6 @@ public class SumoAI : MonoBehaviour
 
     // private variables starts here
     private bool isDead = false;
-    private bool isChasing = false;
     private bool isTired = false;
     private GameObject playerCollider;
     private Vector2 playerPosition;
@@ -44,7 +43,6 @@ public class SumoAI : MonoBehaviour
     void Awake()
     {
         animator = GetComponent<Animator>();
-        playerPosition = player.position;
         lastHitTime = 1f;
         enemy = GetComponent<NavMeshAgent2D>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
@@ -61,7 +59,6 @@ public class SumoAI : MonoBehaviour
         if (isDead) { return; }
 
         currentBaseState = animator.GetCurrentAnimatorStateInfo(0);
-        float distance = Vector2.Distance(transform.position, player.position);
 
         /**************************************************/
         /* A Simple State Machine Management starts here */
@@ -71,7 +68,6 @@ public class SumoAI : MonoBehaviour
             hasAttacked = false;
 
             float previousDistance = Vector2.Distance(transform.position, playerPosition);
-
             // I have reached the previous player position or I have catched the player
             if (previousDistance.Equals(0) || playerCollider != null)
             {
@@ -82,9 +78,12 @@ public class SumoAI : MonoBehaviour
         {
             if (!hasAttacked)
             {
+                setEnemyDirection();
                 enemy.Stop();
                 hasAttacked = true;
-                if (playerCollider != null)
+                
+                float distance = Vector2.Distance(transform.position, player.position);
+                if (distance <= 0.5f)
                 {
                     PlayerHealth.doDamage(damage, this.transform.position);
                 }
@@ -114,14 +113,19 @@ public class SumoAI : MonoBehaviour
         }
         else if (currentBaseState.fullPathHash.Equals(idleState))
         {
-            playerPosition = player.position;
+            Wait(timeBeforeChase, () =>
+            {
+                StartToChase();
+            });
         }
     }
 
     private void StartToChase()
     {
-        isChasing = true;
         playerPosition = player.position;
+
+        enemy.Resume();
+        enemy.destination = playerPosition;
         setToThisAnimation(AnimationParams.isWalk);
         setEnemyDirection();
     }
@@ -141,7 +145,10 @@ public class SumoAI : MonoBehaviour
             if (HP.Equals(0))
             {
                 Loading.loadLevel("finalQTE");
-            } else {
+            }
+            else
+            {
+                setEnemyDirection();
                 setToThisAnimation(AnimationParams.isHit);
             }
         }
