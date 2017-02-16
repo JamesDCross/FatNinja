@@ -439,6 +439,18 @@ public class EnemyAI : MonoBehaviour
         {
             c.enabled = false;
         }
+
+        this.tag = "DeadEnemy";      
+/*
+        Vector2 deadPlace = transform.position;
+         
+         GameObject newOne = Instantiate(enemyPrefab, deadPlace, Quaternion.identity);
+         newOne.GetComponent<EnemyAI>().isDead = true;
+         newOne.GetComponent<Animator>().SetBool("IsEnemyDead", true);
+Destroy(gameObject);
+*/
+
+
         return;
     }
 

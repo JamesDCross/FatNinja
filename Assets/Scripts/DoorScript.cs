@@ -15,6 +15,12 @@ public class DoorScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		GameObject[] spawners = GameObject.FindGameObjectsWithTag("Spawner");
+		foreach	(GameObject go in spawners) {
+			if (go.GetComponent<SpawnWaves>().numberOfWaves != 0)
+			return;
+		}
+
 		GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
 		if (enemies.Length == 0) {
 			this.GetComponent<Animator>().SetBool("OpenDoor", true);
