@@ -477,7 +477,7 @@ ParticleSystem:
   m_GameObject: {fileID: 204141111}
   serializedVersion: 5
   lengthInSec: 1
-  simulationSpeed: 1
+  speed: 1
   looping: 0
   prewarm: 0
   playOnAwake: 0
@@ -3160,14 +3160,9 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 114687367332380592, guid: 27ab1f8ff4c174f92befa08fbca6f832,
         type: 2}
-      propertyPath: PauseMenu.y
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 114687367332380592, guid: 27ab1f8ff4c174f92befa08fbca6f832,
-        type: 2}
-      propertyPath: PauseMenu.height
-      value: 300
-      objectReference: {fileID: 0}
+      propertyPath: scoreText
+      value: 
+      objectReference: {fileID: 987069821}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 27ab1f8ff4c174f92befa08fbca6f832, type: 2}
   m_IsPrefabParent: 0
@@ -3814,6 +3809,12 @@ SpriteRenderer:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
+--- !u!114 &987069821 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114272008141531898, guid: 67a366c035c06c34292040dcfe00121c,
+    type: 2}
+  m_PrefabInternal: {fileID: 1920396718}
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 --- !u!1 &1004545243
 GameObject:
   m_ObjectHideFlags: 0
@@ -4051,40 +4052,9 @@ Prefab:
       propertyPath: m_RootOrder
       value: 6
       objectReference: {fileID: 0}
-    - target: {fileID: 114327943213478830, guid: 2c081b361d5574412ae3042115686bae,
-        type: 2}
-      propertyPath: comboText
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 1842082821315410, guid: 2c081b361d5574412ae3042115686bae, type: 2}
       propertyPath: m_Name
       value: Shibo
-      objectReference: {fileID: 0}
-    - target: {fileID: 212115757922060158, guid: 2c081b361d5574412ae3042115686bae,
-        type: 2}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 75c01588ceb624a71bd361898f1256a4,
-        type: 3}
-    - target: {fileID: 1842082821315410, guid: 2c081b361d5574412ae3042115686bae, type: 2}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114327943213478830, guid: 2c081b361d5574412ae3042115686bae,
-        type: 2}
-      propertyPath: comboButtonFlashing
-      value: 
-      objectReference: {fileID: 21300000, guid: 41717304d2e01c440a467b305563cc22,
-        type: 3}
-    - target: {fileID: 114521733678021618, guid: 2c081b361d5574412ae3042115686bae,
-        type: 2}
-      propertyPath: quote
-      value: Do I hit bag or does bag hit me?
-      objectReference: {fileID: 0}
-    - target: {fileID: 114521733678021618, guid: 2c081b361d5574412ae3042115686bae,
-        type: 2}
-      propertyPath: displayTextTime
-      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2c081b361d5574412ae3042115686bae, type: 2}

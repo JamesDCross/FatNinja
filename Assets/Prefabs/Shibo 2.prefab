@@ -307,7 +307,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1842082821315410}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.23, y: -4.57, z: 0}
+  m_LocalPosition: {x: -4.83, y: -3.04, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4411377374814452}
@@ -618,8 +618,8 @@ MonoBehaviour:
   comboTimeMin: 0.2
   comboTimeMax: 2
   punchDamage: 1
-  kickDamage: 1
-  upperCutDamage: 1
+  kickDamage: 2
+  upperCutDamage: 4
   hurricaneKickDamage: 1
   A: {fileID: 21300000, guid: 0b8d64663a9e8d14ca4d39e86e6346d7, type: 3}
   B: {fileID: 21300000, guid: cfd96d1e7e099684e8dbd6f43627df18, type: 3}
@@ -666,8 +666,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pauseBeforeText: 0
-  displayTextTime: 3
-  quote: 'time to kick ass '
+  displayTextTime: 5
+  quote: Do I hit bag or does bag hit me?
   Line: {fileID: 114089356881843460}
   speechBubble: {fileID: 114960410274101760}
 --- !u!114 &114960410274101760
@@ -763,7 +763,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 0580b0e9b19cd43f18c5f6c1b9c1372d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 75c01588ceb624a71bd361898f1256a4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

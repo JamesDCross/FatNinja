@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
 using InControl;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameMaster : MonoBehaviour {
     PlayerAction characterActions;
+    public Text scoreText;
     public static bool pause;
     bool pressed;
     bool keyboard;
@@ -16,8 +18,8 @@ public class GameMaster : MonoBehaviour {
     private float height = (Screen.height * .7f);
     private float exitsY;
 
+
     void Start () {
-        
         characterActions = new PlayerAction();
         pause = false;
         combo = false;
@@ -44,6 +46,7 @@ public class GameMaster : MonoBehaviour {
             pressed = false;
         }
 
+        scoreText.text = "SCORE: " + Score.getScore();
     }
 
     void OnGUI()
@@ -117,6 +120,7 @@ public class GameMaster : MonoBehaviour {
 
     public static void SoftReset()
     {
+        Score.scoreReset();
         Scene scene = SceneManager.GetActiveScene();
         PlayerHealth.Damage = 0;
         PlayerHealth.PlayersHP = PlayerHealth.MaxHP;
@@ -126,6 +130,7 @@ public class GameMaster : MonoBehaviour {
 
     public static void HardReset()
     {
+        Score.scoreReset();
         MusicPlayer.destroyMusic();
         SceneManager.LoadScene("Start Menu", LoadSceneMode.Single);
     }
