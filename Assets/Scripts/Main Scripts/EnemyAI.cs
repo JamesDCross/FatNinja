@@ -409,11 +409,6 @@ public class EnemyAI : MonoBehaviour
             {
                 isRandomMove = false;
             }
-            else
-            {
-                enemy.destination = RandomDestination;
-                return;
-            }
         }
 
         //Get's the time snice the emeny last made an attack

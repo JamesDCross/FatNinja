@@ -16,7 +16,6 @@ public class SumoAI : MonoBehaviour
     //Audio
     public AudioClip[] painSounds;
     public AudioSource audioE;
-
     // Blood effect
     public GameObject bloodPrefab;
 
@@ -165,8 +164,6 @@ public class SumoAI : MonoBehaviour
         }
     }
 
-
-
     IEnumerator SaySomethingFirstMeet()
     {
         saySomething.text = "You're killing my men!";
@@ -181,6 +178,8 @@ public class SumoAI : MonoBehaviour
 
     IEnumerator SaySomethingWhenTired(string quote)
     {
+        saySomething.GetComponent<Text>().enabled = false;
+        speechBubble.GetComponent<Image>().enabled = false;
         saySomething.text = quote;
         saySomething.GetComponent<Text>().enabled = true;
         speechBubble.GetComponent<Image>().enabled = true;
