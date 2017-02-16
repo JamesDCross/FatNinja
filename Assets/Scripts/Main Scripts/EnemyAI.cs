@@ -127,7 +127,6 @@ public class EnemyAI : MonoBehaviour
         BeenHit = true;
         //hurtMeSound.Play();
         enemyHP -= incomingdamage;
-        Score.calcScore(CharacterController.getAttack());
         if (Random.Range(0f, 1f) < chanceToBeStunned || CharacterController.getAttack() == "UpperCut")
         {
             SetEnemyAnimation(AnimationParams.hitme);
@@ -150,7 +149,11 @@ public class EnemyAI : MonoBehaviour
 		blood.transform.position = this.transform.position;
         float playerAngle = player.gameObject.GetComponent<CharacterController>().getPlayerAngle();
         blood.GetComponent<BloodScript>().setBlood(playerAngle, (float)incomingdamage / 2f);
-        blood.GetComponentInChildren<damageTextScr>().setDamage(incomingdamage);
+        int incomingdam = ((incomingdamage * 100) + Random.Range(0, 100));
+        blood.GetComponentInChildren<damageTextScr>().setDamage(incomingdam);
+        Score.setDamage(incomingdam);
+        Score.calcScore(CharacterController.getAttack());
+        GameMaster.setScoretimer();
 
         if (enemyHP <= 0) { EnemyDead(); }
     }

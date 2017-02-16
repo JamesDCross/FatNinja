@@ -15,7 +15,7 @@ public class damageTextScr : MonoBehaviour {
 	}
 	
 	public void setDamage(int damage) {
-		GetComponent<TextMesh>().text = "" + ((damage * 100) + Random.Range(0, 100));
+		GetComponent<TextMesh>().text = "" + damage;
 	}
 
 	// Update is called once per frame

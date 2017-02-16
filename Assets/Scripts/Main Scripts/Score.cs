@@ -5,17 +5,16 @@ using UnityEngine;
 public class Score : MonoBehaviour {
     private static float lastAttack;
     private static int chainMultipler = 1;
-    private static int score;
+    private static int score = 0;
+    private static int damage;
 
-	// Update is called once per frame
-	void Start () {
+    // Update is called once per frame
+    void Start () {
         lastAttack = 0;
-        score = 0;
     }
 
     public static void calcScore(string attack)
     {
-        Debug.Log(attack);
         if (attack == "UpperCut" || attack == "HurricaneKick")
         {
             chainMultipler += 1;
@@ -24,13 +23,30 @@ public class Score : MonoBehaviour {
 
         if (lastAttack + 3f < Time.time)
         {
-            Debug.Log("reste score");
             chainMultipler = 1;
         }
 
-        int add = 100 * chainMultipler;
-        score += add;
-        Debug.Log(chainMultipler);
+        score += damage * chainMultipler;
+    }
+
+    public static void setDamage(int dam)
+    {
+        damage = dam;
+    }
+
+    public static int getDamage()
+    {
+        return damage;
+    }
+
+    public static int getMultipler()
+    {
+        return chainMultipler;
+    }
+    
+    public static void resetMultipler()
+    {
+        chainMultipler = 1;
     }
 
     public static int getScore()

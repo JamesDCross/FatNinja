@@ -376,7 +376,11 @@ public class ArcherAI : MonoBehaviour
         float playerAngle = player.gameObject.GetComponent<CharacterController>().getPlayerAngle();
         blood.GetComponent<BloodScript>().setBlood(playerAngle, (float)incomingdamage / 2f);
         // set blood damage text
-        blood.GetComponentInChildren<damageTextScr>().setDamage(incomingdamage);
+        int incomingdam = ((incomingdamage * 100) + Random.Range(0, 100));
+        blood.GetComponentInChildren<damageTextScr>().setDamage(incomingdam);
+        Score.setDamage(incomingdam);
+        Score.calcScore(CharacterController.getAttack());
+        GameMaster.setScoretimer();
     }
 
     Vector2 GetFurthestPointAfterPlayerToEnemy()
