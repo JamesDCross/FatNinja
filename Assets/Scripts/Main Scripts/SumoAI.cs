@@ -20,6 +20,8 @@ public class SumoAI : MonoBehaviour
 
     // private variables starts here
     private bool isDead = false;
+    private bool isChasing = false;
+    private bool isTired = false;
     private GameObject playerCollider;
     private Vector2 playerPosition;
     private int walkState = Animator.StringToHash("Base Layer.walk");
@@ -53,14 +55,18 @@ public class SumoAI : MonoBehaviour
 
     void Start()
     {
-        ApplyAnimationEventToAnimation(CreateAnimationEvent(4f, "StartToChase"), "st");
+        //ApplyAnimationEventToAnimation(CreateAnimationEvent(4f, "StartToChase"), "st");
     }
 
     void Update()
     {
-        if (isDead) { return; }
+        if (HP <= 0)
+        {
+            Loading.loadLevel("finalQTE");
+        }
 
         currentBaseState = animator.GetCurrentAnimatorStateInfo(0);
+        float distance = Vector2.Distance(transform.position, playerPosition);
 
         /**************************************************/
         /* A Simple State Machine Management starts here */
@@ -68,10 +74,15 @@ public class SumoAI : MonoBehaviour
         if (currentBaseState.fullPathHash.Equals(walkState))
         {
             hasAttacked = false;
-            Debug.Log("remain"+enemy.remainingDistance);
-            enemy.destination = playerPosition;
+            if (isChasing)
+            {
+                enemy.Resume();
+                enemy.destination = playerPosition;
+                isChasing = false;
+                setEnemyDirection();
+            }
             // I have reached the previous player position or I have catched the player
-            if (enemy.remainingDistance.Equals(0))
+            if (distance.Equals(0))
             {
                 setToThisAnimation(AnimationParams.isPunch);
             }
@@ -88,21 +99,23 @@ public class SumoAI : MonoBehaviour
                     setEnemyDirection();
                     PlayerHealth.doDamage(damage, this.transform.position);
                 }
-                setToThisAnimation(AnimationParams.isTired);
             }
+            setToThisAnimation(AnimationParams.isTired);
         }
         else if (currentBaseState.fullPathHash.Equals(tiredState))
         {
-
+            isTired = true;
+            StartCoroutine(StartToChase());
         }
         else if (currentBaseState.fullPathHash.Equals(beenHitState))
         {
             // anything related to the beenHit state should locates here.
             animator.SetBool("isHit", false);
-            setToThisAnimation(AnimationParams.isRoar);
+            //setToThisAnimation(AnimationParams.isRoar);
         }
         else if (currentBaseState.fullPathHash.Equals(roarState))
         {
+            StartCoroutine(StartToChase());            
         }
         else if (currentBaseState.fullPathHash.Equals(idleState))
         {
@@ -113,9 +126,9 @@ public class SumoAI : MonoBehaviour
     IEnumerator StartToChase()
     {
         yield return new WaitForSeconds(timeBeforeChase);
+        isChasing = true;
+        isTired = false;
         playerPosition = player.position;
-        enemy.Resume();
-        enemy.ResetPath();
         setToThisAnimation(AnimationParams.isWalk);
         setEnemyDirection();
     }
@@ -132,25 +145,22 @@ public class SumoAI : MonoBehaviour
 
     public void EnemyBeenHit(int incomingDamage)
     {
-        if (currentBaseState.Equals(tiredState))
+        Debug.Log("hhhh");
+        Debug.Log("not Tired");
+        //if (currentBaseState.Equals(tiredState))
+        if (isTired)
         {
+            Debug.Log("Tired");
             HP -= incomingDamage;
 
-            int rand = UnityEngine.Random.Range(0, painSounds.Length);
-            audioE.clip = painSounds[rand];
-            audioE.Play();
-
+            // int rand = UnityEngine.Random.Range(0, painSounds.Length);
+            // audioE.clip = painSounds[rand];
+            // audioE.Play();
+            Debug.Log("here");
             showSomeBlood(incomingDamage);
 
-            if (HP.Equals(0))
-            {
-                Loading.loadLevel("finalQTE");
-            }
-            else
-            {
-                setEnemyDirection();
-                setToThisAnimation(AnimationParams.isHit);
-            }
+            setToThisAnimation(AnimationParams.isHit);
+            setEnemyDirection();
         }
     }
 
