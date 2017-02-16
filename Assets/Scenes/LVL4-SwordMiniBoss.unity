@@ -867,6 +867,12 @@ Camera:
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
   m_StereoMirrorMode: 0
+--- !u!114 &808544929 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114578882234929860, guid: 67a366c035c06c34292040dcfe00121c,
+    type: 2}
+  m_PrefabInternal: {fileID: 819822684}
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 --- !u!1001 &819822684
 Prefab:
   m_ObjectHideFlags: 0
@@ -2367,7 +2373,7 @@ CircleCollider2D:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1818003050}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -2393,6 +2399,7 @@ MonoBehaviour:
     type: 2}
   bloodPrefabTEMP: {fileID: 1098130290637650, guid: 6a16bf338f2c3409bb4e4c16139198f7,
     type: 2}
+  GameOverText: {fileID: 808544929}
 --- !u!50 &1818003054
 Rigidbody2D:
   serializedVersion: 4
@@ -2433,6 +2440,7 @@ MonoBehaviour:
   kickDamage: 1
   upperCutDamage: 1
   hurricaneKickDamage: 1
+  surasshuSlashDamage: 1
   A: {fileID: 21300000, guid: 0b8d64663a9e8d14ca4d39e86e6346d7, type: 3}
   B: {fileID: 21300000, guid: cfd96d1e7e099684e8dbd6f43627df18, type: 3}
   Y: {fileID: 21300000, guid: 5bd6be8569fe6ff4186d2caa048ebfe7, type: 3}

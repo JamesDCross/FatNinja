@@ -13,49 +13,49 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: isPunch
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: isHit
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: isIdle
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: moveX
     m_Type: 1
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: moveY
     m_Type: 1
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: isTired
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: isRoar
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -77,7 +77,7 @@ BlendTree:
   m_Name: walk
   m_Childs:
   - serializedVersion: 2
-    m_Motion: {fileID: 7400000, guid: 6c1ace7ec9802492695cab0f18367ae4, type: 2}
+    m_Motion: {fileID: 7400000, guid: b1188e7f86240440eaac8c04b67ecb0d, type: 2}
     m_Threshold: 0
     m_Position: {x: 0, y: -1}
     m_TimeScale: 1
@@ -85,7 +85,7 @@ BlendTree:
     m_DirectBlendParameter: moveX
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: 7400000, guid: e9a90056c62ee42e596bac8f0c59fcdc, type: 2}
+    m_Motion: {fileID: 7400000, guid: 717adbca6157a43b28c38962999e72cc, type: 2}
     m_Threshold: 0.125
     m_Position: {x: -1, y: -1}
     m_TimeScale: 1
@@ -93,7 +93,7 @@ BlendTree:
     m_DirectBlendParameter: moveX
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: 7400000, guid: ed615a316d80b4c0e860f2e956beebe5, type: 2}
+    m_Motion: {fileID: 7400000, guid: 0ce3faf4cd7d24b2888dd18c57a92501, type: 2}
     m_Threshold: 0.25
     m_Position: {x: 1, y: -1}
     m_TimeScale: 1
@@ -101,7 +101,7 @@ BlendTree:
     m_DirectBlendParameter: moveX
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: 7400000, guid: 8d95e608bc9dd49f8aa29b61c54c72b6, type: 2}
+    m_Motion: {fileID: 7400000, guid: 4c0b730e2b43e4d369b16a23eb20422a, type: 2}
     m_Threshold: 0.375
     m_Position: {x: -1, y: 0}
     m_TimeScale: 1
@@ -109,7 +109,7 @@ BlendTree:
     m_DirectBlendParameter: moveX
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: 7400000, guid: 99b974128884a448bbfcbd6ae94a8cb9, type: 2}
+    m_Motion: {fileID: 7400000, guid: 15be768b63fcb4f93aa5ca082279d50a, type: 2}
     m_Threshold: 0.5
     m_Position: {x: 1, y: 0}
     m_TimeScale: 1
@@ -117,7 +117,7 @@ BlendTree:
     m_DirectBlendParameter: moveX
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: 7400000, guid: 738bacd8bc792480aaf70c98ba482d52, type: 2}
+    m_Motion: {fileID: 7400000, guid: 95dc5947fad09466b85886e58a7cd78c, type: 2}
     m_Threshold: 0.625
     m_Position: {x: 0, y: 1}
     m_TimeScale: 1
@@ -125,7 +125,7 @@ BlendTree:
     m_DirectBlendParameter: moveX
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: 7400000, guid: 4bcdae98195fb49e69830841ce665c31, type: 2}
+    m_Motion: {fileID: 7400000, guid: 5174e3b9eefa44ff79a1835179a3f45f, type: 2}
     m_Threshold: 0.75
     m_Position: {x: -1, y: 1}
     m_TimeScale: 1
@@ -133,7 +133,7 @@ BlendTree:
     m_DirectBlendParameter: moveX
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: 7400000, guid: b7e4be2889a3c4a4e9f6bab8a11c5998, type: 2}
+    m_Motion: {fileID: 7400000, guid: daa3e147dfbe349ddaa0b6955fcb640a, type: 2}
     m_Threshold: 0.875
     m_Position: {x: 1, y: 1}
     m_TimeScale: 1
@@ -627,7 +627,7 @@ AnimatorState:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: walk
-  m_Speed: 8
+  m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 1101874108633263294}
