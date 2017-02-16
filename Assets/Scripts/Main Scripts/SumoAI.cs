@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;      //1Tells Random to use the Unity Engine random number generator.
 
 public class SumoAI : MonoBehaviour
@@ -10,7 +11,8 @@ public class SumoAI : MonoBehaviour
     public float timeBeforeChase = 3f;
     public int damage = 4;
     public float speed = 4f;
-
+    public Text saySomething;
+    public Image speechBubble;
     //Audio
     public AudioClip[] painSounds;
     public AudioSource audioE;
@@ -19,9 +21,10 @@ public class SumoAI : MonoBehaviour
     public GameObject bloodPrefab;
 
     // private variables starts here
-    private bool isDead = false;
     private bool isChasing = false;
     private bool isTired = false;
+    private bool isFirstTimeMeet = true;
+    private bool isFirstTimeTired = false;
     private GameObject playerCollider;
     private Vector2 playerPosition;
     private int walkState = Animator.StringToHash("Base Layer.walk");
@@ -30,6 +33,7 @@ public class SumoAI : MonoBehaviour
     private int punchState = Animator.StringToHash("Base Layer.punch");
     private int idleState = Animator.StringToHash("Base Layer.flex");
     private int beenHitState = Animator.StringToHash("Base Layer.beenHit");
+    private int entryState = Animator.StringToHash("Base Layer.entry");
     private bool hasAttacked;
     private Animator animator;
     private float startTiredTime;
@@ -56,6 +60,8 @@ public class SumoAI : MonoBehaviour
     void Start()
     {
         //ApplyAnimationEventToAnimation(CreateAnimationEvent(4f, "StartToChase"), "st");
+        saySomething.GetComponent<Text>().enabled = false;
+        speechBubble.GetComponent<Image>().enabled = false;
     }
 
     void Update()
@@ -64,9 +70,10 @@ public class SumoAI : MonoBehaviour
         {
             Loading.loadLevel("finalQTE");
         }
-        Debug.Log(playerPosition);
         currentBaseState = animator.GetCurrentAnimatorStateInfo(0);
-        float distance = Vector2.Distance(transform.position, playerPosition);
+        float distance = Vector2.Distance(transform.position, player.position);
+
+
 
         /**************************************************/
         /* A Simple State Machine Management starts here */
@@ -108,37 +115,71 @@ public class SumoAI : MonoBehaviour
         else if (currentBaseState.fullPathHash.Equals(tiredState))
         {
             isTired = true;
-            StartCoroutine(TimePause());
-            //StartToChase();
+            StartCoroutine(TimePause(timeBeforeChase));
         }
         else if (currentBaseState.fullPathHash.Equals(beenHitState))
         {
             // anything related to the beenHit state should locates here.
             animator.SetBool("isHit", false);
             isTired = true;
-            
             //setToThisAnimation(AnimationParams.isRoar);
         }
         else if (currentBaseState.fullPathHash.Equals(roarState))
         {
             //StartCoroutine(StartToChase());    
-            isTired = true;
-            StartCoroutine(TimePause());
+            if (isFirstTimeMeet)
+            {
+                isTired = false;
+                isFirstTimeMeet = false;
+            } else {
+                isTired = true;
+            }
+            StartCoroutine(TimePause(timeBeforeChase));
             StartToChase();
         }
         else if (currentBaseState.fullPathHash.Equals(idleState))
         {
-            StartCoroutine(TimePause());
+            StartCoroutine(TimePause(timeBeforeChase));
             StartToChase();
+        }
+        else if (currentBaseState.fullPathHash.Equals(entryState))
+        {
+            if (distance <= 4f)
+            {
+                //say something
+                //UnityEngine.UI.Text txt = transform.GetChild(3).GetChild(0).GetChild(0).GetComponent<UnityEngine.UI.Text>();
+                StartCoroutine(SaySomethingFirstMeet());
+                isFirstTimeMeet = false;
+                enemy.Stop();
+                setToThisAnimation(AnimationParams.isRoar);
+                StartCoroutine(TimePause(timeBeforeChase*1.5f));
+            }
         }
     }
 
-    IEnumerator TimePause()
+    //You skinny basterd, come over let me hug you.
+    //Time for me to hit the Dojo.
+
+    IEnumerator SaySomethingFirstMeet()
     {
-        yield return new WaitForSeconds(timeBeforeChase);
+        saySomething.text = "You're killing my man!";
+        saySomething.GetComponent<Text>().enabled = true;
+        speechBubble.GetComponent<Image>().enabled = true;
+        yield return new WaitForSeconds(1.5f);
+        saySomething.text = "You damn THUG!";
+        yield return new WaitForSeconds(1.5f);
+        saySomething.GetComponent<Text>().enabled = false;
+        speechBubble.GetComponent<Image>().enabled = false;
+    }
+
+
+
+    IEnumerator TimePause(float time1)
+    {
+        yield return new WaitForSeconds(time1);
     }
     void StartToChase()
-    { 
+    {
         isChasing = true;
         isTired = false;
         playerPosition = player.position;
