@@ -36,7 +36,6 @@ public class SumoAI : MonoBehaviour
     private int entryState = Animator.StringToHash("Base Layer.entry");
     private bool hasAttacked;
     private Animator animator;
-    private float startTiredTime;
     private NavMeshAgent2D enemy;
     private Transform player;
     private AnimatorStateInfo currentBaseState;
@@ -157,7 +156,6 @@ public class SumoAI : MonoBehaviour
             if (distance <= 4f)
             {
                 //say something
-                //UnityEngine.UI.Text txt = transform.GetChild(3).GetChild(0).GetChild(0).GetComponent<UnityEngine.UI.Text>();
                 StartCoroutine(SaySomethingFirstMeet());
                 isFirstTimeMeet = false;
                 enemy.Stop();
