@@ -17,6 +17,7 @@ public class GameMaster : MonoBehaviour {
     private float width = (Screen.width * .3f);
     private float height = (Screen.height * .7f);
     private float exitsY;
+    private GUIStyle style;
 
 
     void Start () {
@@ -28,6 +29,7 @@ public class GameMaster : MonoBehaviour {
         characterActions.Pause.AddDefaultBinding(Key.Escape);
         PauseMenu = new Rect(posX, posY, width, height);
         exitsY = posY + (height * .34f);
+        style = new GUIStyle();
     }
 
     // Update is called once per frame
@@ -61,6 +63,8 @@ public class GameMaster : MonoBehaviour {
 
     void ThePauseMenu()
     {
+        GUI.color = Color.black;
+        style.fontSize = 20;
         if (GUI.Button(new Rect(posX + (width * .15f), posY + (height * .22f), width *.7f, 20), "Resume"))
         {
             pause = false;
@@ -72,7 +76,7 @@ public class GameMaster : MonoBehaviour {
             combo = combo ? false : true;
             if (combo)
             {
-                exitsY = posY + (height * .64f);
+                exitsY = posY + (height * .70f);
                 //PauseMenu.size = new Vector2(360, 290);
             }
             else
@@ -100,18 +104,20 @@ public class GameMaster : MonoBehaviour {
             }
 
             if (keyboard)
-            {
-                GUI.Label(new Rect(posX + (width * .15f), posY + (height * .40f), width * .7f, 20), "Kick X");
-                GUI.Label(new Rect(posX + (width * .15f), posY + (height * .46f), width * .7f, 20), "Punch Z");
-                GUI.Label(new Rect(posX + (width * .15f), posY + (height * .52f), width * .7f, 20), "Upper Cut Z Z X");
-                GUI.Label(new Rect(posX + (width * .15f), posY + (height * .58f), width * .7f, 20), "Hurricane Kick X X Z");
+            {               
+                GUI.Label(new Rect(posX + (width * .15f), posY + (height * .40f), width * .7f, 20), "Kick X", style);
+                GUI.Label(new Rect(posX + (width * .15f), posY + (height * .46f), width * .7f, 20), "Punch Z", style);
+                GUI.Label(new Rect(posX + (width * .15f), posY + (height * .52f), width * .7f, 20), "Upper Cut Z Z X", style);
+                GUI.Label(new Rect(posX + (width * .15f), posY + (height * .58f), width * .7f, 20), "Hurricane Kick X X Z", style);
+                GUI.Label(new Rect(posX + (width * .15f), posY + (height * .64f), width * .7f, 20), "Surasshu Slash X Z Z X", style);
             } 
             else
             {
-                GUI.Label(new Rect(posX + (width * .15f), posY + (height * .40f), width * .7f, 20), "Kick B");
-                GUI.Label(new Rect(posX + (width * .15f), posY + (height * .46f), width * .7f, 20), "Punch A");
-                GUI.Label(new Rect(posX + (width * .15f), posY + (height * .52f), width * .7f, 20), "Upper Cut B B A");
-                GUI.Label(new Rect(posX + (width * .15f), posY + (height * .58f), width * .7f, 20), "Hurricane Kick A A B");
+                GUI.Label(new Rect(posX + (width * .15f), posY + (height * .40f), width * .7f, 20), "Kick B", style);
+                GUI.Label(new Rect(posX + (width * .15f), posY + (height * .46f), width * .7f, 20), "Punch A", style);
+                GUI.Label(new Rect(posX + (width * .15f), posY + (height * .52f), width * .7f, 20), "Upper Cut A A B", style);
+                GUI.Label(new Rect(posX + (width * .15f), posY + (height * .58f), width * .7f, 20), "Hurricane Kick B B A", style);
+                GUI.Label(new Rect(posX + (width * .15f), posY + (height * .64f), width * .7f, 20), "Surasshu Slash B A A B", style);
             }
         }
         
