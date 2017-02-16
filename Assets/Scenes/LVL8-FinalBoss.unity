@@ -1005,7 +1005,7 @@ Prefab:
     - target: {fileID: 114996723105635614, guid: b3d10f6edb5e449de86bd6eb057f5f0c,
         type: 2}
       propertyPath: acceleration
-      value: 80
+      value: 120
       objectReference: {fileID: 0}
     - target: {fileID: 114996723105635614, guid: b3d10f6edb5e449de86bd6eb057f5f0c,
         type: 2}
@@ -1032,6 +1032,16 @@ Prefab:
         type: 2}
       propertyPath: HP
       value: 100000
+      objectReference: {fileID: 0}
+    - target: {fileID: 114985681842784688, guid: b3d10f6edb5e449de86bd6eb057f5f0c,
+        type: 2}
+      propertyPath: damage
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 114985681842784688, guid: b3d10f6edb5e449de86bd6eb057f5f0c,
+        type: 2}
+      propertyPath: speed
+      value: 20
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 60343048966283774, guid: b3d10f6edb5e449de86bd6eb057f5f0c, type: 2}
