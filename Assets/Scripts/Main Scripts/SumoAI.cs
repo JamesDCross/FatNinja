@@ -108,18 +108,21 @@ public class SumoAI : MonoBehaviour
         else if (currentBaseState.fullPathHash.Equals(tiredState))
         {
             isTired = true;
-                        StartCoroutine(TimePause());
-            StartToChase();
+            StartCoroutine(TimePause());
+            //StartToChase();
         }
         else if (currentBaseState.fullPathHash.Equals(beenHitState))
         {
             // anything related to the beenHit state should locates here.
             animator.SetBool("isHit", false);
+            isTired = true;
+            
             //setToThisAnimation(AnimationParams.isRoar);
         }
         else if (currentBaseState.fullPathHash.Equals(roarState))
         {
             //StartCoroutine(StartToChase());    
+            isTired = true;
             StartCoroutine(TimePause());
             StartToChase();
         }
@@ -135,8 +138,7 @@ public class SumoAI : MonoBehaviour
         yield return new WaitForSeconds(timeBeforeChase);
     }
     void StartToChase()
-    {
-
+    { 
         isChasing = true;
         isTired = false;
         playerPosition = player.position;
@@ -165,9 +167,7 @@ public class SumoAI : MonoBehaviour
             // int rand = UnityEngine.Random.Range(0, painSounds.Length);
             // audioE.clip = painSounds[rand];
             // audioE.Play();
-            Debug.Log("here");
             showSomeBlood(incomingDamage);
-
             setToThisAnimation(AnimationParams.isHit);
             setEnemyDirection();
         }
