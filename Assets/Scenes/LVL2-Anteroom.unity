@@ -762,6 +762,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   level: LVL3-Training
+  blockExitCollider: {fileID: 0}
 --- !u!95 &937182774
 Animator:
   serializedVersion: 3
@@ -1465,6 +1466,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   level: LVL3-NinjaOnlyRoom
+  blockExitCollider: {fileID: 0}
 --- !u!95 &1950910723
 Animator:
   serializedVersion: 3
@@ -1619,6 +1621,26 @@ Prefab:
         type: 2}
       propertyPath: quote
       value: should I practice?
+      objectReference: {fileID: 0}
+    - target: {fileID: 212115757922060158, guid: 2c081b361d5574412ae3042115686bae,
+        type: 2}
+      propertyPath: m_Color.r
+      value: 0.85882354
+      objectReference: {fileID: 0}
+    - target: {fileID: 212115757922060158, guid: 2c081b361d5574412ae3042115686bae,
+        type: 2}
+      propertyPath: m_Color.g
+      value: 0.85882354
+      objectReference: {fileID: 0}
+    - target: {fileID: 212115757922060158, guid: 2c081b361d5574412ae3042115686bae,
+        type: 2}
+      propertyPath: m_Color.b
+      value: 0.85882354
+      objectReference: {fileID: 0}
+    - target: {fileID: 212115757922060158, guid: 2c081b361d5574412ae3042115686bae,
+        type: 2}
+      propertyPath: m_Color.a
+      value: 0.85882354
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2c081b361d5574412ae3042115686bae, type: 2}
