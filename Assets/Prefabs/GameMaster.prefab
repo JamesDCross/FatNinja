@@ -53,3 +53,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scoreText: {fileID: 0}
   Background: {fileID: 2800000, guid: 29cf1ad528e5444d68cfb9c1a492806f, type: 3}
+  font: {fileID: 12800000, guid: f7b495acb3de8c7498534205ee6bc80c, type: 3}
