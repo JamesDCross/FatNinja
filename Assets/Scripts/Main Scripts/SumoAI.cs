@@ -40,6 +40,7 @@ public class SumoAI : MonoBehaviour
     private NavMeshAgent2D enemy;
     private Transform player;
     private AnimatorStateInfo currentBaseState;
+    //private 
     private enum AnimationParams
     {
         isWalk, isPunch, isHit, isIdle, isTired, isRoar
@@ -172,7 +173,15 @@ public class SumoAI : MonoBehaviour
         speechBubble.GetComponent<Image>().enabled = false;
     }
 
-
+    IEnumerator SaySomethingWhenTired(string quote)
+    {
+        saySomething.text = quote;
+        saySomething.GetComponent<Text>().enabled = true;
+        speechBubble.GetComponent<Image>().enabled = true;
+        yield return new WaitForSeconds(1.5f);
+        saySomething.GetComponent<Text>().enabled = false;
+        speechBubble.GetComponent<Image>().enabled = false;
+    }
 
     IEnumerator TimePause(float time1)
     {
