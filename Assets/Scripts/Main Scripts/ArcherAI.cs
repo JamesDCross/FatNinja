@@ -13,6 +13,7 @@ public class ArcherAI : MonoBehaviour
     private float chaseWalkDelta = 1f;
     public int chanceToAttack = 5;
     public float attackTimeGap = 1f; // time gap between each attack
+    private bool startingLevel = true;
 
     //Audio
     public AudioClip[] painSounds;
@@ -84,7 +85,10 @@ public class ArcherAI : MonoBehaviour
         if (currentBaseState.fullPathHash.Equals(aimState))
         {
             //TODO: fire the arrow
-            Attack();
+            if (!startingLevel)
+                Attack();
+            else
+                startingLevel = false;
         }
         else if (currentBaseState.fullPathHash.Equals(beenHitState))
         {
