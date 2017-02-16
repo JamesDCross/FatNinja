@@ -18,6 +18,8 @@ public class GameMaster : MonoBehaviour {
     private float height = (Screen.height * .7f);
     private float exitsY;
     private GUIStyle style;
+    private GUIStyle styleButton;
+    public Font font;
 
 
     void Start () {
@@ -30,6 +32,7 @@ public class GameMaster : MonoBehaviour {
         PauseMenu = new Rect(posX, posY, width, height);
         exitsY = posY + (height * .34f);
         style = new GUIStyle();
+        styleButton = new GUIStyle();
     }
 
     // Update is called once per frame
@@ -64,14 +67,17 @@ public class GameMaster : MonoBehaviour {
     void ThePauseMenu()
     {
         GUI.color = Color.black;
-        style.fontSize = 20;
-        if (GUI.Button(new Rect(posX + (width * .15f), posY + (height * .22f), width *.7f, 20), "Resume"))
+        GUI.backgroundColor = Color.white;
+        style.fontSize = 18;
+        styleButton.fontSize = 22;
+        styleButton.font = font;
+        if (GUI.Button(new Rect(posX + (width * .15f), posY + (height * .22f), width *.7f, 20), "Resume", styleButton))
         {
             pause = false;
             Time.timeScale = 1;
         }
 
-        if (GUI.Button(new Rect(posX + (width * .15f), posY + (height * .28f), width * .7f, 20), "Combos"))
+        if (GUI.Button(new Rect(posX + (width * .15f), posY + (height * .28f), width * .7f, 20), "Combos", styleButton))
         {
             combo = combo ? false : true;
             if (combo)
@@ -86,19 +92,19 @@ public class GameMaster : MonoBehaviour {
             }
         }
 
-        if (GUI.Button(new Rect(posX + (width * .15f), exitsY, width * .7f, 20), "Quit"))
+        if (GUI.Button(new Rect(posX + (width * .15f), exitsY, width * .7f, 20), "Quit", styleButton))
         {
             HardReset();
         }
 
         if (combo)
         {
-            if (GUI.Button(new Rect(posX + (width * .15f), posY + (height * .34f), width * .34f , 20), "Controller"))
+            if (GUI.Button(new Rect(posX + (width * .15f), posY + (height * .34f), width * .34f , 20), "Controller", styleButton))
             {
                 keyboard = false;
             }
 
-            if (GUI.Button(new Rect(posX + (width * .51f), posY + (height * .34f), width * .34f, 20), "Keyboard"))
+            if (GUI.Button(new Rect(posX + (width * .51f), posY + (height * .34f), width * .34f, 20), "Keyboard", styleButton))
             {
                 keyboard = true;
             }
