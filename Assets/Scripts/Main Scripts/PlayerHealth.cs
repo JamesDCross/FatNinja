@@ -9,7 +9,7 @@ public class PlayerHealth : MonoBehaviour {
     public static float Damage = 0;
     public Texture HP_Indercator;
     public Texture HP_Container;
-    Vector2 pos  = new Vector2(10,30);
+    Vector2 pos  = new Vector2(40,30);
     Vector2 size  = new Vector2(200,20);
 
     // fade and die coroutine
