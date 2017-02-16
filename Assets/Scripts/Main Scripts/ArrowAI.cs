@@ -33,11 +33,14 @@ public class ArrowAI : MonoBehaviour
 
     public Vector2 computeDestination(Vector3 playerPosition)
     {
+        // we need a destination which is beyond where the player stands
+        // this is how an arrow flies
         return transform.position + (playerPosition - transform.position).normalized * 80.0f;
     }
 
     public Quaternion computeRotation(Vector3 playerPosition)
     {
+        // rotate the arrow to the player
         return Quaternion.LookRotation(Vector3.forward, playerPosition - transform.position) * Quaternion.Euler(0, 0, -180);
     }
 }
