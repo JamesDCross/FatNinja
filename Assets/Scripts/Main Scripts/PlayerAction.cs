@@ -11,6 +11,7 @@ public class PlayerAction : PlayerActionSet {
     public InControl.PlayerAction Kick;
     public InControl.PlayerAction Roll;
     public InControl.PlayerAction Blank;
+    public InControl.PlayerAction Skip;
 
     public InControl.PlayerAction Level1;
     public InControl.PlayerAction Controls;
@@ -23,5 +24,6 @@ public class PlayerAction : PlayerActionSet {
         Blank = CreatePlayerAction("Blank");
         Level1 = CreatePlayerAction("Level1");
         Controls = CreatePlayerAction("Controls");
+        Skip = CreatePlayerAction("Skip");
     }
 }
