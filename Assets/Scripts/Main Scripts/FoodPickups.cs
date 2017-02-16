@@ -7,17 +7,20 @@ using UnityEngine;
 public class FoodPickups : MonoBehaviour {
 
     public AudioSource audio;
+    public GameObject healText;
 
     void OnTriggerEnter2D(Collider2D other)
     {
         if (PlayerHealth.PlayersHP < PlayerHealth.MaxHP)
         {
+            int healAmount = (int)PlayerHealth.MaxHP - (int)PlayerHealth.PlayersHP;
 
-
+            healText.SetActive(true);
+            healText.GetComponent<damageTextScr>().setDamage(healAmount);
 
             GetComponentInChildren <SpriteRenderer>().enabled = false;
 
-            PlayerHealth.heal(10);
+            PlayerHealth.heal(healAmount);
 
             StartCoroutine(Ding());
            // Destroy(gameObject);
