@@ -2566,6 +2566,11 @@ Prefab:
       propertyPath: damage
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 114769454782630468, guid: ee69fabab52b44a0e8752e56d70e1301,
+        type: 2}
+      propertyPath: enemyHP
+      value: 20
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ee69fabab52b44a0e8752e56d70e1301, type: 2}
   m_IsPrefabParent: 0
