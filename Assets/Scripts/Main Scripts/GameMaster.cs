@@ -151,6 +151,8 @@ public class GameMaster : MonoBehaviour {
         Scene scene = SceneManager.GetActiveScene();
         PlayerHealth.Damage = 0;
         PlayerHealth.PlayersHP = PlayerHealth.MaxHP;
+        pause = false;
+        Time.timeScale = 1;
         Loading.loadLevel(scene.name);
     }
 
@@ -158,6 +160,10 @@ public class GameMaster : MonoBehaviour {
     {
         Score.scoreReset();
         MusicPlayer.destroyMusic();
+        //Loading.loadLevel("Start Menu");
+        //SceneManager.LoadScene("Start Menu");
+        pause = false;
+        Time.timeScale = 1;
         Loading.loadLevel("Start Menu");
     }
 }

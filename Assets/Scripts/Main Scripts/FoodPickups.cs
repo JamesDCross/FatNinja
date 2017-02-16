@@ -16,7 +16,8 @@ public class FoodPickups : MonoBehaviour {
             int healAmount = (int)PlayerHealth.MaxHP - (int)PlayerHealth.PlayersHP;
 
             healText.SetActive(true);
-            healText.GetComponent<damageTextScr>().setDamage(healAmount);
+            int incomingheal = ((healAmount * 100) + Random.Range(0, 100));
+            healText.GetComponent<damageTextScr>().setDamage(incomingheal);
 
             GetComponentInChildren <SpriteRenderer>().enabled = false;
 

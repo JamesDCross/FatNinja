@@ -819,10 +819,21 @@ Prefab:
         type: 2}
       propertyPath: scoreText
       value: 
+      objectReference: {fileID: 841070140}
+    - target: {fileID: 114443227487411254, guid: 27ab1f8ff4c174f92befa08fbca6f832,
+        type: 2}
+      propertyPath: m_FontData.m_HorizontalOverflow
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 27ab1f8ff4c174f92befa08fbca6f832, type: 2}
   m_IsPrefabParent: 0
+--- !u!114 &841070140 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114443227487411254, guid: 27ab1f8ff4c174f92befa08fbca6f832,
+    type: 2}
+  m_PrefabInternal: {fileID: 841070139}
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 --- !u!1001 &846772068
 Prefab:
   m_ObjectHideFlags: 0
