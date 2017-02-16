@@ -15,49 +15,22 @@ public class LevelMaster : MonoBehaviour
         characterActions.Level1.AddDefaultBinding(InputControlType.Action2);
         characterActions.Level1.AddDefaultBinding(Key.X);
 
-        characterActions.Controls.AddDefaultBinding(InputControlType.Action3);
-        characterActions.Controls.AddDefaultBinding(Key.C);
+        characterActions.Level1.AddDefaultBinding(InputControlType.Action1);
+        characterActions.Level1.AddDefaultBinding(Key.Z);
+        characterActions.Level1.AddDefaultBinding(Key.Return);
+        characterActions.Level1.AddDefaultBinding(Key.Space);
 
 
     }
 
-void Update(){
+    void Update()
+    {
+        LoadLevel1();
+    }
 
-LoadLevel1();
-//LoadLevelControls();
-
-
-}
     public void LoadLevel1()
     {
-        //if button is ... 
-        Debug.Log("New Level load: ");
         if (characterActions.Level1)
-         //if(Input.GetKeyDown(KeyCode.C))
-        {
-            SceneManager.LoadScene("Intro");
-         }
+            Loading.loadLevel("LVL1-Balcony");
     }
-
-    /*public void LoadLevelControls()
-    {
-        //if button is ... 
-        Debug.Log("New Level load: ");
-         if (characterActions.Controls)
-         //if(Input.GetKeyDown(KeyCode.C))
-        {
-            SceneManager.LoadScene("Controls");
-         }
-    }*/
-
-
-
-
-
-    /*public void QuitRequest()
-    {
-        Debug.Log("Quit requested");
-        Application.Quit();
-    }*/
-
 }
