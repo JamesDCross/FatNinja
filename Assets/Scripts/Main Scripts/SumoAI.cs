@@ -41,6 +41,8 @@ public class SumoAI : MonoBehaviour
     private Transform player;
     private AnimatorStateInfo currentBaseState;
     private string[] tiredList = new string[] {
+        "It's not fair!",
+        "I'll tell your mom!",
         "You skinny basterd, I'll beat you.",
         "Time for me to hit the Dojo.",
         "Damn, Why you keep running?",
@@ -87,7 +89,6 @@ public class SumoAI : MonoBehaviour
             if (isChasing)
             {
                 enemy.Resume();
-                //enemy.destination = playerPosition;
                 setEnemyDirection();
                 isChasing = false;
             }
