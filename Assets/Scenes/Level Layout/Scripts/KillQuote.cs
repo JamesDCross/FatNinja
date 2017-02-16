@@ -10,7 +10,9 @@ public class KillQuote : MonoBehaviour {
 
     public float pauseBeforeText;
     public float displayTextTime;
-    public bool speak;
+    public bool speak = false;
+
+    private bool spoken = false;
 
    
     public Image speechBubble;
@@ -26,7 +28,7 @@ public class KillQuote : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        speak = false;
+        //speak = false;
 
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
         if (enemies.Length == 0)
@@ -34,8 +36,9 @@ public class KillQuote : MonoBehaviour {
             speak = true;
         }
 
-        if (speak) {
+        if (speak && !spoken) {
             StartCoroutine(Timer());
+            spoken = true;
         }
 
     }
