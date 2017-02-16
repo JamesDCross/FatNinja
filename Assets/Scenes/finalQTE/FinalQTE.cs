@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Fungus;
+using InControl;
 
 [CommandInfo("QTE", "Add QTE to flow", "Quick Time Event System")]
 public class FinalQTE : Command
@@ -14,7 +15,11 @@ public class FinalQTE : Command
     // an enum for a possible response!
     [HideInInspector] public enum QTResponse { Null, Success, Fail };
     [HideInInspector] public QTResponse qtResponse = QTResponse.Null;
-    public KeyCode QTEButton = new KeyCode();
+    //public KeyCode QTEButton = new KeyCode();
+     public enum Action{
+        punch, kick
+    }
+    public Action QTEButton;
 
     // How long should the event last?
     public float CountTimer = 2f;
@@ -25,10 +30,19 @@ public class FinalQTE : Command
 
     public GameObject ButtonDisplay;
 
+    PlayerAction characterActions;
+
     // Use this for initialization
     void Start()
     {
         //qtState = QTState.Ready;
+        characterActions = new PlayerAction();
+        
+        characterActions.Punch.AddDefaultBinding(InputControlType.Action1);
+        characterActions.Punch.AddDefaultBinding(Key.Z);
+
+        characterActions.Kick.AddDefaultBinding(InputControlType.Action2);
+        characterActions.Kick.AddDefaultBinding(Key.X);
     }
 
     public override void OnEnter()
@@ -43,7 +57,11 @@ public class FinalQTE : Command
     {
         if (qtState == QTState.Ongoing)
         {
-            if (Input.GetKeyDown(QTEButton))
+            // succeed QTE (press right button)
+            if (
+                (QTEButton == Action.punch && characterActions.Punch) || 
+                (QTEButton == Action.kick && characterActions.Kick)
+            )
             {
                 qtState = QTState.Done;
                 qtResponse = QTResponse.Success;
@@ -56,6 +74,17 @@ public class FinalQTE : Command
                 {
                     flowChart.ExecuteBlock(blockWhenSuccess);
                 }
+            }
+
+            // fail QTE (press wrong button)
+            if (
+                (QTEButton == Action.punch && characterActions.Kick) || 
+                (QTEButton == Action.kick && characterActions.Punch)
+            ) {
+                qtState = QTState.Done;
+                qtResponse = QTResponse.Fail;
+                flowChart.ExecuteBlock(blockWhenFailed);
+
             }
         }
     }

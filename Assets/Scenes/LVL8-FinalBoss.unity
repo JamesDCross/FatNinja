@@ -1032,12 +1032,17 @@ Prefab:
     - target: {fileID: 114996723105635614, guid: b3d10f6edb5e449de86bd6eb057f5f0c,
         type: 2}
       propertyPath: acceleration
-      value: 5
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 114996723105635614, guid: b3d10f6edb5e449de86bd6eb057f5f0c,
         type: 2}
       propertyPath: speed
       value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 114985681842784688, guid: b3d10f6edb5e449de86bd6eb057f5f0c,
+        type: 2}
+      propertyPath: timeBeforeChase
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b3d10f6edb5e449de86bd6eb057f5f0c, type: 2}
