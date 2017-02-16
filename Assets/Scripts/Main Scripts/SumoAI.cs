@@ -108,7 +108,8 @@ public class SumoAI : MonoBehaviour
         else if (currentBaseState.fullPathHash.Equals(tiredState))
         {
             isTired = true;
-            StartCoroutine(StartToChase());
+                        StartCoroutine(TimePause());
+            StartToChase();
         }
         else if (currentBaseState.fullPathHash.Equals(beenHitState))
         {
@@ -118,17 +119,24 @@ public class SumoAI : MonoBehaviour
         }
         else if (currentBaseState.fullPathHash.Equals(roarState))
         {
-            //StartCoroutine(StartToChase());            
+            //StartCoroutine(StartToChase());    
+            StartCoroutine(TimePause());
+            StartToChase();
         }
         else if (currentBaseState.fullPathHash.Equals(idleState))
         {
-            StartCoroutine(StartToChase());
+            StartCoroutine(TimePause());
+            StartToChase();
         }
     }
 
-    IEnumerator StartToChase()
+    IEnumerator TimePause()
     {
         yield return new WaitForSeconds(timeBeforeChase);
+    }
+    void StartToChase()
+    {
+
         isChasing = true;
         isTired = false;
         playerPosition = player.position;
