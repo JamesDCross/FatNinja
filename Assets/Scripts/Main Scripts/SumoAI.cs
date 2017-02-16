@@ -30,12 +30,13 @@ public class SumoAI : MonoBehaviour
     private int beenHitState = Animator.StringToHash("Base Layer.beenHit");
     private bool hasAttacked;
     private Animator animator;
+    private float startTiredTime;
     private NavMeshAgent2D enemy;
     private Transform player;
     private AnimatorStateInfo currentBaseState;
     private enum AnimationParams
     {
-        isWalk, isPunch, isIdle, isHit, isTired, isRoar
+        isWalk, isPunch, isHit, isIdle, isTired, isRoar
     }
 
     void Awake()
@@ -48,7 +49,11 @@ public class SumoAI : MonoBehaviour
         {
             audioE = GetComponentInChildren<AudioSource>();
         }
-        //ApplyAnimationEventToKickAnimation(CreateAnimationEvent());
+    }
+
+    void Start()
+    {
+        ApplyAnimationEventToAnimation(CreateAnimationEvent(4f, "StartToChase"), "st");
     }
 
     void Update()
@@ -63,7 +68,8 @@ public class SumoAI : MonoBehaviour
         if (currentBaseState.fullPathHash.Equals(walkState))
         {
             hasAttacked = false;
-
+            Debug.Log("remain"+enemy.remainingDistance);
+            enemy.destination = playerPosition;
             // I have reached the previous player position or I have catched the player
             if (enemy.remainingDistance.Equals(0))
             {
@@ -87,8 +93,7 @@ public class SumoAI : MonoBehaviour
         }
         else if (currentBaseState.fullPathHash.Equals(tiredState))
         {
-            setEnemyDirection();
-            StartCoroutine(StartToChase());
+
         }
         else if (currentBaseState.fullPathHash.Equals(beenHitState))
         {
@@ -108,10 +113,9 @@ public class SumoAI : MonoBehaviour
     IEnumerator StartToChase()
     {
         yield return new WaitForSeconds(timeBeforeChase);
-
-        playerPosition = new Vector2(player.position.x, player.position.y);
+        playerPosition = player.position;
         enemy.Resume();
-        enemy.destination = playerPosition;
+        enemy.ResetPath();
         setToThisAnimation(AnimationParams.isWalk);
         setEnemyDirection();
     }
@@ -294,6 +298,39 @@ public class SumoAI : MonoBehaviour
             //Let me hit you.
             //PlayerHealth.doDamage(damage, this.transform.position);
             playerCollider = null;
+        }
+    }
+
+    private AnimationEvent CreateAnimationEvent(float stime, string eventName)
+    {
+        // new event created
+        return new AnimationEvent()
+        {
+            time = stime,
+            functionName = eventName
+        };
+    }
+
+    private void ApplyAnimationEventToAnimation(AnimationEvent evt, String animationName)
+    {
+        foreach (AnimationClip clip in animator.runtimeAnimatorController.animationClips)
+        {
+            string name = clip.name;
+            if (name.StartsWith(animationName))
+            {
+                bool isAdded = false;
+                foreach (AnimationEvent e in clip.events)
+                {
+                    if (e.functionName == evt.functionName)
+                    {
+                        isAdded = true;
+                    }
+                }
+                if (!isAdded)
+                {
+                    clip.AddEvent(evt);
+                }
+            }
         }
     }
 }
