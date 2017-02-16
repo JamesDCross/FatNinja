@@ -176,32 +176,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
-    - target: {fileID: 212115757922060158, guid: 2c081b361d5574412ae3042115686bae,
-        type: 2}
-      propertyPath: m_Color.r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 212115757922060158, guid: 2c081b361d5574412ae3042115686bae,
-        type: 2}
-      propertyPath: m_Color.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 212115757922060158, guid: 2c081b361d5574412ae3042115686bae,
-        type: 2}
-      propertyPath: m_Color.b
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 212115757922060158, guid: 2c081b361d5574412ae3042115686bae,
-        type: 2}
-      propertyPath: m_Color.a
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114132039298968758, guid: 2c081b361d5574412ae3042115686bae,
-        type: 2}
-      propertyPath: dyingPrefabTEMP
-      value: 
-      objectReference: {fileID: 1868279629309482, guid: 441259ba601d74bfe8368c5b6b5ab921,
-        type: 2}
     - target: {fileID: 114132039298968758, guid: 2c081b361d5574412ae3042115686bae,
         type: 2}
       propertyPath: GameOverText
@@ -1031,7 +1005,7 @@ Prefab:
     - target: {fileID: 114985681842784688, guid: b3d10f6edb5e449de86bd6eb057f5f0c,
         type: 2}
       propertyPath: HP
-      value: 100000
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 114985681842784688, guid: b3d10f6edb5e449de86bd6eb057f5f0c,
         type: 2}
@@ -1090,9 +1064,9 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 0
-  m_Offset: {x: -0.069924355, y: -0.03458357}
+  m_Offset: {x: -0.026094317, y: 0.03846693}
   serializedVersion: 2
-  m_Size: {x: 1.2796972, y: 2.169167}
+  m_Size: {x: 2.010197, y: 2.7243443}
 --- !u!1 &1818003050 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1842082821315410, guid: 2c081b361d5574412ae3042115686bae,
