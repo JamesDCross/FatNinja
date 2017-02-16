@@ -162,7 +162,7 @@ public class SumoAI : MonoBehaviour
 
     IEnumerator SaySomethingFirstMeet()
     {
-        saySomething.text = "You're killing my man!";
+        saySomething.text = "You're killing my men!";
         saySomething.GetComponent<Text>().enabled = true;
         speechBubble.GetComponent<Image>().enabled = true;
         yield return new WaitForSeconds(1.5f);
