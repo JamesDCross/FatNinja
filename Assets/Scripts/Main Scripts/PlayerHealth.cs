@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour {
 
@@ -19,6 +20,7 @@ public class PlayerHealth : MonoBehaviour {
 
 public GameObject bloodPrefabTEMP;
     private static GameObject bloodPrefab;
+    public Text GameOverText = null; 
 
 
 	// Use this for initialization
@@ -92,6 +94,10 @@ public GameObject bloodPrefabTEMP;
         dyingPlayer.GetComponent<EnemyAI>().isDead = true;
         dyingPlayer.GetComponent<Animator>().SetBool("IsEnemyDead", true);
 
+        // spawn dead text
+        GameOverText.text = "GAME OVER";
+
+        // slowly fade in text
         // slowly fade out all other objects
         while (alpha > -1f) {
             foreach(GameObject go in allObjects) {
@@ -118,6 +124,7 @@ public GameObject bloodPrefabTEMP;
 
 
         startedDying = false;
+        GameOverText.text = "";
         GameMaster.SoftReset();
 
     }
