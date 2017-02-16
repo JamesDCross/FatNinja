@@ -771,14 +771,9 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 114687367332380592, guid: 27ab1f8ff4c174f92befa08fbca6f832,
         type: 2}
-      propertyPath: PauseMenu.y
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 114687367332380592, guid: 27ab1f8ff4c174f92befa08fbca6f832,
-        type: 2}
-      propertyPath: PauseMenu.height
-      value: 300
-      objectReference: {fileID: 0}
+      propertyPath: scoreText
+      value: 
+      objectReference: {fileID: 1856296796}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 27ab1f8ff4c174f92befa08fbca6f832, type: 2}
   m_IsPrefabParent: 0
@@ -2604,6 +2599,12 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 67a366c035c06c34292040dcfe00121c, type: 2}
   m_IsPrefabParent: 0
+--- !u!114 &1856296796 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114272008141531898, guid: 67a366c035c06c34292040dcfe00121c,
+    type: 2}
+  m_PrefabInternal: {fileID: 1856296795}
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 --- !u!1 &1885703408
 GameObject:
   m_ObjectHideFlags: 0

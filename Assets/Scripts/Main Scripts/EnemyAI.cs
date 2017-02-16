@@ -127,6 +127,7 @@ public class EnemyAI : MonoBehaviour
         BeenHit = true;
         //hurtMeSound.Play();
         enemyHP -= incomingdamage;
+        Score.calcScore(CharacterController.getAttack());
         if (Random.Range(0f, 1f) < chanceToBeStunned || CharacterController.getAttack() == "UpperCut")
         {
             SetEnemyAnimation(AnimationParams.hitme);
@@ -274,9 +275,12 @@ public class EnemyAI : MonoBehaviour
             SetEnemyAnimation(AnimationParams.PlayerKicking);
 
             //attacking sounds
-            int rand = UnityEngine.Random.Range(0, attackSounds.Length);
-            audio.clip = attackSounds[rand];
-            audio.Play();
+            int rand = Random.Range(0, attackSounds.Length);
+            if (attackSounds != null && attackSounds.Length > 0 && audio != null)
+            {
+                audio.clip = attackSounds[0];
+                audio.Play();
+            }
             // Debug.Log("enemy attacks");
 
         }
