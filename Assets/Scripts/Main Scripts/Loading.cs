@@ -11,7 +11,7 @@ public class Loading : MonoBehaviour {
 	
 	public static void loadLevel(string lvl)
     {
-        SceneManager.LoadScene("Loading");
+        SceneManager.LoadScene("Loading", LoadSceneMode.Single);
         level = lvl;
     }
 }
