@@ -186,6 +186,11 @@ Prefab:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 58448105340201668, guid: 2c081b361d5574412ae3042115686bae,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2c081b361d5574412ae3042115686bae, type: 2}
   m_IsPrefabParent: 0
@@ -1227,6 +1232,11 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 114985681842784688, guid: b3d10f6edb5e449de86bd6eb057f5f0c,
+        type: 2}
+      propertyPath: painSounds.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4592333946608652, guid: b3d10f6edb5e449de86bd6eb057f5f0c, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1310,6 +1320,11 @@ Prefab:
       propertyPath: speechBubble
       value: 
       objectReference: {fileID: 883053264}
+    - target: {fileID: 114985681842784688, guid: b3d10f6edb5e449de86bd6eb057f5f0c,
+        type: 2}
+      propertyPath: painSounds.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: abb1ef5cd0010bc43b4a6f7ad87a57d3, type: 3}
     m_RemovedComponents:
     - {fileID: 60343048966283774, guid: b3d10f6edb5e449de86bd6eb057f5f0c, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: b3d10f6edb5e449de86bd6eb057f5f0c, type: 2}
