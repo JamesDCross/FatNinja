@@ -7,7 +7,9 @@ public class MusicPlayer : MonoBehaviour
 
     static MusicPlayer INSTANCE = null;
     private static bool destroyObj = false;
-    //Scene scene;
+
+
+    private Scene scene;
 
 
 
@@ -35,10 +37,12 @@ public class MusicPlayer : MonoBehaviour
             Destroy(gameObject);
             destroyObj = false;
         }
-        /*scene = SceneManager.GetActiveScene();
-        if (scene.name == "LVL4-SwordMiniBoss") {
+
+        //Debug.Log(scene.name.ToString());
+        scene = SceneManager.GetActiveScene();
+        if (scene.name == "LVL4-SwordMiniBoss" || scene.name == "LVL8-FinalBoss") {
             Destroy(gameObject);
-        }*/
+        }
     }
 
     public static void destroyMusic()
