@@ -20,7 +20,6 @@ public class SumoAI : MonoBehaviour
 
     // private variables starts here
     private bool isDead = false;
-    private bool isTired = false;
     private GameObject playerCollider;
     private Vector2 playerPosition;
     private int walkState = Animator.StringToHash("Base Layer.walk");
@@ -29,7 +28,6 @@ public class SumoAI : MonoBehaviour
     private int punchState = Animator.StringToHash("Base Layer.punch");
     private int idleState = Animator.StringToHash("Base Layer.flex");
     private int beenHitState = Animator.StringToHash("Base Layer.beenHit");
-    private float lastHitTime;
     private bool hasAttacked;
     private Animator animator;
     private NavMeshAgent2D enemy;
@@ -43,7 +41,6 @@ public class SumoAI : MonoBehaviour
     void Awake()
     {
         animator = GetComponent<Animator>();
-        lastHitTime = 1f;
         enemy = GetComponent<NavMeshAgent2D>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
         enemy.speed = speed;
@@ -67,9 +64,8 @@ public class SumoAI : MonoBehaviour
         {
             hasAttacked = false;
 
-            float previousDistance = Vector2.Distance(transform.position, playerPosition);
             // I have reached the previous player position or I have catched the player
-            if (previousDistance.Equals(0) || playerCollider != null)
+            if (enemy.remainingDistance.Equals(0))
             {
                 setToThisAnimation(AnimationParams.isPunch);
             }
@@ -78,25 +74,21 @@ public class SumoAI : MonoBehaviour
         {
             if (!hasAttacked)
             {
-                setEnemyDirection();
-                enemy.Stop();
                 hasAttacked = true;
-                
-                float distance = Vector2.Distance(transform.position, player.position);
-                if (distance <= 0.5f)
+                enemy.Stop();
+
+                if (playerCollider != null)
                 {
+                    setEnemyDirection();
                     PlayerHealth.doDamage(damage, this.transform.position);
                 }
+                setToThisAnimation(AnimationParams.isTired);
             }
-            setToThisAnimation(AnimationParams.isTired);
         }
         else if (currentBaseState.fullPathHash.Equals(tiredState))
         {
-            //wait for a certain seconds.
-            Wait(timeBeforeChase, () =>
-            {
-                StartToChase();
-            });
+            setEnemyDirection();
+            StartCoroutine(StartToChase());
         }
         else if (currentBaseState.fullPathHash.Equals(beenHitState))
         {
@@ -106,29 +98,33 @@ public class SumoAI : MonoBehaviour
         }
         else if (currentBaseState.fullPathHash.Equals(roarState))
         {
-            Wait(timeBeforeChase, () =>
-            {
-                StartToChase();
-            });
         }
         else if (currentBaseState.fullPathHash.Equals(idleState))
         {
-            Wait(timeBeforeChase, () =>
-            {
-                StartToChase();
-            });
+            StartCoroutine(StartToChase());
         }
     }
 
-    private void StartToChase()
+    IEnumerator StartToChase()
     {
-        playerPosition = player.position;
+        yield return new WaitForSeconds(timeBeforeChase);
 
+        playerPosition = new Vector2(player.position.x, player.position.y);
         enemy.Resume();
         enemy.destination = playerPosition;
         setToThisAnimation(AnimationParams.isWalk);
         setEnemyDirection();
     }
+
+    // private void StartToChase()
+    // {
+    //     playerPosition = new Vector2(player.position.x, player.position.y);
+
+    //     enemy.Resume();
+    //     enemy.destination = playerPosition;
+    //     setToThisAnimation(AnimationParams.isWalk);
+    //     setEnemyDirection();
+    // }
 
     public void EnemyBeenHit(int incomingDamage)
     {
@@ -299,16 +295,5 @@ public class SumoAI : MonoBehaviour
             //PlayerHealth.doDamage(damage, this.transform.position);
             playerCollider = null;
         }
-    }
-
-    public void Wait(float seconds, Action action)
-    {
-        StartCoroutine(_wait(seconds, action));
-    }
-
-    IEnumerator _wait(float time, Action callback)
-    {
-        yield return new WaitForSeconds(time);
-        callback();
     }
 }
