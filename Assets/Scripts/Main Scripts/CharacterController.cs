@@ -156,7 +156,7 @@ public class CharacterController : MonoBehaviour {
 
         if (!playerAttacking || attackString == "HurricaneKick")
         {
-            if (comboTracker.Count != 0 && Training.getTrainingMode())
+            if (comboTracker != null && comboTracker.Count != 0 && Training.getTrainingMode())
             {
                 combo[comboTracker.Count].GetComponent<SpriteRenderer>().sprite = comboButtonFlashing;
                 combo[comboTracker.Count].GetComponent<SpriteRenderer>().enabled = true;
