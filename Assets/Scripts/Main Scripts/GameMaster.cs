@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class GameMaster : MonoBehaviour {
     PlayerAction characterActions;
     public Text scoreText;
+    public Text ScoreMultipler;
     public static bool pause;
     bool pressed;
     bool keyboard;
@@ -20,6 +21,8 @@ public class GameMaster : MonoBehaviour {
     private GUIStyle style;
     private GUIStyle styleButton;
     public Font font;
+    public static float scoreUpdateTime = -1.2f;
+
 
 
     void Start () {
@@ -52,6 +55,18 @@ public class GameMaster : MonoBehaviour {
         }
 
         scoreText.text = "SCORE: " + Score.getScore();
+        if (scoreUpdateTime + 3f > Time.time)
+            ScoreMultipler.text = Score.getDamage() + "  X " + Score.getMultipler();
+        else
+        {
+            ScoreMultipler.text = "X " + Score.getMultipler();
+            Score.resetMultipler();
+        }
+    }
+
+    public static void setScoretimer()
+    {
+        scoreUpdateTime = Time.time;
     }
 
     void OnGUI()

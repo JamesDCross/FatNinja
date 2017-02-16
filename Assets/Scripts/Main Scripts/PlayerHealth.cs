@@ -72,7 +72,8 @@ public GameObject bloodPrefabTEMP;
         //float playerAngle = player.gameObject.GetComponent<CharacterController>().getPlayerAngle();
         blood.GetComponent<BloodScript>().setBlood(enemyAngle, (float)damageAmount / 4f);
         // set blood damage text
-        blood.GetComponentInChildren<damageTextScr>().setDamage(damageAmount);
+        int incomingdam = ((damageAmount * 100) + Random.Range(0, 100));
+        blood.GetComponentInChildren<damageTextScr>().setDamage(incomingdam);
     }
 
     IEnumerator FadeAndDie() {
