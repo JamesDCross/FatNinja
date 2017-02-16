@@ -136,7 +136,6 @@ public class ArcherAI : MonoBehaviour
     {
         GameObject myArrow = Instantiate(arrow);
         var arrowAI = myArrow.GetComponent<ArrowAI>();
-        var arrowRigid = myArrow.GetComponent<Rigidbody2D>();
         
         myArrow.transform.position = transform.position;
         myArrow.transform.rotation = arrowAI.computeRotation(player.position);
