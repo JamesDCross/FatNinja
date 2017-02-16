@@ -124,7 +124,7 @@ public class GameMaster : MonoBehaviour {
         Scene scene = SceneManager.GetActiveScene();
         PlayerHealth.Damage = 0;
         PlayerHealth.PlayersHP = PlayerHealth.MaxHP;
-        Loading.loadLevel("Start Menu");
+        Loading.loadLevel(scene.name);
     }
 
     public static void HardReset()

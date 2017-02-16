@@ -448,4 +448,14 @@ public class CharacterController : MonoBehaviour {
     {
         return playerAttacking;
     }
+
+    public void DoDamage()
+    {
+        //Needed for ai.cs
+    }
+
+    public void KickPlayer()
+    {
+        //Needed for ai.cs
+    }
 }
