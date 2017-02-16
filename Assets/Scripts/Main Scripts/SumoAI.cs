@@ -64,7 +64,7 @@ public class SumoAI : MonoBehaviour
         {
             Loading.loadLevel("finalQTE");
         }
-
+        Debug.Log(playerPosition);
         currentBaseState = animator.GetCurrentAnimatorStateInfo(0);
         float distance = Vector2.Distance(transform.position, playerPosition);
 
@@ -77,12 +77,13 @@ public class SumoAI : MonoBehaviour
             if (isChasing)
             {
                 enemy.Resume();
-                enemy.destination = playerPosition;
-                isChasing = false;
+                //enemy.destination = playerPosition;
                 setEnemyDirection();
+                isChasing = false;
             }
             // I have reached the previous player position or I have catched the player
-            if (distance.Equals(0))
+            //if (distance.Equals(0))
+            if (enemy.remainingDistance.Equals(0))
             {
                 setToThisAnimation(AnimationParams.isPunch);
             }
@@ -93,11 +94,13 @@ public class SumoAI : MonoBehaviour
             {
                 hasAttacked = true;
                 enemy.Stop();
+                float pDistance = Vector2.Distance(transform.position, player.position);
 
-                if (playerCollider != null)
+                if (pDistance <= 0.5f)
                 {
                     setEnemyDirection();
                     PlayerHealth.doDamage(damage, this.transform.position);
+                    playerCollider = null;
                 }
             }
             setToThisAnimation(AnimationParams.isTired);
@@ -115,7 +118,7 @@ public class SumoAI : MonoBehaviour
         }
         else if (currentBaseState.fullPathHash.Equals(roarState))
         {
-            StartCoroutine(StartToChase());            
+            //StartCoroutine(StartToChase());            
         }
         else if (currentBaseState.fullPathHash.Equals(idleState))
         {
@@ -131,6 +134,7 @@ public class SumoAI : MonoBehaviour
         playerPosition = player.position;
         setToThisAnimation(AnimationParams.isWalk);
         setEnemyDirection();
+        enemy.destination = playerPosition;
     }
 
     // private void StartToChase()
@@ -145,12 +149,9 @@ public class SumoAI : MonoBehaviour
 
     public void EnemyBeenHit(int incomingDamage)
     {
-        Debug.Log("hhhh");
-        Debug.Log("not Tired");
         //if (currentBaseState.Equals(tiredState))
         if (isTired)
         {
-            Debug.Log("Tired");
             HP -= incomingDamage;
 
             // int rand = UnityEngine.Random.Range(0, painSounds.Length);
@@ -299,8 +300,6 @@ public class SumoAI : MonoBehaviour
     {
         if (other.tag.Equals("Player"))
         {
-            //Let me hit you.
-            //PlayerHealth.doDamage(damage, this.transform.position);
             playerCollider = other.gameObject;
         }
     }
@@ -309,8 +308,6 @@ public class SumoAI : MonoBehaviour
     {
         if (other.tag.Equals("Player"))
         {
-            //Let me hit you.
-            //PlayerHealth.doDamage(damage, this.transform.position);
             playerCollider = null;
         }
     }
