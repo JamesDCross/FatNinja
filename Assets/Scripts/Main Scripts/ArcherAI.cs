@@ -89,7 +89,6 @@ public class ArcherAI : MonoBehaviour
         else if (currentBaseState.fullPathHash.Equals(beenHitState))
         {
             // anything related to the beenHit state should locates here.
-            //setToThisAnimation(AnimationParams.isWalk);
             animator.SetBool("isHit",false);
         }
         else if (currentBaseState.fullPathHash.Equals(deadState))
@@ -141,9 +140,6 @@ public class ArcherAI : MonoBehaviour
         myArrow.transform.rotation = arrowAI.computeRotation(player.position);
         arrowAI.damage = damage;
         arrowAI.destination = arrowAI.computeDestination(player.position);
-        
-        //float angle1 = Mathf.Atan2(arrowAI.destination.y, arrowAI.destination.x) * Mathf.Rad2Deg;
-        //arrowRigid.MoveRotation(angle1+90);
     }
 
     private void RandomlyChooseAttackOrMove(int chance, Action callback)
@@ -161,7 +157,6 @@ public class ArcherAI : MonoBehaviour
 
     private void StartToAttack()
     {
-        //check the god damn time
         float timeSinceLastHit = Time.time - lastHitTime;
         if (timeSinceLastHit >= attackTimeGap)
         {
@@ -177,7 +172,6 @@ public class ArcherAI : MonoBehaviour
             lastHitTime = Time.time;
             fireArrow();
             hasAttacked = true;
-            //Debug.Log("FUCK");
         }
         setToThisAnimation(AnimationParams.isWalk);
     }
@@ -223,56 +217,6 @@ public class ArcherAI : MonoBehaviour
         {
             c.enabled = false;
         }
-        //Destroy(gameObject);
-    }
-
-    Vector2 GetRandomNearPosition()
-    {
-        Vector2 newPosition = transform.position;
-
-        Vector2 playerPosition = GetPlayerDirection(player, transform);
-
-        if (playerPosition.x > 0) //player at the right side of enemy
-        {
-            if (playerPosition.y >= 0) //upper right
-            {
-                newPosition.x = player.position.x - chaseWalkDelta;
-                newPosition.y = player.position.x - chaseWalkDelta;
-            }
-            else if (playerPosition.y < 0) //down right
-            {
-                newPosition.x = player.position.x - chaseWalkDelta;
-                newPosition.y = player.position.y + chaseWalkDelta;
-            }
-        }
-        else if (playerPosition.x < 0) //player at the left side of enemy
-        {
-            if (playerPosition.y >= 0) //upper left
-            {
-                newPosition.x = player.position.x + chaseWalkDelta;
-                newPosition.y = player.position.y - chaseWalkDelta;
-            }
-            else if (playerPosition.y < 0) //down left
-            {
-                newPosition.x = player.position.x + chaseWalkDelta;
-                newPosition.y = player.position.y + chaseWalkDelta;
-            }
-        }
-        else if (playerPosition.x == 0)
-        {
-            if (playerPosition.y > 0)
-            { //player is at vertical top
-                newPosition.x -= Random.Range(-1 * chaseWalkDelta, chaseWalkDelta);
-                newPosition.y -= chaseWalkDelta;
-            }
-            else if (playerPosition.y < 0)
-            { //player is at vertical down
-                newPosition.x -= Random.Range(-1 * chaseWalkDelta, chaseWalkDelta);
-                newPosition.y += chaseWalkDelta;
-            }
-        }
-
-        return newPosition;
     }
 
     void setEnemyDirection()

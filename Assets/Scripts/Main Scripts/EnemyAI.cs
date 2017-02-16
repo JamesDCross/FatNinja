@@ -135,8 +135,6 @@ public class EnemyAI : MonoBehaviour
             formerStatus[2] = animator.GetBool("EnemyWalking");
         }
 
-
-        //BeenHit = false;
         //stop any current action
 
         //audio
@@ -156,78 +154,6 @@ public class EnemyAI : MonoBehaviour
         GameMaster.setScoretimer();
 
         if (enemyHP <= 0) { EnemyDead(); }
-    }
-
-    Vector2 GetDestination(Vector2 playerRawAxis)
-    {
-        /*
-            This method is used to detect the player's facing,
-            then return the destination that the enemy should move to.
-            The destination == center point of the player's collider2D component
-            but slightly move outwards
-        */
-
-        Vector2 finalPosition = player.transform.position;
-
-        // player facing up
-        if (playerRawAxis.x == 0 && playerRawAxis.y == 1)
-        {
-            finalPosition.y += 0.5f; // + -> outwards
-        }
-
-        // player facing down
-        if (playerRawAxis.x == 0 && playerRawAxis.y == -1)
-        {
-            finalPosition.y -= 0.4f; // - -> outwards
-        }
-
-        // player facing right
-        if (playerRawAxis.x == 1 && playerRawAxis.y == 0)
-        {
-            finalPosition.x += 0.4f; // - -> outwards
-        }
-
-        // player facing left
-        if (playerRawAxis.x == -1 && playerRawAxis.y == 0)
-        {
-            finalPosition.x -= 0.4f; // - -> outwards
-        }
-
-        // =================================
-
-        // player facing up right
-        if (playerRawAxis.x > 0 && playerRawAxis.x <= 1 &&
-      playerRawAxis.y > 0 && playerRawAxis.y <= 1)
-        {
-            finalPosition.x += 0.27f; // + -> outwards
-            finalPosition.y += 0.4f; // + -> outwards
-        }
-
-        // player facing up left
-        if (playerRawAxis.x < 0 && playerRawAxis.x >= -1 &&
-      playerRawAxis.y > 0 && playerRawAxis.y <= 1)
-        {
-            finalPosition.x += 0.35f; // - -> outwards
-            finalPosition.y -= 0.4f; // + -> outwards
-        }
-
-        // player facing down right
-        if (playerRawAxis.x > 0 && playerRawAxis.x <= 1 &&
-      playerRawAxis.y < 0 && playerRawAxis.y >= -1)
-        {
-            finalPosition.x += 0.32f; // + -> outwards
-            finalPosition.y -= 0.3f;  // + -> outwards
-        }
-
-        // player facing down left
-        if (playerRawAxis.x < 0 && playerRawAxis.x >= -1 &&
-      playerRawAxis.y < 0 && playerRawAxis.y >= -1)
-        {
-            finalPosition.x -= 0.29f; // - -> outwards
-            finalPosition.y -= 0.29f; // - -> outwards
-        }
-
-        return finalPosition;
     }
 
     void SetEnemyAnimation(AnimationParams type)
@@ -296,20 +222,6 @@ public class EnemyAI : MonoBehaviour
                 EnemyRestoreFromHit();
             }
         }
-    }
-
-    private float AwayFromPlayerVertically(float playerY, float moveY)
-    {
-        float newY = 0f;
-        if (playerY > 0)
-        {
-            newY -= moveY;
-        }
-        else if (playerY < 0)
-        {
-            newY += moveY;
-        }
-        return newY;
     }
 
     Vector2 GetFurthestPointAfterPlayerToEnemy()
@@ -443,31 +355,18 @@ public class EnemyAI : MonoBehaviour
             c.enabled = false;
         }
 
-        this.tag = "DeadEnemy";      
-/*
-        Vector2 deadPlace = transform.position;
-         
-         GameObject newOne = Instantiate(enemyPrefab, deadPlace, Quaternion.identity);
-         newOne.GetComponent<EnemyAI>().isDead = true;
-         newOne.GetComponent<Animator>().SetBool("IsEnemyDead", true);
-Destroy(gameObject);
-*/
-
-
+        this.tag = "DeadEnemy";
         return;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (enemyHP <= runAwayHP)
         {
             timeSinceRanAway += Time.deltaTime;
-            //Debug.Log(timeSinceRanAway);
         }
         if (timeSinceRanAway > 5f)
         {
-            //Debug.Log("restored health");
             timeSinceRanAway = 0f;
             enemyHP = (runAwayHP * 2);
         }
@@ -510,23 +409,15 @@ Destroy(gameObject);
             {
                 isRandomMove = false;
             }
-            else
-            {
-                enemy.destination = RandomDestination;
-                return;
-            }
         }
 
         //Get's the time snice the emeny last made an attack
         timeSinceLastHit = Time.time - lastHitTime;
 
         //Makese the kick animation == to false after .3 secounds after it was set to true
-        //TODO: Why previous one is 1f?
         if (attacking && timeSinceLastHit >= .3)
-        //if (attacking)
         {
             attacking = false;
-            //PlayerHealth.doDamage(2);
         }
 
 
@@ -539,7 +430,6 @@ Destroy(gameObject);
         {
             float remainingDistance = Vector2.Distance(transform.position, player.position);
             animator.SetFloat("Distance", remainingDistance);
-            //EnemyRestoreFromHit();
 
             if (enemyHP <= runAwayHP)
             {
@@ -577,7 +467,6 @@ Destroy(gameObject);
                 }
                 else if (remainingDistance <= checkDistance)
                 {
-                    //enemy.speed = 0.9f * enemySpeed;
                     enemy.Resume();
                     SetEnemyAnimation(AnimationParams.EnemyWalking);
                 }
@@ -595,14 +484,6 @@ Destroy(gameObject);
 
         playerLastPosition = player.position;
     }
-
-    // void OnCollisionEnter2D(Collision2D coll)
-    // {
-    // }
-
-    // void OnCollisionExit2D(Collision2D coll)
-    // {
-    // }
 
     public void Wait(float seconds, Action action)
     {
@@ -644,10 +525,6 @@ Destroy(gameObject);
                     caughtPlayer = true;
                     playerCollider = other.gameObject.transform;
                 }
-            }
-            else if (other.tag == "Enemy")
-            {
-                Debug.Log("Enemy");
             }
         }
     }

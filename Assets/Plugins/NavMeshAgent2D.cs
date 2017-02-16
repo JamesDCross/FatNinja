@@ -117,6 +117,7 @@ public class NavMeshAgent2D : MonoBehaviour {
     }
 
     public void Stop() {
+        agent.velocity = Vector3.zero;
         agent.Stop();
     }
 

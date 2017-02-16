@@ -16,7 +16,6 @@ public class SumoAI : MonoBehaviour
     //Audio
     public AudioClip[] painSounds;
     public AudioSource audioE;
-
     // Blood effect
     public GameObject bloodPrefab;
 
@@ -24,7 +23,7 @@ public class SumoAI : MonoBehaviour
     private bool isChasing = false;
     private bool isTired = false;
     private bool isFirstTimeMeet = true;
-    private bool isFirstTimeTired = false;
+    private bool isSaying = false;
     private GameObject playerCollider;
     private Vector2 playerPosition;
     private int walkState = Animator.StringToHash("Base Layer.walk");
@@ -36,10 +35,20 @@ public class SumoAI : MonoBehaviour
     private int entryState = Animator.StringToHash("Base Layer.entry");
     private bool hasAttacked;
     private Animator animator;
-    private float startTiredTime;
     private NavMeshAgent2D enemy;
     private Transform player;
     private AnimatorStateInfo currentBaseState;
+    private string[] tiredList = new string[] {
+        "It's not fair!",
+        "I'll tell your mom!",
+        "You skinny basterd, I'll beat you.",
+        "Time for me to hit the Dojo.",
+        "Damn, Why you keep running?",
+        "Are you super mario?!",
+        "It's not funny at all!",
+        "Stop!! For god sake.",
+        "I curse you become fat!"
+    };
     private enum AnimationParams
     {
         isWalk, isPunch, isHit, isIdle, isTired, isRoar
@@ -59,21 +68,15 @@ public class SumoAI : MonoBehaviour
 
     void Start()
     {
-        //ApplyAnimationEventToAnimation(CreateAnimationEvent(4f, "StartToChase"), "st");
         saySomething.GetComponent<Text>().enabled = false;
         speechBubble.GetComponent<Image>().enabled = false;
     }
 
     void Update()
     {
-        if (HP <= 0)
-        {
-            Loading.loadLevel("finalQTE");
-        }
+
         currentBaseState = animator.GetCurrentAnimatorStateInfo(0);
         float distance = Vector2.Distance(transform.position, player.position);
-
-
 
         /**************************************************/
         /* A Simple State Machine Management starts here */
@@ -84,12 +87,11 @@ public class SumoAI : MonoBehaviour
             if (isChasing)
             {
                 enemy.Resume();
-                //enemy.destination = playerPosition;
                 setEnemyDirection();
                 isChasing = false;
             }
+
             // I have reached the previous player position or I have catched the player
-            //if (distance.Equals(0))
             if (enemy.remainingDistance.Equals(0))
             {
                 setToThisAnimation(AnimationParams.isPunch);
@@ -115,6 +117,12 @@ public class SumoAI : MonoBehaviour
         else if (currentBaseState.fullPathHash.Equals(tiredState))
         {
             isTired = true;
+            int quoteIndex = Random.Range(0, tiredList.Length);
+            if (!isSaying)
+            {
+                isSaying = true;
+                StartCoroutine(SaySomethingWhenTired(tiredList[quoteIndex]));
+            }
             StartCoroutine(TimePause(timeBeforeChase));
         }
         else if (currentBaseState.fullPathHash.Equals(beenHitState))
@@ -122,16 +130,16 @@ public class SumoAI : MonoBehaviour
             // anything related to the beenHit state should locates here.
             animator.SetBool("isHit", false);
             isTired = true;
-            //setToThisAnimation(AnimationParams.isRoar);
         }
         else if (currentBaseState.fullPathHash.Equals(roarState))
         {
-            //StartCoroutine(StartToChase());    
             if (isFirstTimeMeet)
             {
                 isTired = false;
                 isFirstTimeMeet = false;
-            } else {
+            }
+            else
+            {
                 isTired = true;
             }
             StartCoroutine(TimePause(timeBeforeChase));
@@ -147,18 +155,14 @@ public class SumoAI : MonoBehaviour
             if (distance <= 4f)
             {
                 //say something
-                //UnityEngine.UI.Text txt = transform.GetChild(3).GetChild(0).GetChild(0).GetComponent<UnityEngine.UI.Text>();
                 StartCoroutine(SaySomethingFirstMeet());
                 isFirstTimeMeet = false;
                 enemy.Stop();
                 setToThisAnimation(AnimationParams.isRoar);
-                StartCoroutine(TimePause(timeBeforeChase*1.5f));
+                StartCoroutine(TimePause(timeBeforeChase * 1.5f));
             }
         }
     }
-
-    //You skinny basterd, come over let me hug you.
-    //Time for me to hit the Dojo.
 
     IEnumerator SaySomethingFirstMeet()
     {
@@ -172,7 +176,17 @@ public class SumoAI : MonoBehaviour
         speechBubble.GetComponent<Image>().enabled = false;
     }
 
-
+    IEnumerator SaySomethingWhenTired(string quote)
+    {
+        saySomething.GetComponent<Text>().enabled = false;
+        speechBubble.GetComponent<Image>().enabled = false;
+        saySomething.text = quote;
+        saySomething.GetComponent<Text>().enabled = true;
+        speechBubble.GetComponent<Image>().enabled = true;
+        yield return new WaitForSeconds(1.5f);
+        saySomething.GetComponent<Text>().enabled = false;
+        speechBubble.GetComponent<Image>().enabled = false;
+    }
 
     IEnumerator TimePause(float time1)
     {
@@ -182,21 +196,12 @@ public class SumoAI : MonoBehaviour
     {
         isChasing = true;
         isTired = false;
+        isSaying = false;
         playerPosition = player.position;
         setToThisAnimation(AnimationParams.isWalk);
         setEnemyDirection();
         enemy.destination = playerPosition;
     }
-
-    // private void StartToChase()
-    // {
-    //     playerPosition = new Vector2(player.position.x, player.position.y);
-
-    //     enemy.Resume();
-    //     enemy.destination = playerPosition;
-    //     setToThisAnimation(AnimationParams.isWalk);
-    //     setEnemyDirection();
-    // }
 
     public void EnemyBeenHit(int incomingDamage)
     {
@@ -204,11 +209,11 @@ public class SumoAI : MonoBehaviour
         if (isTired)
         {
             HP -= incomingDamage;
-
-            // int rand = UnityEngine.Random.Range(0, painSounds.Length);
-            // audioE.clip = painSounds[rand];
-            // audioE.Play();
             showSomeBlood(incomingDamage);
+            if (HP <= 0)
+            {
+                Loading.loadLevel("finalQTE");
+            }
             setToThisAnimation(AnimationParams.isHit);
             setEnemyDirection();
         }
@@ -294,57 +299,6 @@ public class SumoAI : MonoBehaviour
         GameMaster.setScoretimer();
     }
 
-    Vector2 GetFurthestPointAfterPlayerToEnemy()
-    {
-        Vector2 playerPosition = GetPlayerDirection(player, transform);
-        Vector2 newPosition = transform.position;
-
-        float moveX = 1f; // delta value to move
-        float moveY = 1f; // delta value to move
-
-        if (playerPosition.x > 0) //player at the right side of enemy
-        {
-            if (playerPosition.y >= 0) //upper right
-            {
-                newPosition.x -= moveX;
-                newPosition.y -= moveY;
-            }
-            else if (playerPosition.y < 0) //down right
-            {
-                newPosition.x -= moveX;
-                newPosition.y += moveY;
-            }
-        }
-        else if (playerPosition.x < 0) //player at the left side of enemy
-        {
-            if (playerPosition.y >= 0) //upper left
-            {
-                newPosition.x += moveX;
-                newPosition.y -= moveY;
-            }
-            else if (playerPosition.y < 0) //down left
-            {
-                newPosition.x += moveX;
-                newPosition.y += moveY;
-            }
-        }
-        else if (playerPosition.x == 0)
-        {
-            if (playerPosition.y > 0)
-            { //player is at vertical top
-                newPosition.x += Random.Range(-1 * moveX, moveX);
-                newPosition.y -= moveY;
-            }
-            else if (playerPosition.y < 0)
-            { //player is at vertical down
-                newPosition.x += Random.Range(-1 * moveX, moveX);
-                newPosition.y += moveY;
-            }
-        }
-
-        return newPosition;
-    }
-
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag.Equals("Player"))
@@ -358,39 +312,6 @@ public class SumoAI : MonoBehaviour
         if (other.tag.Equals("Player"))
         {
             playerCollider = null;
-        }
-    }
-
-    private AnimationEvent CreateAnimationEvent(float stime, string eventName)
-    {
-        // new event created
-        return new AnimationEvent()
-        {
-            time = stime,
-            functionName = eventName
-        };
-    }
-
-    private void ApplyAnimationEventToAnimation(AnimationEvent evt, String animationName)
-    {
-        foreach (AnimationClip clip in animator.runtimeAnimatorController.animationClips)
-        {
-            string name = clip.name;
-            if (name.StartsWith(animationName))
-            {
-                bool isAdded = false;
-                foreach (AnimationEvent e in clip.events)
-                {
-                    if (e.functionName == evt.functionName)
-                    {
-                        isAdded = true;
-                    }
-                }
-                if (!isAdded)
-                {
-                    clip.AddEvent(evt);
-                }
-            }
         }
     }
 }
