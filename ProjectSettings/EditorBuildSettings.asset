@@ -30,6 +30,10 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/finalQTE.unity
   - enabled: 1
+    path: Assets/Scenes/DisplayHighScore.unity
+  - enabled: 1
     path: Assets/Scenes/Loading.unity
   - enabled: 1
     path: Assets/Scenes/bossQTE.unity
+  - enabled: 1
+    path: Assets/Scenes/LVL2-Anteroom-fromDojo.unity
