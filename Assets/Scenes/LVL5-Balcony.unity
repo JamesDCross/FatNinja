@@ -1563,8 +1563,8 @@ MonoBehaviour:
   isDead: 0
   isSit: 0
   sitTime: 2
-  enemyHP: 30
-  damage: 5
+  enemyHP: 15
+  damage: 4
   enemySpeed: 1
   runAwayHP: 0
   randomWalkRange: 2
@@ -1753,8 +1753,8 @@ MonoBehaviour:
   isDead: 0
   isSit: 0
   sitTime: 2
-  enemyHP: 30
-  damage: 5
+  enemyHP: 15
+  damage: 4
   enemySpeed: 1
   runAwayHP: 0
   randomWalkRange: 2
