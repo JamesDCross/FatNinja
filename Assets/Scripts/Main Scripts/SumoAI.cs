@@ -105,6 +105,12 @@ public class SumoAI : MonoBehaviour
                 enemy.Stop();
                 float pDistance = Vector2.Distance(transform.position, player.position);
 
+
+
+                int attack = 2;
+                audioE.clip = painSounds[attack];
+                audioE.Play();
+
                 if (pDistance <= 0.5f)
                 {
                     setEnemyDirection();
@@ -212,8 +218,20 @@ public class SumoAI : MonoBehaviour
             showSomeBlood(incomingDamage);
             if (HP <= 0)
             {
+                int death = 1;
+                audioE.clip = painSounds[death];
+                audioE.Play();
+
                 Loading.loadLevel("finalQTE");
             }
+
+            //play audio
+            int general = 0;
+            audioE.clip = painSounds[general];
+            audioE.Play();
+
+
+
             setToThisAnimation(AnimationParams.isHit);
             setEnemyDirection();
         }
