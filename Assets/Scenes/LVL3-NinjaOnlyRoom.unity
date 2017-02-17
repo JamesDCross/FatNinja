@@ -2123,7 +2123,7 @@ MonoBehaviour:
   kickDamage: 2
   upperCutDamage: 4
   hurricaneKickDamage: 1
-  surasshuSlashDamage: 1
+  surasshuSlashDamage: 7
   A: {fileID: 21300000, guid: 0b8d64663a9e8d14ca4d39e86e6346d7, type: 3}
   B: {fileID: 21300000, guid: cfd96d1e7e099684e8dbd6f43627df18, type: 3}
   Y: {fileID: 21300000, guid: 5bd6be8569fe6ff4186d2caa048ebfe7, type: 3}
