@@ -298,7 +298,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25d1d98bbacf842e4b64e2e0017e9735, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  level: LVL2-Anteroom
+  level: LVL2-Anteroom-fromDojo
   blockExitCollider: {fileID: 0}
 --- !u!95 &197060104
 Animator:

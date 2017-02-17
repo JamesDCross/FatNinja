@@ -14,6 +14,8 @@ public class ArcherAI : MonoBehaviour
     public int chanceToAttack = 5;
     public float attackTimeGap = 1f; // time gap between each attack
 
+    private bool notFirstAttack;
+
     //Audio
     public AudioClip[] painSounds;
     public AudioSource audioE;
@@ -55,6 +57,10 @@ public class ArcherAI : MonoBehaviour
         //ApplyAnimationEventToKickAnimation(CreateAnimationEvent());
     }
 
+    void Start(){
+        notFirstAttack = false;
+    }
+
     void Update()
     {
         if (isDead) { return; }
@@ -84,7 +90,11 @@ public class ArcherAI : MonoBehaviour
         if (currentBaseState.fullPathHash.Equals(aimState))
         {
             //TODO: fire the arrow
-            Attack();
+            if(notFirstAttack) {
+                Attack();
+            } else {
+                notFirstAttack = true;
+            }
         }
         else if (currentBaseState.fullPathHash.Equals(beenHitState))
         {
