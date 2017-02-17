@@ -201,15 +201,16 @@ public class ArcherAI : MonoBehaviour
 
     void whenEnemyDead()
     {
+        this.tag = "DeadEnemy";
         enemy.Stop();
         isDead = true;
         setToThisAnimation(AnimationParams.isDead);
 
         foreach (Transform child in transform)
         {
-            if (child.GetComponent<AudioSource>().Equals(null))
+            if (child.GetComponent<AudioSource>() == null)
             {
-                Destroy(child.gameObject);
+                child.gameObject.SetActive(false);
             }
         }
 
