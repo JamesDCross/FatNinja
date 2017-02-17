@@ -204,6 +204,22 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
+--- !u!1 &264778807 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1129107582800370, guid: b3d10f6edb5e449de86bd6eb057f5f0c,
+    type: 2}
+  m_PrefabInternal: {fileID: 1734600435}
+--- !u!114 &264778808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 264778807}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2463b2b263a04190826d13d4c28b733, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &355802245
 GameObject:
   m_ObjectHideFlags: 0
@@ -1696,6 +1712,14 @@ Prefab:
       propertyPath: painSounds.Array.data[2]
       value: 
       objectReference: {fileID: 8300000, guid: 128bb8be37e09e848bb03631dc09062b, type: 3}
+    - target: {fileID: 4592333946608652, guid: b3d10f6edb5e449de86bd6eb057f5f0c, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4592333946608652, guid: b3d10f6edb5e449de86bd6eb057f5f0c, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 1.5
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 60343048966283774, guid: b3d10f6edb5e449de86bd6eb057f5f0c, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: b3d10f6edb5e449de86bd6eb057f5f0c, type: 2}
