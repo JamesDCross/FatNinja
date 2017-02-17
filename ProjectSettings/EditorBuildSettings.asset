@@ -26,6 +26,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/LVL6-BanquetHall.unity
   - enabled: 1
+    path: Assets/Scenes/Credits.unity
+  - enabled: 1
     path: Assets/Scenes/LVL8-FinalBoss.unity
   - enabled: 0
     path: Assets/Scenes/finalQTE.unity

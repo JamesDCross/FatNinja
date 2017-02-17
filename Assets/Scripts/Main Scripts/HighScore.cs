@@ -22,7 +22,7 @@ public class HighScore : MonoBehaviour {
 
         if (characterActions.Pause)
         {
-            GameMaster.HardReset();
+            Loading.loadLevel("Credits");
         }
     }
 
