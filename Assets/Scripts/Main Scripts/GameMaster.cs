@@ -159,6 +159,8 @@ public class GameMaster : MonoBehaviour {
     {
         Score.scoreReset();
         MusicPlayer.destroyMusic();
+        PlayerHealth.Damage = 0;
+        PlayerHealth.PlayersHP = PlayerHealth.MaxHP;
         pause = false;
         Time.timeScale = 1;
         Loading.loadLevel("Start Menu");
