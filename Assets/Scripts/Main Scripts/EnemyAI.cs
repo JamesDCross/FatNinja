@@ -38,7 +38,6 @@ public class EnemyAI : MonoBehaviour
     private bool BeenHit = false;
 
     private bool isRandomMove;
-    private Vector2 RandomDestination;
     private Transform playerCollider;
     private bool[] formerStatus; //1-move; 2-kick;
     private Vector3 playerLastPosition;
@@ -204,7 +203,6 @@ public class EnemyAI : MonoBehaviour
             SetEnemyAnimation(AnimationParams.PlayerKicking);
 
             //attacking sounds
-            int rand = Random.Range(0, attackSounds.Length);
             if (attackSounds != null && attackSounds.Length > 0 && audio != null)
             {
                 audio.clip = attackSounds[0];
@@ -322,7 +320,6 @@ public class EnemyAI : MonoBehaviour
             enemy.destination = GetRandomNearPlayerPosition();
 
             isRandomMove = true;
-            RandomDestination = enemy.destination;
         }
     }
 
@@ -342,6 +339,7 @@ public class EnemyAI : MonoBehaviour
         isDead = true;
         enemy.Stop();
         animator.SetBool("IsEnemyDead", true);
+        Destroy(GetComponent<NavMeshAgent2D>());
         foreach (Transform child in transform)
         {
             if (child.GetComponent<AudioSource>().Equals(null))
@@ -361,6 +359,11 @@ public class EnemyAI : MonoBehaviour
 
     void Update()
     {
+        if (isDead)
+        {
+            return;
+        }
+
         if (enemyHP <= runAwayHP)
         {
             timeSinceRanAway += Time.deltaTime;
@@ -372,10 +375,6 @@ public class EnemyAI : MonoBehaviour
         }
 
 
-        if (isDead)
-        {
-            return;
-        }
 
         if (enemyHP <= 0)
         {
