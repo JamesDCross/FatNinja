@@ -222,7 +222,7 @@ public class SumoAI : MonoBehaviour
                 audioE.clip = painSounds[death];
                 audioE.Play();
 
-                Loading.loadLevel("DisplayHighScore");
+                Loading.loadLevel("bossQTE");
             }
 
             //play audio
