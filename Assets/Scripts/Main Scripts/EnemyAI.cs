@@ -123,36 +123,39 @@ public class EnemyAI : MonoBehaviour
 
     public void EnemyBeenHit(int incomingdamage)
     {
-        BeenHit = true;
-        //hurtMeSound.Play();
-        enemyHP -= incomingdamage;
-        if (Random.Range(0f, 1f) < chanceToBeStunned || CharacterController.getAttack() == "UpperCut")
+        if (!isDead)
         {
-            SetEnemyAnimation(AnimationParams.hitme);
-            formerStatus[0] = animator.GetBool("PlayerMoving");
-            formerStatus[1] = animator.GetBool("PlayerKicking");
-            formerStatus[2] = animator.GetBool("EnemyWalking");
+            BeenHit = true;
+            //hurtMeSound.Play();
+            enemyHP -= incomingdamage;
+            if (Random.Range(0f, 1f) < chanceToBeStunned || CharacterController.getAttack() == "UpperCut")
+            {
+                SetEnemyAnimation(AnimationParams.hitme);
+                formerStatus[0] = animator.GetBool("PlayerMoving");
+                formerStatus[1] = animator.GetBool("PlayerKicking");
+                formerStatus[2] = animator.GetBool("EnemyWalking");
+            }
+
+            //stop any current action
+
+            //audio
+            int rand = UnityEngine.Random.Range(0, painSounds.Length);
+            audioE.clip = painSounds[rand];
+            audioE.Play();
+
+            // spawn blood
+            GameObject blood = Instantiate(bloodPrefab);
+            blood.transform.position = this.transform.position;
+            float playerAngle = player.gameObject.GetComponent<CharacterController>().getPlayerAngle();
+            blood.GetComponent<BloodScript>().setBlood(playerAngle, (float)incomingdamage / 2f);
+            int incomingdam = ((incomingdamage * 100) + Random.Range(0, 100));
+            blood.GetComponentInChildren<damageTextScr>().setDamage(incomingdam);
+            Score.setDamage(incomingdam);
+            Score.calcScore(CharacterController.getAttack());
+            GameMaster.setScoretimer();
+
+            if (enemyHP <= 0) { EnemyDead(); }
         }
-
-        //stop any current action
-
-        //audio
-        int rand = UnityEngine.Random.Range(0, painSounds.Length);
-        audioE.clip = painSounds[rand];
-        audioE.Play();
-
-        // spawn blood
-        GameObject blood = Instantiate(bloodPrefab);
-		blood.transform.position = this.transform.position;
-        float playerAngle = player.gameObject.GetComponent<CharacterController>().getPlayerAngle();
-        blood.GetComponent<BloodScript>().setBlood(playerAngle, (float)incomingdamage / 2f);
-        int incomingdam = ((incomingdamage * 100) + Random.Range(0, 100));
-        blood.GetComponentInChildren<damageTextScr>().setDamage(incomingdam);
-        Score.setDamage(incomingdam);
-        Score.calcScore(CharacterController.getAttack());
-        GameMaster.setScoretimer();
-
-        if (enemyHP <= 0) { EnemyDead(); }
     }
 
     void SetEnemyAnimation(AnimationParams type)
@@ -336,28 +339,26 @@ public class EnemyAI : MonoBehaviour
 
     void EnemyDead()
     {
-        isDead = true;
-        enemy.Stop();
-        animator.SetBool("IsEnemyDead", true);
-        Destroy(GetComponent<NavMeshAgent2D>());
-        foreach (Transform child in transform)
+        if (!isDead)
         {
-            if (child.GetComponent<AudioSource>().Equals(null))
+            isDead = true;
+            this.tag = "DeadEnemy";
+            enemy.Stop();
+            animator.SetBool("IsEnemyDead", true);
+            Destroy(GetComponent<NavMeshAgent2D>());
+            foreach (Transform child in transform)
             {
                 Destroy(child.gameObject);
             }
-        }
 
-        foreach (Collider2D c in GetComponents<Collider2D>())
-        {
-            c.enabled = false;
+            foreach (Collider2D c in GetComponents<Collider2D>())
+            {
+                c.enabled = false;
+            }
         }
-
-        this.tag = "DeadEnemy";
-        return;
     }
 
-    void Update()
+    void Update()
     {
         if (isDead)
         {
@@ -466,7 +467,7 @@ public class EnemyAI : MonoBehaviour
                 }
                 else if (remainingDistance <= checkDistance)
                 {
-                    enemy.Resume();
+                    enemy.Resume();
                     SetEnemyAnimation(AnimationParams.EnemyWalking);
                 }
 
