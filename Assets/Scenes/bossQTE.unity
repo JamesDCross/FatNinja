@@ -115,6 +115,7 @@ GameObject:
   - component: {fileID: 56939251}
   - component: {fileID: 56939260}
   - component: {fileID: 56939259}
+  - component: {fileID: 56939261}
   m_Layer: 0
   m_Name: Flowchart
   m_TagString: Untagged
@@ -162,6 +163,7 @@ MonoBehaviour:
   eventHandler: {fileID: 56939247}
   commandList:
   - {fileID: 56939258}
+  - {fileID: 56939261}
   - {fileID: 56939257}
   - {fileID: 56939256}
   - {fileID: 56939254}
@@ -186,7 +188,7 @@ MonoBehaviour:
   scrollPos: {x: 0, y: 0}
   variablesScrollPos: {x: 0, y: 0}
   variablesExpanded: 1
-  blockViewHeight: 400
+  blockViewHeight: 355
   zoom: 1
   scrollViewRect:
     serializedVersion: 2
@@ -197,7 +199,7 @@ MonoBehaviour:
   selectedBlocks:
   - {fileID: 56939248}
   selectedCommands:
-  - {fileID: 56939259}
+  - {fileID: 56939261}
   variables: []
   description: 
   stepPause: 0
@@ -224,7 +226,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &56939251
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 56939246}
@@ -243,7 +245,7 @@ MonoBehaviour:
   visibleOLD: 0
 --- !u!114 &56939252
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 56939246}
@@ -262,7 +264,7 @@ MonoBehaviour:
   visibleOLD: 0
 --- !u!114 &56939253
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 56939246}
@@ -281,7 +283,7 @@ MonoBehaviour:
   visibleOLD: 0
 --- !u!114 &56939254
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 56939246}
@@ -325,7 +327,7 @@ MonoBehaviour:
   - {fileID: 56939271}
 --- !u!114 &56939256
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 56939246}
@@ -344,7 +346,7 @@ MonoBehaviour:
   visibleOLD: 0
 --- !u!114 &56939257
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 56939246}
@@ -363,7 +365,7 @@ MonoBehaviour:
   visibleOLD: 0
 --- !u!114 &56939258
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 56939246}
@@ -382,7 +384,7 @@ MonoBehaviour:
   visibleOLD: 0
 --- !u!114 &56939259
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 56939246}
@@ -404,7 +406,7 @@ MonoBehaviour:
   ButtonDisplay: {fileID: 1442321623}
 --- !u!114 &56939260
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 56939246}
@@ -425,6 +427,24 @@ MonoBehaviour:
   waitUntilFinished: 1
   durationOLD: 0
   targetColorOLD: {r: 0, g: 0, b: 0, a: 0}
+--- !u!114 &56939261
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 56939246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00d03ae0919f04264b018681ed534177, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 35
+  indentLevel: 0
+  _sceneName:
+    stringRef: {fileID: 0}
+    stringVal: DisplayHighScore
+  loadingImage: {fileID: 0}
+  sceneNameOLD: 
 --- !u!114 &56939269
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -1367,6 +1387,7 @@ GameObject:
   - component: {fileID: 2110489293}
   - component: {fileID: 2110489292}
   - component: {fileID: 2110489291}
+  - component: {fileID: 2110489296}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1442,3 +1463,14 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2110489296
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2110489290}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7289222b1d47f47a153c5eb0061eb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

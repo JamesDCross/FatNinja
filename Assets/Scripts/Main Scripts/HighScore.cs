@@ -1,17 +1,29 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using InControl;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class HighScore : MonoBehaviour {
     public Text highScore;
     public Text yourScore;
+    PlayerAction characterActions;
+
+    void Start()
+    {
+        characterActions = new PlayerAction();
+        characterActions.Pause.AddDefaultBinding(InputControlType.Command);
+        characterActions.Pause.AddDefaultBinding(Key.Escape);
+    }
 
     void Update()
     {
         setHighScore();
         highScore.text = "HIGH SCORE: "+ PlayerPrefs.GetInt("Score");
         yourScore.text = "YOUR SCORE: "+ Score.getScore();
+
+        if (characterActions.Pause)
+        {
+            GameMaster.HardReset();
+        }
     }
 
     public static void setHighScore()
