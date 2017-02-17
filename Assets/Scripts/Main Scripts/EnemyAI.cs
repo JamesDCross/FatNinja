@@ -144,7 +144,7 @@ public class EnemyAI : MonoBehaviour
 
         // spawn blood
         GameObject blood = Instantiate(bloodPrefab);
-		blood.transform.position = this.transform.position;
+        blood.transform.position = this.transform.position;
         float playerAngle = player.gameObject.GetComponent<CharacterController>().getPlayerAngle();
         blood.GetComponent<BloodScript>().setBlood(playerAngle, (float)incomingdamage / 2f);
         int incomingdam = ((incomingdamage * 100) + Random.Range(0, 100));
@@ -355,12 +355,19 @@ public class EnemyAI : MonoBehaviour
             c.enabled = false;
         }
 
+        Destroy(GetComponent<NavMeshAgent2D>());
+
         this.tag = "DeadEnemy";
         return;
     }
 
-    void Update()
+    void Update()
     {
+        if (isDead)
+        {
+            return;
+        }
+
         if (enemyHP <= runAwayHP)
         {
             timeSinceRanAway += Time.deltaTime;
@@ -369,12 +376,6 @@ public class EnemyAI : MonoBehaviour
         {
             timeSinceRanAway = 0f;
             enemyHP = (runAwayHP * 2);
-        }
-
-
-        if (isDead)
-        {
-            return;
         }
 
         if (enemyHP <= 0)
@@ -467,7 +468,7 @@ public class EnemyAI : MonoBehaviour
                 }
                 else if (remainingDistance <= checkDistance)
                 {
-                    enemy.Resume();
+                    enemy.Resume();
                     SetEnemyAnimation(AnimationParams.EnemyWalking);
                 }
 
