@@ -318,8 +318,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HP: 4
-  keepDistance: 9
-  alertDistance: 12
+  keepDistance: 8
+  alertDistance: 11
   damage: 4
   speed: 4
   chanceToAttack: 6

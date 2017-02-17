@@ -1235,7 +1235,7 @@ Prefab:
     - target: {fileID: 114985681842784688, guid: b3d10f6edb5e449de86bd6eb057f5f0c,
         type: 2}
       propertyPath: painSounds.Array.size
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4592333946608652, guid: b3d10f6edb5e449de86bd6eb057f5f0c, type: 2}
       propertyPath: m_LocalPosition.x
@@ -1325,6 +1325,16 @@ Prefab:
       propertyPath: painSounds.Array.data[0]
       value: 
       objectReference: {fileID: 8300000, guid: abb1ef5cd0010bc43b4a6f7ad87a57d3, type: 3}
+    - target: {fileID: 114985681842784688, guid: b3d10f6edb5e449de86bd6eb057f5f0c,
+        type: 2}
+      propertyPath: painSounds.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: b367443d0fbec5549bd74d636ab7d8fa, type: 3}
+    - target: {fileID: 114985681842784688, guid: b3d10f6edb5e449de86bd6eb057f5f0c,
+        type: 2}
+      propertyPath: painSounds.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: 128bb8be37e09e848bb03631dc09062b, type: 3}
     m_RemovedComponents:
     - {fileID: 60343048966283774, guid: b3d10f6edb5e449de86bd6eb057f5f0c, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: b3d10f6edb5e449de86bd6eb057f5f0c, type: 2}
@@ -1636,7 +1646,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 0.656
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0

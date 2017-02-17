@@ -716,13 +716,11 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 376556380}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25d1d98bbacf842e4b64e2e0017e9735, type: 3}
+  m_Script: {fileID: 11500000, guid: b2463b2b263a04190826d13d4c28b733, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  level: LVL8-FinalBoss
-  blockExitCollider: {fileID: 0}
 --- !u!1 &408862179
 GameObject:
   m_ObjectHideFlags: 0
@@ -1949,7 +1947,7 @@ BoxCollider2D:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 865305946}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -3608,6 +3606,16 @@ Prefab:
       propertyPath: audioE
       value: 
       objectReference: {fileID: 13002011}
+    - target: {fileID: 114617377269384578, guid: a6aaa7a97499d40289bcf9bb9f48ae15,
+        type: 2}
+      propertyPath: enemyHP
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 114617377269384578, guid: a6aaa7a97499d40289bcf9bb9f48ae15,
+        type: 2}
+      propertyPath: damage
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a6aaa7a97499d40289bcf9bb9f48ae15, type: 2}
   m_IsPrefabParent: 0

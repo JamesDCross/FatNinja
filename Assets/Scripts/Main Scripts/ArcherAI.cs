@@ -7,13 +7,12 @@ public class ArcherAI : MonoBehaviour
     // public settings here
     public int HP = 10;
     public float keepDistance = 6f; // if player is in this range, then we should walk back
-    public float alertDistance = 15f; // if player is greater than this range, do nothing
+    public float alertDistance = 9f; // if player is greater than this range, do nothing
     public int damage = 4;
     public float speed = 4f;
     private float chaseWalkDelta = 1f;
     public int chanceToAttack = 5;
     public float attackTimeGap = 1f; // time gap between each attack
-    private bool startingLevel = true;
 
     //Audio
     public AudioClip[] painSounds;
@@ -85,10 +84,7 @@ public class ArcherAI : MonoBehaviour
         if (currentBaseState.fullPathHash.Equals(aimState))
         {
             //TODO: fire the arrow
-            if (!startingLevel)
-                Attack();
-            else
-                startingLevel = false;
+            Attack();
         }
         else if (currentBaseState.fullPathHash.Equals(beenHitState))
         {
@@ -205,15 +201,16 @@ public class ArcherAI : MonoBehaviour
 
     void whenEnemyDead()
     {
+        this.tag = "DeadEnemy";
         enemy.Stop();
         isDead = true;
         setToThisAnimation(AnimationParams.isDead);
 
         foreach (Transform child in transform)
         {
-            if (child.GetComponent<AudioSource>().Equals(null))
+            if (child.GetComponent<AudioSource>() == null)
             {
-                Destroy(child.gameObject);
+                child.gameObject.SetActive(false);
             }
         }
 
