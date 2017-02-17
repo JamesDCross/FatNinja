@@ -361,6 +361,11 @@ public class EnemyAI : MonoBehaviour
 
     void Update()
     {
+        if (isDead)
+        {
+            return;
+        }
+
         if (enemyHP <= runAwayHP)
         {
             timeSinceRanAway += Time.deltaTime;
@@ -372,10 +377,6 @@ public class EnemyAI : MonoBehaviour
         }
 
 
-        if (isDead)
-        {
-            return;
-        }
 
         if (enemyHP <= 0)
         {
