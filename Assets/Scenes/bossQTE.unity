@@ -180,6 +180,7 @@ GameObject:
   - component: {fileID: 56939317}
   - component: {fileID: 56939316}
   - component: {fileID: 56939269}
+  - component: {fileID: 56939329}
   m_Layer: 0
   m_Name: Flowchart
   m_TagString: Untagged
@@ -215,8 +216,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nodeRect:
     serializedVersion: 2
-    x: 67
-    y: 72
+    x: 68
+    y: 73
     width: 120
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
@@ -272,7 +273,7 @@ MonoBehaviour:
     width: 1114
     height: 859
   selectedBlocks:
-  - {fileID: 56939303}
+  - {fileID: 56939248}
   selectedCommands: []
   variables: []
   description: 
@@ -671,7 +672,7 @@ MonoBehaviour:
   visibleOLD: 0
 --- !u!114 &56939269
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 56939246}
@@ -690,7 +691,7 @@ MonoBehaviour:
   CountTimer: 2
   DelayTimer: 0
   flowChart: {fileID: 56939249}
-  ButtonDisplay: {fileID: 0}
+  ButtonDisplay: {fileID: 178545208}
 --- !u!114 &56939270
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -737,7 +738,7 @@ MonoBehaviour:
   setSayDialog: {fileID: 0}
 --- !u!114 &56939272
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 56939246}
@@ -781,7 +782,7 @@ MonoBehaviour:
   visibleOLD: 0
 --- !u!114 &56939274
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 56939246}
@@ -804,7 +805,7 @@ MonoBehaviour:
   targetColorOLD: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &56939275
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 56939246}
@@ -823,7 +824,7 @@ MonoBehaviour:
   visibleOLD: 0
 --- !u!114 &56939276
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 56939246}
@@ -842,7 +843,7 @@ MonoBehaviour:
   visibleOLD: 0
 --- !u!114 &56939277
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 56939246}
@@ -861,7 +862,7 @@ MonoBehaviour:
   visibleOLD: 0
 --- !u!114 &56939278
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 56939246}
@@ -880,7 +881,7 @@ MonoBehaviour:
   visibleOLD: 0
 --- !u!114 &56939279
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 56939246}
@@ -899,7 +900,7 @@ MonoBehaviour:
   visibleOLD: 0
 --- !u!114 &56939280
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 56939246}
@@ -918,7 +919,7 @@ MonoBehaviour:
   visibleOLD: 0
 --- !u!114 &56939281
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 56939246}
@@ -937,7 +938,7 @@ MonoBehaviour:
   visibleOLD: 0
 --- !u!114 &56939282
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 56939246}
@@ -1013,7 +1014,7 @@ MonoBehaviour:
   visibleOLD: 0
 --- !u!114 &56939286
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 56939246}
@@ -1032,7 +1033,7 @@ MonoBehaviour:
   visibleOLD: 0
 --- !u!114 &56939287
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 56939246}
@@ -1051,7 +1052,7 @@ MonoBehaviour:
   visibleOLD: 0
 --- !u!114 &56939288
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 56939246}
@@ -1070,7 +1071,7 @@ MonoBehaviour:
   visibleOLD: 0
 --- !u!114 &56939289
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 56939246}
@@ -1082,7 +1083,7 @@ MonoBehaviour:
   nodeRect:
     serializedVersion: 2
     x: 252.5
-    y: 72.5
+    y: 73.5
     width: 120
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
@@ -1403,6 +1404,7 @@ MonoBehaviour:
   - {fileID: 56939292}
   - {fileID: 56939291}
   - {fileID: 56939290}
+  - {fileID: 56939329}
 --- !u!114 &56939304
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -1608,7 +1610,7 @@ MonoBehaviour:
   setSayDialog: {fileID: 0}
 --- !u!114 &56939313
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 56939246}
@@ -1627,7 +1629,7 @@ MonoBehaviour:
   visibleOLD: 0
 --- !u!114 &56939314
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 56939246}
@@ -1646,7 +1648,7 @@ MonoBehaviour:
   visibleOLD: 0
 --- !u!114 &56939315
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 56939246}
@@ -1671,7 +1673,7 @@ MonoBehaviour:
   setSayDialog: {fileID: 0}
 --- !u!114 &56939316
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 56939246}
@@ -1694,7 +1696,7 @@ MonoBehaviour:
   targetColorOLD: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &56939317
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 56939246}
@@ -1713,7 +1715,7 @@ MonoBehaviour:
   visibleOLD: 0
 --- !u!114 &56939318
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 56939246}
@@ -1732,7 +1734,7 @@ MonoBehaviour:
   visibleOLD: 0
 --- !u!114 &56939319
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 56939246}
@@ -1751,7 +1753,7 @@ MonoBehaviour:
   visibleOLD: 0
 --- !u!114 &56939320
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 56939246}
@@ -1770,7 +1772,7 @@ MonoBehaviour:
   visibleOLD: 0
 --- !u!114 &56939321
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 56939246}
@@ -1789,7 +1791,7 @@ MonoBehaviour:
   visibleOLD: 0
 --- !u!114 &56939322
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 56939246}
@@ -1808,7 +1810,7 @@ MonoBehaviour:
   visibleOLD: 0
 --- !u!114 &56939323
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 56939246}
@@ -1827,7 +1829,7 @@ MonoBehaviour:
   visibleOLD: 0
 --- !u!114 &56939324
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 56939246}
@@ -1846,7 +1848,7 @@ MonoBehaviour:
   visibleOLD: 0
 --- !u!114 &56939325
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 56939246}
@@ -1865,7 +1867,7 @@ MonoBehaviour:
   visibleOLD: 0
 --- !u!114 &56939326
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 56939246}
@@ -1884,7 +1886,7 @@ MonoBehaviour:
   visibleOLD: 0
 --- !u!114 &56939327
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 56939246}
@@ -1903,7 +1905,7 @@ MonoBehaviour:
   visibleOLD: 0
 --- !u!114 &56939328
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 56939246}
@@ -1920,7 +1922,7 @@ MonoBehaviour:
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
-  itemId: 108
+  itemId: 126
   blockName: B1
   description: 
   eventHandler: {fileID: 0}
@@ -1937,6 +1939,20 @@ MonoBehaviour:
   - {fileID: 56939318}
   - {fileID: 56939317}
   - {fileID: 56939316}
+--- !u!114 &56939329
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 56939246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 129706d6f89d84f09af955a4b08188b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 127
+  indentLevel: 0
+  sceneName: DisplayHighScore
 --- !u!1 &80787961
 GameObject:
   m_ObjectHideFlags: 0
@@ -2011,7 +2027,7 @@ GameObject:
   - component: {fileID: 178545209}
   - component: {fileID: 178545210}
   m_Layer: 0
-  m_Name: a_button (1)
+  m_Name: b_button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2645,7 +2661,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1442321623}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.61, y: -0.03, z: -6.99}
+  m_LocalPosition: {x: -3.65, y: 1.29, z: -6.99}
   m_LocalScale: {x: 0.2, y: 0.2, z: 0.31922266}
   m_Children: []
   m_Father: {fileID: 2006671058}
