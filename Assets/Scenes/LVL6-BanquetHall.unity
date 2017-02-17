@@ -716,13 +716,11 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 376556380}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25d1d98bbacf842e4b64e2e0017e9735, type: 3}
+  m_Script: {fileID: 11500000, guid: b2463b2b263a04190826d13d4c28b733, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  level: LVL8-FinalBoss
-  blockExitCollider: {fileID: 0}
 --- !u!1 &408862179
 GameObject:
   m_ObjectHideFlags: 0
