@@ -163,17 +163,4 @@ public class GameMaster : MonoBehaviour {
         Time.timeScale = 1;
         Loading.loadLevel("Start Menu");
     }
-
-    public static void setHighScore()
-    {
-        if (!PlayerPrefs.HasKey("Score"))
-            PlayerPrefs.SetInt("Score", Score.getScore());
-        else
-        {
-            if (PlayerPrefs.GetInt("Score") < Score.getScore())
-            {
-                PlayerPrefs.SetInt("Score", Score.getScore());
-            }
-        }
-    }
 }
