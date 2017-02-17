@@ -20,8 +20,7 @@ public class SkipMenu : MonoBehaviour {
 	void Update () {
         if (characterActions.Skip)
         {
-            Debug.Log("skip");
-            SceneManager.LoadScene("Start Menu");
+            Loading.loadLevel("Start Menu");
         }
     }
 }
