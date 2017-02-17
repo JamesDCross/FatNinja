@@ -1695,9 +1695,10 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1389769658}
   m_LocalRotation: {x: 0, y: 0, z: -0.258819, w: 0.9659259}
-  m_LocalPosition: {x: -6.92, y: -7.62, z: 0}
+  m_LocalPosition: {x: -7.55, y: -7.91, z: 0}
   m_LocalScale: {x: 1, y: 1.4, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 2127920968}
   m_Father: {fileID: 1156691599}
   m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -30}
@@ -1727,7 +1728,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   level: LVL5-Balcony
-  blockExitCollider: {fileID: 0}
+  blockExitCollider: {fileID: 2127920969}
 --- !u!95 &1389769662
 Animator:
   serializedVersion: 3
@@ -2472,7 +2473,7 @@ Prefab:
     - target: {fileID: 114769454782630468, guid: ee69fabab52b44a0e8752e56d70e1301,
         type: 2}
       propertyPath: damage
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 114769454782630468, guid: ee69fabab52b44a0e8752e56d70e1301,
         type: 2}
@@ -2925,6 +2926,49 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
+--- !u!1 &2127920967
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 2127920968}
+  - component: {fileID: 2127920969}
+  m_Layer: 0
+  m_Name: Doors Block
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 4294967295
+  m_IsActive: 1
+--- !u!4 &2127920968
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2127920967}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.31, y: 0.41, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1389769659}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -30}
+--- !u!61 &2127920969
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2127920967}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_Offset: {x: 0, y: 2}
+  serializedVersion: 2
+  m_Size: {x: 4, y: 1}
 --- !u!1001 &2142359287
 Prefab:
   m_ObjectHideFlags: 0

@@ -13,8 +13,8 @@ public class GameMaster : MonoBehaviour {
     bool combo;
     private Rect PauseMenu;
     public Texture Background;
-    private float posX = (Screen.width /2) - ((Screen.width * .3f) / 2);
-    private float posY = (Screen.height /2) - ((Screen.height * .7f) / 2);
+    private float posX = (Screen.width / 2) - ((Screen.width * .3f) / 2);
+    private float posY = (Screen.height / 2) - ((Screen.height * .7f) / 2);
     private float width = (Screen.width * .3f);
     private float height = (Screen.height * .7f);
     private float exitsY;
@@ -25,7 +25,8 @@ public class GameMaster : MonoBehaviour {
 
 
 
-    void Start () {
+    void Start()
+    {
         characterActions = new PlayerAction();
         pause = false;
         combo = false;
@@ -75,7 +76,7 @@ public class GameMaster : MonoBehaviour {
         {
             //GUI.Window(0, PauseMenu, ThePauseMenu, "Main menu");
             GUI.DrawTexture(PauseMenu, Background);
-            ThePauseMenu(); 
+            ThePauseMenu();
         }
     }
 
@@ -86,7 +87,7 @@ public class GameMaster : MonoBehaviour {
         style.fontSize = 18;
         styleButton.fontSize = 22;
         styleButton.font = font;
-        if (GUI.Button(new Rect(posX + (width * .15f), posY + (height * .22f), width *.7f, 20), "Resume", styleButton))
+        if (GUI.Button(new Rect(posX + (width * .15f), posY + (height * .22f), width * .7f, 20), "Resume", styleButton))
         {
             pause = false;
             Time.timeScale = 1;
@@ -99,8 +100,7 @@ public class GameMaster : MonoBehaviour {
             {
                 exitsY = posY + (height * .70f);
                 //PauseMenu.size = new Vector2(360, 290);
-            }
-            else
+            } else
             {
                 exitsY = posY + (height * .34f);
                 //PauseMenu.size = new Vector2(360, 110);
@@ -114,7 +114,7 @@ public class GameMaster : MonoBehaviour {
 
         if (combo)
         {
-            if (GUI.Button(new Rect(posX + (width * .15f), posY + (height * .34f), width * .34f , 20), "Controller", styleButton))
+            if (GUI.Button(new Rect(posX + (width * .15f), posY + (height * .34f), width * .34f, 20), "Controller", styleButton))
             {
                 keyboard = false;
             }
@@ -125,14 +125,13 @@ public class GameMaster : MonoBehaviour {
             }
 
             if (keyboard)
-            {               
+            {
                 GUI.Label(new Rect(posX + (width * .15f), posY + (height * .40f), width * .7f, 20), "Kick X", style);
                 GUI.Label(new Rect(posX + (width * .15f), posY + (height * .46f), width * .7f, 20), "Punch Z", style);
                 GUI.Label(new Rect(posX + (width * .15f), posY + (height * .52f), width * .7f, 20), "Upper Cut Z Z X", style);
                 GUI.Label(new Rect(posX + (width * .15f), posY + (height * .58f), width * .7f, 20), "Hurricane Kick X X Z", style);
                 GUI.Label(new Rect(posX + (width * .15f), posY + (height * .64f), width * .7f, 20), "Surasshu Slash X Z Z X", style);
-            } 
-            else
+            } else
             {
                 GUI.Label(new Rect(posX + (width * .15f), posY + (height * .40f), width * .7f, 20), "Kick B", style);
                 GUI.Label(new Rect(posX + (width * .15f), posY + (height * .46f), width * .7f, 20), "Punch A", style);
@@ -141,7 +140,7 @@ public class GameMaster : MonoBehaviour {
                 GUI.Label(new Rect(posX + (width * .15f), posY + (height * .64f), width * .7f, 20), "Surasshu Slash B A A B", style);
             }
         }
-        
+
 
     }
 
@@ -160,10 +159,21 @@ public class GameMaster : MonoBehaviour {
     {
         Score.scoreReset();
         MusicPlayer.destroyMusic();
-        //Loading.loadLevel("Start Menu");
-        //SceneManager.LoadScene("Start Menu");
         pause = false;
         Time.timeScale = 1;
         Loading.loadLevel("Start Menu");
+    }
+
+    public static void setHighScore()
+    {
+        if (!PlayerPrefs.HasKey("Score"))
+            PlayerPrefs.SetInt("Score", Score.getScore());
+        else
+        {
+            if (PlayerPrefs.GetInt("Score") < Score.getScore())
+            {
+                PlayerPrefs.SetInt("Score", Score.getScore());
+            }
+        }
     }
 }
