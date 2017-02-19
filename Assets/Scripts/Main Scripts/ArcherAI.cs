@@ -14,7 +14,6 @@ public class ArcherAI : MonoBehaviour
     public int chanceToAttack = 5;
     public float attackTimeGap = 1f; // time gap between each attack
 
-    private bool notFirstAttack;
 
     //Audio
     public AudioClip[] painSounds;
@@ -27,6 +26,8 @@ public class ArcherAI : MonoBehaviour
 
     // private variables starts here
     private bool isDead = false;
+    private bool isFirstMeet = true;
+    private bool notFirstAttack;
     private int walkState = Animator.StringToHash("Base Layer.walk");
     private int aimState = Animator.StringToHash("Base Layer.aim");
     private int idleState = Animator.StringToHash("Base Layer.idle");
@@ -61,15 +62,12 @@ public class ArcherAI : MonoBehaviour
     {
         notFirstAttack = false;
     }
-    private bool isFirstMeet = true;
     void Update()
     {
         if (isDead) { return; }
 
         currentBaseState = animator.GetCurrentAnimatorStateInfo(0);
         float distance = Vector2.Distance(transform.position, player.position);
-        Debug.Log(distance);
-
 
         if (distance < alertDistance)
         {
@@ -83,6 +81,10 @@ public class ArcherAI : MonoBehaviour
             setToThisAnimation(AnimationParams.isIdle);
             return;
         }
+        else
+        {
+            setToThisAnimation(AnimationParams.isWalk);
+        }
 
         setEnemyDirection();
 
@@ -92,14 +94,8 @@ public class ArcherAI : MonoBehaviour
         if (currentBaseState.fullPathHash.Equals(aimState))
         {
             //TODO: fire the arrow
-            if (notFirstAttack)
-            {
-                Attack();
-            }
-            else
-            {
-                notFirstAttack = true;
-            }
+
+            Attack();
         }
         else if (currentBaseState.fullPathHash.Equals(beenHitState))
         {
@@ -113,8 +109,8 @@ public class ArcherAI : MonoBehaviour
         else if (currentBaseState.fullPathHash.Equals(walkState))
         {
             hasAttacked = false;
+            enemy.Resume();
 
-            // if i am adjusting the distance to the player,.
             if (enemy.remainingDistance <= 0.5f)
             {
                 Debug.Log("Really");
@@ -123,15 +119,9 @@ public class ArcherAI : MonoBehaviour
 
             if (distance > keepDistance)
             {
-                RandomlyChooseAttackOrMove(chanceToAttack, () =>
-                {
-                    enemy.Resume();
-                    enemy.ResetPath();
-                    //enemy.destination = GetRandomNearPosition();
-                    enemy.destination = (transform.position - player.position).normalized * keepDistance + player.position;
-                });
+                enemy.destination = (transform.position - player.position).normalized * keepDistance + player.position;
             }
-            else
+            else if (distance < keepDistance)
             {
                 //use chance System to determine whether we should attack or not
                 RandomlyChooseAttackOrMove(chanceToAttack / 2, () =>
@@ -141,6 +131,10 @@ public class ArcherAI : MonoBehaviour
                     enemy.ResetPath();
                     enemy.destination = GetFurthestPointAfterPlayerToEnemy();
                 });
+            }
+            else if (distance == keepDistance)
+            {
+                StartToAttack();
             }
         }
     }

@@ -319,10 +319,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HP: 4
   keepDistance: 8
-  alertDistance: 13
+  alertDistance: 12
   damage: 4
-  speed: 4
-  chanceToAttack: 5
+  speed: 5
+  chanceToAttack: 4
   attackTimeGap: 3
   painSounds:
   - {fileID: 8300000, guid: 8e3393b05b74f44c08bcd0a1a61d1b2a, type: 3}
