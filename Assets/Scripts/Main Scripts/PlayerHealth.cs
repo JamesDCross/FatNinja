@@ -53,6 +53,17 @@ public class PlayerHealth : MonoBehaviour {
         // restart level on 0 health
         if (PlayersHP <= 0 && !startedDying)
         {
+           /* GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+            foreach (GameObject go in enemies)
+            {
+                if (go.GetComponent<AudioSource>()!=null) {
+                    go.GetComponent<AudioSource>().enabled = false;
+                }
+            }*/
+        
+           
+
+
             audio.clip = deathSound[0];
             audio.Play();
             startedDying = true;

@@ -19,6 +19,8 @@ public class ArcherAI : MonoBehaviour
     public AudioClip[] painSounds;
     public AudioSource audioE;
 
+    
+
     // Blood effect
     public GameObject bloodPrefab;
 
