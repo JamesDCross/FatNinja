@@ -214,7 +214,9 @@ public class EnemyAI : MonoBehaviour
             //attacking sounds
             if (attackSounds != null && attackSounds.Length > 0 && audio != null)
             {
-                audio.clip = attackSounds[0];
+                int ran = UnityEngine.Random.Range(0, 4);
+                
+                audio.clip = attackSounds[ran];
                 audio.Play();
             }
             // Debug.Log("enemy attacks");
