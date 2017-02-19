@@ -113,7 +113,6 @@ public class ArcherAI : MonoBehaviour
 
             if (enemy.remainingDistance <= 0.5f)
             {
-                Debug.Log("Really");
                 StartToAttack();
             }
 
