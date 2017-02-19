@@ -113,7 +113,7 @@ public class ArcherAI : MonoBehaviour
 
             if (enemy.remainingDistance <= 0.5f)
             {
-                StartToAttack();
+                RandomlyChooseAttackOrMove(chanceToAttack, () => { });
             }
 
             if (distance > keepDistance)
