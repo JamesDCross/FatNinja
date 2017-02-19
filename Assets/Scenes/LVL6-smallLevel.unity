@@ -812,6 +812,120 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ea3f7a35f3db43540bfab27e5c10a0f9, type: 2}
   m_IsPrefabParent: 0
+--- !u!1001 &365401249
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1723092640}
+    m_Modifications:
+    - target: {fileID: 224771400769315650, guid: 2c3807f3bef364ec493cd9197f3989d7,
+        type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224771400769315650, guid: 2c3807f3bef364ec493cd9197f3989d7,
+        type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224771400769315650, guid: 2c3807f3bef364ec493cd9197f3989d7,
+        type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224771400769315650, guid: 2c3807f3bef364ec493cd9197f3989d7,
+        type: 2}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224771400769315650, guid: 2c3807f3bef364ec493cd9197f3989d7,
+        type: 2}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224771400769315650, guid: 2c3807f3bef364ec493cd9197f3989d7,
+        type: 2}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224771400769315650, guid: 2c3807f3bef364ec493cd9197f3989d7,
+        type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224771400769315650, guid: 2c3807f3bef364ec493cd9197f3989d7,
+        type: 2}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 224771400769315650, guid: 2c3807f3bef364ec493cd9197f3989d7,
+        type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224771400769315650, guid: 2c3807f3bef364ec493cd9197f3989d7,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224771400769315650, guid: 2c3807f3bef364ec493cd9197f3989d7,
+        type: 2}
+      propertyPath: m_SizeDelta.x
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 224771400769315650, guid: 2c3807f3bef364ec493cd9197f3989d7,
+        type: 2}
+      propertyPath: m_SizeDelta.y
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 224771400769315650, guid: 2c3807f3bef364ec493cd9197f3989d7,
+        type: 2}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224771400769315650, guid: 2c3807f3bef364ec493cd9197f3989d7,
+        type: 2}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224771400769315650, guid: 2c3807f3bef364ec493cd9197f3989d7,
+        type: 2}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224771400769315650, guid: 2c3807f3bef364ec493cd9197f3989d7,
+        type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224771400769315650, guid: 2c3807f3bef364ec493cd9197f3989d7,
+        type: 2}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 224771400769315650, guid: 2c3807f3bef364ec493cd9197f3989d7,
+        type: 2}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114984354296483826, guid: 2c3807f3bef364ec493cd9197f3989d7,
+        type: 2}
+      propertyPath: quote
+      value: i knock your lights out
+      objectReference: {fileID: 0}
+    - target: {fileID: 114984354296483826, guid: 2c3807f3bef364ec493cd9197f3989d7,
+        type: 2}
+      propertyPath: pauseBeforeText
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1632172482038344, guid: 2c3807f3bef364ec493cd9197f3989d7, type: 2}
+      propertyPath: m_Name
+      value: Dialogninjaonlyroom (1)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 2c3807f3bef364ec493cd9197f3989d7, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &416776399
 GameObject:
   m_ObjectHideFlags: 0
@@ -1623,6 +1737,11 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
+--- !u!224 &1064409057 stripped
+RectTransform:
+  m_PrefabParentObject: {fileID: 224771400769315650, guid: 2c3807f3bef364ec493cd9197f3989d7,
+    type: 2}
+  m_PrefabInternal: {fileID: 365401249}
 --- !u!1001 &1083582146
 Prefab:
   m_ObjectHideFlags: 0
@@ -2806,7 +2925,7 @@ Prefab:
     - target: {fileID: 114984354296483826, guid: 2c3807f3bef364ec493cd9197f3989d7,
         type: 2}
       propertyPath: quote
-      value: For a lampshade, you're not very bright
+      value: you look like a lampshade
       objectReference: {fileID: 0}
     - target: {fileID: 114984354296483826, guid: 2c3807f3bef364ec493cd9197f3989d7,
         type: 2}
@@ -3023,6 +3142,7 @@ Transform:
   - {fileID: 8248583}
   - {fileID: 1606698711}
   - {fileID: 1723092632}
+  - {fileID: 1064409057}
   - {fileID: 1884046678}
   - {fileID: 2010567632}
   - {fileID: 1991027957}
@@ -3058,7 +3178,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1723092640}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &1884046679
 AudioSource:
@@ -3237,7 +3357,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1723092640}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &1991027958
 AudioSource:
@@ -3349,7 +3469,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1723092640}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &2010567633
 AudioSource:
