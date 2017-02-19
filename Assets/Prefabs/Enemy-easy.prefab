@@ -348,7 +348,7 @@ MonoBehaviour:
   angularSpeed: 120
   acceleration: 8
   stoppingDistance: 0
-  autoBraking: 0
+  autoBraking: 1
   nextPos: {x: 0, y: 0}
 --- !u!212 &212155568164087616
 SpriteRenderer:
