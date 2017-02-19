@@ -195,6 +195,7 @@ public class ArcherAI : MonoBehaviour
 
         if (HP <= 0)
         {
+            isDead = true;
             enemy.Stop();
             setToThisAnimation(AnimationParams.isDead);
         }
@@ -202,8 +203,6 @@ public class ArcherAI : MonoBehaviour
         {
             setToThisAnimation(AnimationParams.isHit);
         }
-
-        Debug.Log("asd");
     }
 
     void whenEnemyDead()
