@@ -24,18 +24,20 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/LVL5-Balcony.unity
   - enabled: 1
-    path: Assets/Scenes/LVL6-BanquetHall.unity
+    path: Assets/Scenes/LVL6-smallLevel.unity
   - enabled: 1
-    path: Assets/Scenes/Credits.unity
+    path: Assets/Scenes/LVL7-BanquetHall.unity
   - enabled: 1
     path: Assets/Scenes/LVL8-FinalBoss.unity
-  - enabled: 0
-    path: Assets/Scenes/finalQTE.unity
-  - enabled: 1
-    path: Assets/Scenes/DisplayHighScore.unity
-  - enabled: 1
-    path: Assets/Scenes/Loading.unity
   - enabled: 1
     path: Assets/Scenes/bossQTE.unity
   - enabled: 1
+    path: Assets/Scenes/DisplayHighScore.unity
+  - enabled: 1
+    path: Assets/Scenes/Credits.unity
+  - enabled: 1
+    path: Assets/Scenes/Loading.unity
+  - enabled: 1
     path: Assets/Scenes/LVL2-Anteroom-fromDojo.unity
+  - enabled: 0
+    path: Assets/Scenes/finalQTE.unity
