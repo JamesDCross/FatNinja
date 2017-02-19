@@ -18,6 +18,8 @@ public class EnemyAI : MonoBehaviour
     public float checkDistance = 1.5f; // The distance between enemy and player, when real distance is smaller, enemy will start to walk.
     public int chanceToAttack = 4; // min 0, max 10;
 
+    public float lineOfSight = 10.0f;
+
     public float chanceToBeStunned = 0.5f;//Chance to be stunned between 0 and 1;
 
     //Audio
@@ -73,6 +75,10 @@ public class EnemyAI : MonoBehaviour
         if (audioE == null)
         {
             audioE = GetComponentInChildren<AudioSource>();
+        }
+
+        if (lineOfSight == 0) {
+            lineOfSight = 10.0f;
         }
 
         ApplyAnimationEventToKickAnimation(CreateAnimationEvent());
@@ -447,7 +453,7 @@ public class EnemyAI : MonoBehaviour
                 return;
             }
 
-            if (remainingDistance > 10)
+            if (remainingDistance > Mathf.Min(lineOfSight, 10))
             {
                 enemy.Stop();
                 animator.SetBool("PlayerMoving", false);
@@ -457,7 +463,7 @@ public class EnemyAI : MonoBehaviour
                 return;
             }
 
-            if (remainingDistance > 0 && remainingDistance < 10)
+            if (remainingDistance > 0 && remainingDistance < lineOfSight)
             {
                 enemy.Resume();
                 if (remainingDistance > checkDistance)

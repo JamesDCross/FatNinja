@@ -162,7 +162,6 @@ GameObject:
   - component: {fileID: 56939275}
   - component: {fileID: 56939274}
   - component: {fileID: 56939272}
-  - component: {fileID: 56939315}
   - component: {fileID: 56939314}
   - component: {fileID: 56939313}
   - component: {fileID: 56939269}
@@ -227,11 +226,19 @@ GameObject:
   - component: {fileID: 56939367}
   - component: {fileID: 56939366}
   - component: {fileID: 56939365}
-  - component: {fileID: 56939372}
-  - component: {fileID: 56939371}
   - component: {fileID: 56939370}
   - component: {fileID: 56939369}
   - component: {fileID: 56939373}
+  - component: {fileID: 56939375}
+  - component: {fileID: 56939374}
+  - component: {fileID: 56939372}
+  - component: {fileID: 56939371}
+  - component: {fileID: 56939315}
+  - component: {fileID: 56939377}
+  - component: {fileID: 56939376}
+  - component: {fileID: 56939379}
+  - component: {fileID: 56939378}
+  - component: {fileID: 56939380}
   m_Layer: 0
   m_Name: Flowchart
   m_TagString: Untagged
@@ -329,9 +336,8 @@ MonoBehaviour:
     width: 1114
     height: 859
   selectedBlocks:
-  - {fileID: 56939255}
-  selectedCommands:
-  - {fileID: 56939373}
+  - {fileID: 56939303}
+  selectedCommands: []
   variables: []
   description: 
   stepPause: 0
@@ -810,15 +816,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: 105
   indentLevel: 0
-  storyText: Avoided easily
+  storyText: Not even close
   description: 
   character: {fileID: 1198847693}
   portrait: {fileID: 21300000, guid: 9bbe9deea33f84d6dabaffc3b179f638, type: 3}
   voiceOverClip: {fileID: 0}
-  showAlways: 1
+  showAlways: 0
   showCount: 1
   extendPrevious: 0
-  fadeWhenDone: 0
+  fadeWhenDone: 1
   waitForClick: 0
   stopVoiceover: 1
   setSayDialog: {fileID: 0}
@@ -1171,11 +1177,8 @@ MonoBehaviour:
   - {fileID: 56939386}
   - {fileID: 56939274}
   - {fileID: 56939272}
-  - {fileID: 56939371}
   - {fileID: 56939343}
   - {fileID: 56939342}
-  - {fileID: 56939315}
-  - {fileID: 56939372}
   - {fileID: 56939334}
   - {fileID: 56939269}
 --- !u!114 &56939290
@@ -1479,7 +1482,17 @@ MonoBehaviour:
   - {fileID: 56939363}
   - {fileID: 56939388}
   - {fileID: 56939290}
+  - {fileID: 56939374}
+  - {fileID: 56939375}
   - {fileID: 56939370}
+  - {fileID: 56939372}
+  - {fileID: 56939371}
+  - {fileID: 56939315}
+  - {fileID: 56939378}
+  - {fileID: 56939376}
+  - {fileID: 56939377}
+  - {fileID: 56939379}
+  - {fileID: 56939380}
   - {fileID: 56939329}
 --- !u!114 &56939304
 MonoBehaviour:
@@ -1551,7 +1564,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: 74
   indentLevel: 0
-  storyText: I will atempt to attack, do not even think about evading my attack
+  storyText: I will attempt to attack, do not even think about evading my attack
   description: 
   character: {fileID: 654954444}
   portrait: {fileID: 21300000, guid: f04aa916f700d4d668de7ccbf728bb75, type: 3}
@@ -1733,12 +1746,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec422cd568a9c4a31ad7c36d0572b9da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemId: 109
+  itemId: 242
   indentLevel: 0
-  storyText: Here comes a spinning kick, which I will initiate with a B B A!
+  storyText: But your hands are still full of blood.
   description: 
-  character: {fileID: 1198847693}
-  portrait: {fileID: 21300000, guid: 9bbe9deea33f84d6dabaffc3b179f638, type: 3}
+  character: {fileID: 654954444}
+  portrait: {fileID: 21300000, guid: f04aa916f700d4d668de7ccbf728bb75, type: 3}
   voiceOverClip: {fileID: 0}
   showAlways: 1
   showCount: 1
@@ -2238,7 +2251,7 @@ MonoBehaviour:
   nodeRect:
     serializedVersion: 2
     x: 616.5
-    y: 71.5
+    y: 72.501
     width: 120
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
@@ -2791,7 +2804,7 @@ MonoBehaviour:
   indentLevel: 0
   _duration:
     floatRef: {fileID: 0}
-    floatVal: 1
+    floatVal: 0.6
   durationOLD: 0
 --- !u!114 &56939368
 MonoBehaviour:
@@ -2808,7 +2821,7 @@ MonoBehaviour:
   indentLevel: 0
   _duration:
     floatRef: {fileID: 0}
-    floatVal: 1
+    floatVal: 0.6
   durationOLD: 0
 --- !u!114 &56939369
 MonoBehaviour:
@@ -2855,7 +2868,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3315ad2ebb85443909a1203d56d9344e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemId: 234
+  itemId: 241
   indentLevel: 0
   _duration:
     floatRef: {fileID: 0}
@@ -2869,18 +2882,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 56939246}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3315ad2ebb85443909a1203d56d9344e, type: 3}
+  m_Script: {fileID: 11500000, guid: ec422cd568a9c4a31ad7c36d0572b9da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemId: 233
+  itemId: 240
   indentLevel: 0
-  _duration:
-    floatRef: {fileID: 0}
-    floatVal: 1
-  durationOLD: 0
+  storyText: You killed people in the name of justice.
+  description: 
+  character: {fileID: 654954444}
+  portrait: {fileID: 21300000, guid: f04aa916f700d4d668de7ccbf728bb75, type: 3}
+  voiceOverClip: {fileID: 0}
+  showAlways: 1
+  showCount: 1
+  extendPrevious: 0
+  fadeWhenDone: 0
+  waitForClick: 0
+  stopVoiceover: 1
+  setSayDialog: {fileID: 0}
 --- !u!114 &56939373
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 56939246}
@@ -2896,6 +2917,151 @@ MonoBehaviour:
     stringVal: bossQTE
   loadingImage: {fileID: 0}
   sceneNameOLD: 
+--- !u!114 &56939374
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 56939246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3315ad2ebb85443909a1203d56d9344e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 239
+  indentLevel: 0
+  _duration:
+    floatRef: {fileID: 0}
+    floatVal: 1
+  durationOLD: 0
+--- !u!114 &56939375
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 56939246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec422cd568a9c4a31ad7c36d0572b9da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 238
+  indentLevel: 0
+  storyText: 'You will be the next
+
+'
+  description: 
+  character: {fileID: 654954444}
+  portrait: {fileID: 21300000, guid: f04aa916f700d4d668de7ccbf728bb75, type: 3}
+  voiceOverClip: {fileID: 0}
+  showAlways: 1
+  showCount: 1
+  extendPrevious: 0
+  fadeWhenDone: 0
+  waitForClick: 0
+  stopVoiceover: 1
+  setSayDialog: {fileID: 0}
+--- !u!114 &56939376
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 56939246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec422cd568a9c4a31ad7c36d0572b9da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 244
+  indentLevel: 0
+  storyText: '......'
+  description: 
+  character: {fileID: 1198847693}
+  portrait: {fileID: 21300000, guid: 9bbe9deea33f84d6dabaffc3b179f638, type: 3}
+  voiceOverClip: {fileID: 0}
+  showAlways: 1
+  showCount: 1
+  extendPrevious: 0
+  fadeWhenDone: 0
+  waitForClick: 0
+  stopVoiceover: 1
+  setSayDialog: {fileID: 0}
+--- !u!114 &56939377
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 56939246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3315ad2ebb85443909a1203d56d9344e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 243
+  indentLevel: 0
+  _duration:
+    floatRef: {fileID: 0}
+    floatVal: 1
+  durationOLD: 0
+--- !u!114 &56939378
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 56939246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3315ad2ebb85443909a1203d56d9344e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 246
+  indentLevel: 0
+  _duration:
+    floatRef: {fileID: 0}
+    floatVal: 1
+  durationOLD: 0
+--- !u!114 &56939379
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 56939246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec422cd568a9c4a31ad7c36d0572b9da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 245
+  indentLevel: 0
+  storyText: Yes, father.
+  description: 
+  character: {fileID: 1198847693}
+  portrait: {fileID: 21300000, guid: 9bbe9deea33f84d6dabaffc3b179f638, type: 3}
+  voiceOverClip: {fileID: 0}
+  showAlways: 1
+  showCount: 1
+  extendPrevious: 0
+  fadeWhenDone: 0
+  waitForClick: 0
+  stopVoiceover: 1
+  setSayDialog: {fileID: 0}
+--- !u!114 &56939380
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 56939246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3315ad2ebb85443909a1203d56d9344e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 247
+  indentLevel: 0
+  _duration:
+    floatRef: {fileID: 0}
+    floatVal: 1
+  durationOLD: 0
 --- !u!114 &56939381
 MonoBehaviour:
   m_ObjectHideFlags: 2

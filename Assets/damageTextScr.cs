@@ -16,6 +16,7 @@ public class damageTextScr : MonoBehaviour {
 	
 	public void setDamage(int damage) {
 		GetComponent<TextMesh>().text = "" + damage;
+		//GetComponent<TextMesh>().text = "x" + Score.getMultipler();
 	}
 
 	// Update is called once per frame

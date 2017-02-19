@@ -39,15 +39,14 @@ public class SumoAI : MonoBehaviour
     private Transform player;
     private AnimatorStateInfo currentBaseState;
     private string[] tiredList = new string[] {
-        "It's not fair!",
-        "I'll tell your mom!",
-        "You skinny basterd, I'll beat you.",
-        "Time for me to hit the Dojo.",
-        "Damn, Why you keep running?",
-        "Are you super mario?!",
-        "It's not funny at all!",
-        "Stop!! For god sake.",
-        "I curse you become fat!"
+        "Stay still so I can kill you",
+        "You so skinny your mom enjoyed your birth",
+        "I break you, you skinny twig",
+        "you hoola-hoop with Fruit Loops",
+        "Run Forrest, Run",
+        
+        "At last a work-out"
+        
     };
     private enum AnimationParams
     {
@@ -111,7 +110,7 @@ public class SumoAI : MonoBehaviour
                 audioE.clip = painSounds[attack];
                 audioE.Play();
 
-                if (pDistance <= 0.5f)
+                if (pDistance <= 1.5f)
                 {
                     setEnemyDirection();
                     PlayerHealth.doDamage(damage, this.transform.position);
@@ -172,11 +171,11 @@ public class SumoAI : MonoBehaviour
 
     IEnumerator SaySomethingFirstMeet()
     {
-        saySomething.text = "You're killing my men!";
+        saySomething.text = "At last you have come";
         saySomething.GetComponent<Text>().enabled = true;
         speechBubble.GetComponent<Image>().enabled = true;
         yield return new WaitForSeconds(1.5f);
-        saySomething.text = "You damn THUG!";
+        saySomething.text = "Prepare to die!!";
         yield return new WaitForSeconds(1.5f);
         saySomething.GetComponent<Text>().enabled = false;
         speechBubble.GetComponent<Image>().enabled = false;

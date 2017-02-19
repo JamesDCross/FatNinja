@@ -629,6 +629,16 @@ Prefab:
       propertyPath: isSit
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114350945088803758, guid: 09da5ac14ee653941a58b3b177a19c7f,
+        type: 2}
+      propertyPath: damage
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114350945088803758, guid: 09da5ac14ee653941a58b3b177a19c7f,
+        type: 2}
+      propertyPath: enemyHP
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 09da5ac14ee653941a58b3b177a19c7f, type: 2}
   m_IsPrefabParent: 0
@@ -968,25 +978,9 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 114687367332380592, guid: 27ab1f8ff4c174f92befa08fbca6f832,
-        type: 2}
-      propertyPath: scoreText
-      value: 
-      objectReference: {fileID: 841070140}
-    - target: {fileID: 114443227487411254, guid: 27ab1f8ff4c174f92befa08fbca6f832,
-        type: 2}
-      propertyPath: m_FontData.m_HorizontalOverflow
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 27ab1f8ff4c174f92befa08fbca6f832, type: 2}
   m_IsPrefabParent: 0
---- !u!114 &841070140 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114443227487411254, guid: 27ab1f8ff4c174f92befa08fbca6f832,
-    type: 2}
-  m_PrefabInternal: {fileID: 841070139}
-  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 --- !u!1001 &846772068
 Prefab:
   m_ObjectHideFlags: 0
@@ -2033,7 +2027,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1421277760
 Transform:
   m_ObjectHideFlags: 0
