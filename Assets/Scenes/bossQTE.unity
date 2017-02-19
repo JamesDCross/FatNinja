@@ -335,8 +335,9 @@ MonoBehaviour:
     width: 1114
     height: 859
   selectedBlocks:
-  - {fileID: 56939303}
-  selectedCommands: []
+  - {fileID: 56939248}
+  selectedCommands:
+  - {fileID: 56939307}
   variables: []
   description: 
   stepPause: 0
@@ -1562,7 +1563,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: 74
   indentLevel: 0
-  storyText: I will atempt to attack, do not even think about evading my attack
+  storyText: I will attempt to attack, do not even think about evading my attack
   description: 
   character: {fileID: 654954444}
   portrait: {fileID: 21300000, guid: f04aa916f700d4d668de7ccbf728bb75, type: 3}
@@ -3003,7 +3004,7 @@ MonoBehaviour:
   durationOLD: 0
 --- !u!114 &56939378
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 56939246}
@@ -3020,7 +3021,7 @@ MonoBehaviour:
   durationOLD: 0
 --- !u!114 &56939379
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 56939246}
