@@ -87,7 +87,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1635246712760814}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -74.98, y: 26.92, z: 0}
+  m_LocalPosition: {x: -20.77, y: -2.08, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4387880597627382}
@@ -302,7 +302,7 @@ MonoBehaviour:
   radius: 0.5
   speed: 3.5
   angularSpeed: 70
-  acceleration: 1
+  acceleration: 5
   stoppingDistance: 0
   autoBraking: 1
   nextPos: {x: 0, y: 0}
@@ -318,11 +318,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HP: 4
-  keepDistance: 8
+  keepDistance: 7
   alertDistance: 12
   damage: 4
-  speed: 5
-  chanceToAttack: 4
+  speed: 7
+  chanceToAttack: 5
   attackTimeGap: 3
   painSounds:
   - {fileID: 8300000, guid: 8e3393b05b74f44c08bcd0a1a61d1b2a, type: 3}
