@@ -111,7 +111,7 @@ public class SumoAI : MonoBehaviour
                 audioE.clip = painSounds[attack];
                 audioE.Play();
 
-                if (pDistance <= 0.5f)
+                if (pDistance <= 1.5f)
                 {
                     setEnemyDirection();
                     PlayerHealth.doDamage(damage, this.transform.position);
