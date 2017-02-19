@@ -337,7 +337,7 @@ MonoBehaviour:
   angularSpeed: 120
   acceleration: 8
   stoppingDistance: 0
-  autoBraking: 0
+  autoBraking: 1
   nextPos: {x: 0, y: 0}
 --- !u!114 &114899153508095432
 MonoBehaviour:
