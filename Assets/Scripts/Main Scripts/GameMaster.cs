@@ -58,10 +58,9 @@ public class GameMaster : MonoBehaviour {
         scoreText.text = "" + Score.getScore();
         if (scoreUpdateTime + Score.timeLength > Time.time)
             ScoreMultipler.text = Score.getDamage() + "  X " + Score.getMultipler();
-            //ScoreMultipler.text = Score.getMultipler() + " HITS";
         else
         {
-            ScoreMultipler.text = "";// "X " + Score.getMultipler();
+            ScoreMultipler.text = "X " + Score.getMultipler();
             Score.resetMultipler();
         }
     }
