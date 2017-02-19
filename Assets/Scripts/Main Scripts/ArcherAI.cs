@@ -57,29 +57,31 @@ public class ArcherAI : MonoBehaviour
         //ApplyAnimationEventToKickAnimation(CreateAnimationEvent());
     }
 
-    void Start(){
+    void Start()
+    {
         notFirstAttack = false;
     }
-
+    private bool isFirstMeet = true;
     void Update()
     {
         if (isDead) { return; }
 
         currentBaseState = animator.GetCurrentAnimatorStateInfo(0);
         float distance = Vector2.Distance(transform.position, player.position);
+        Debug.Log(distance);
 
-        // player is out of our sight, we stop;
-        if (distance > alertDistance)
+
+        if (distance < alertDistance)
+        {
+            isFirstMeet = false;
+            setToThisAnimation(AnimationParams.isWalk);
+        }
+
+        if (isFirstMeet)
         {
             enemy.Stop();
             setToThisAnimation(AnimationParams.isIdle);
-        }
-        else
-        {
-            if (currentBaseState.fullPathHash.Equals(idleState))
-            {
-                setToThisAnimation(AnimationParams.isWalk);
-            }
+            return;
         }
 
         setEnemyDirection();
@@ -90,16 +92,19 @@ public class ArcherAI : MonoBehaviour
         if (currentBaseState.fullPathHash.Equals(aimState))
         {
             //TODO: fire the arrow
-            if(notFirstAttack) {
+            if (notFirstAttack)
+            {
                 Attack();
-            } else {
+            }
+            else
+            {
                 notFirstAttack = true;
             }
         }
         else if (currentBaseState.fullPathHash.Equals(beenHitState))
         {
             // anything related to the beenHit state should locates here.
-            animator.SetBool("isHit",false);
+            animator.SetBool("isHit", false);
         }
         else if (currentBaseState.fullPathHash.Equals(deadState))
         {
@@ -138,14 +143,13 @@ public class ArcherAI : MonoBehaviour
                 });
             }
         }
-        //Debug.Log(Vector2.Distance(transform.position, player.position));
     }
 
     private void fireArrow()
     {
         GameObject myArrow = Instantiate(arrow);
         var arrowAI = myArrow.GetComponent<ArrowAI>();
-        
+
         myArrow.transform.position = transform.position;
         myArrow.transform.rotation = arrowAI.computeRotation(player.position);
         arrowAI.damage = damage;
