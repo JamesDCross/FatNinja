@@ -18,13 +18,16 @@ public class PlayerHealth : MonoBehaviour {
     public GameObject dyingPrefabTEMP;
     private static GameObject dyingPrefab;
 
-public GameObject bloodPrefabTEMP;
+    public GameObject bloodPrefabTEMP;
     private static GameObject bloodPrefab;
-    public Text GameOverText = null; 
+    public Text GameOverText = null;
+
+    public AudioClip[] deathSound;
+    public AudioSource audio;
 
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         bloodPrefab = bloodPrefabTEMP;
         dyingPrefab = dyingPrefabTEMP;
 	}
@@ -50,7 +53,8 @@ public GameObject bloodPrefabTEMP;
         // restart level on 0 health
         if (PlayersHP <= 0 && !startedDying)
         {
-            
+            audio.clip = deathSound[0];
+            audio.Play();
             startedDying = true;
 
             
