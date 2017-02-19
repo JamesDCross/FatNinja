@@ -50,9 +50,13 @@ public GameObject bloodPrefabTEMP;
         // restart level on 0 health
         if (PlayersHP <= 0 && !startedDying)
         {
+            
             startedDying = true;
+
+            
             coroutine = FadeAndDie();
             StartCoroutine(coroutine);
+           
         }
     }
 
