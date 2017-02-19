@@ -55,8 +55,8 @@ public class GameMaster : MonoBehaviour {
             pressed = false;
         }
 
-        scoreText.text = "SCORE: " + Score.getScore();
-        if (scoreUpdateTime + 3f > Time.time)
+        scoreText.text = "" + Score.getScore();
+        if (scoreUpdateTime + Score.timeLength > Time.time)
             ScoreMultipler.text = Score.getDamage() + "  X " + Score.getMultipler();
         else
         {
