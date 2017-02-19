@@ -8,6 +8,8 @@ public class Score : MonoBehaviour {
     private static int score = 0;
     private static int damage;
 
+    public static float timeLength = 1.0f;
+
     // Update is called once per frame
     void Start () {
         lastAttack = 0;
@@ -15,13 +17,13 @@ public class Score : MonoBehaviour {
 
     public static void calcScore(string attack)
     {
-        if (attack == "UpperCut" || attack == "HurricaneKick")
+        //if (attack == "UpperCut" || attack == "HurricaneKick")
         {
             chainMultipler += 1;
             lastAttack = Time.time;
         }
 
-        if (lastAttack + 3f < Time.time)
+        if (lastAttack + timeLength < Time.time)
         {
             chainMultipler = 1;
         }
