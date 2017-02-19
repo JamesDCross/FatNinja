@@ -335,9 +335,9 @@ MonoBehaviour:
     width: 1114
     height: 859
   selectedBlocks:
-  - {fileID: 56939248}
+  - {fileID: 56939289}
   selectedCommands:
-  - {fileID: 56939307}
+  - {fileID: 56939272}
   variables: []
   description: 
   stepPause: 0
@@ -816,7 +816,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: 105
   indentLevel: 0
-  storyText: Avoided easily
+  storyText: Not even close
   description: 
   character: {fileID: 1198847693}
   portrait: {fileID: 21300000, guid: 9bbe9deea33f84d6dabaffc3b179f638, type: 3}
@@ -1747,7 +1747,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: 242
   indentLevel: 0
-  storyText: But your hands still full of blood.
+  storyText: But your hands are still full of blood.
   description: 
   character: {fileID: 654954444}
   portrait: {fileID: 21300000, guid: f04aa916f700d4d668de7ccbf728bb75, type: 3}
@@ -2250,7 +2250,7 @@ MonoBehaviour:
   nodeRect:
     serializedVersion: 2
     x: 616.5
-    y: 71.5
+    y: 72.501
     width: 120
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
@@ -2886,7 +2886,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: 240
   indentLevel: 0
-  storyText: You killed people by the name of justice.
+  storyText: You killed people in the name of justice.
   description: 
   character: {fileID: 654954444}
   portrait: {fileID: 21300000, guid: f04aa916f700d4d668de7ccbf728bb75, type: 3}
