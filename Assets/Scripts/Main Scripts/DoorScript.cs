@@ -5,7 +5,7 @@ public class DoorScript : MonoBehaviour {
     public string level;
 	public BoxCollider2D blockExitCollider = null;
     private bool loadLevel;
-
+    //public float[] enemiesDead;
     
 
     // Use this for initialization
@@ -16,10 +16,13 @@ public class DoorScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		GameObject[] spawners = GameObject.FindGameObjectsWithTag("Spawner");
-		foreach	(GameObject go in spawners) {
-			if (go.GetComponent<SpawnWaves>().numberOfWaves != 0)
-			return;
-		}
+		for	(int i = 0; i < spawners.Length;i++) {
+            //enemiesDead[i] = spawners[i].GetComponent<SpawnWaves>().numberOfWaves;
+            if (spawners[i].GetComponent<SpawnWaves>().numberOfWaves != 0)
+                return;
+                Debug.Log("nothing");
+
+        }
 
 		GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
 		if (enemies.Length == 0) {
