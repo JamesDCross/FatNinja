@@ -6,6 +6,8 @@ public class DoorScript : MonoBehaviour {
 	public BoxCollider2D blockExitCollider = null;
     private bool loadLevel;
 
+    
+
     // Use this for initialization
     void Start () {
         loadLevel = false;

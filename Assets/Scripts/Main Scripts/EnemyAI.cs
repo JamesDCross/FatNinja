@@ -158,7 +158,7 @@ public class EnemyAI : MonoBehaviour
             GameObject blood = Instantiate(bloodPrefab);
             blood.transform.position = this.transform.position;
             float playerAngle = player.gameObject.GetComponent<CharacterController>().getPlayerAngle();
-            blood.GetComponent<BloodScript>().setBlood(playerAngle, (float)incomingdamage / 4f);
+            blood.GetComponent<BloodScript>().setBlood(playerAngle, (float)incomingdamage / 6f);
             int incomingdam = ((incomingdamage * 100) + Random.Range(0, 100));
             blood.GetComponentInChildren<damageTextScr>().setDamage(incomingdam);
             Score.setDamage(incomingdam);

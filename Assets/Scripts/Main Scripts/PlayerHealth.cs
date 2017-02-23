@@ -89,7 +89,7 @@ public class PlayerHealth : MonoBehaviour {
         Vector2 enemyDirection = (GameObject.FindGameObjectWithTag("Player").transform.position - enemyPosition).normalized;
         float enemyAngle = enemyDirection.x * Vector2.Angle(Vector2.up, enemyDirection);
         //float playerAngle = player.gameObject.GetComponent<CharacterController>().getPlayerAngle();
-        blood.GetComponent<BloodScript>().setBlood(enemyAngle, (float)damageAmount / 4f);
+        blood.GetComponent<BloodScript>().setBlood(enemyAngle, (float)damageAmount / 6f);
         // set blood damage text
         int incomingdam = ((damageAmount * 100) + Random.Range(0, 100));
         blood.GetComponentInChildren<damageTextScr>().setDamage(incomingdam);
