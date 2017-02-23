@@ -334,8 +334,8 @@ MonoBehaviour:
   isDead: 0
   isSit: 0
   sitTime: 2
-  enemyHP: 10
-  damage: 3
+  enemyHP: 8
+  damage: 2
   enemySpeed: 4
   runAwayHP: 0
   randomWalkRange: 1
