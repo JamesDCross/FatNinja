@@ -1623,6 +1623,15 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 114377844527267906, guid: 84acb397c635e494c9ccaafef5ac80dd,
+        type: 2}
+      propertyPath: quote
+      value: 'sure '
+      objectReference: {fileID: 0}
+    - target: {fileID: 1992374066982082, guid: 84acb397c635e494c9ccaafef5ac80dd, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 84acb397c635e494c9ccaafef5ac80dd, type: 2}
   m_IsPrefabParent: 0
@@ -6607,6 +6616,11 @@ Prefab:
         type: 2}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114675467036511634, guid: 0af0ccc7c08564f42b594799eb843ee6,
+        type: 2}
+      propertyPath: quote
+      value: where you having dinner?
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0af0ccc7c08564f42b594799eb843ee6, type: 2}

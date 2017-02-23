@@ -7396,6 +7396,11 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 114851658815531752, guid: ad6394b0186ea4a17a7a504694f276d0,
+        type: 2}
+      propertyPath: quote
+      value: Do I hit the bag or does it hit me?
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ad6394b0186ea4a17a7a504694f276d0, type: 2}
   m_IsPrefabParent: 0
